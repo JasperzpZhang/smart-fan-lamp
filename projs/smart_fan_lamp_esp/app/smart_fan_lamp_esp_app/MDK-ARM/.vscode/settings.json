@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "include.h": "c",
+        "main.h": "c",
+        "lib_type.h": "c",
+        "lib_debug.h": "c",
+        "lib_i2c.h": "c",
+        "define.h": "c"
+    }
+}
