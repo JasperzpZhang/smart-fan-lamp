@@ -28,9 +28,12 @@
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\lib\\wdog",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\lib\\rbuf",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\lib\\gpio",
+                "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\lib\\delay",
+                "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\lib\\prot",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\drv\\peri\\mem",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\drv\\peri\\humiture",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\drv\\peri\\rtc",
+                "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\drv\\peri\\sc",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\app",
                 "d:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\app\\src\\arm\\app\\svc"
             ],

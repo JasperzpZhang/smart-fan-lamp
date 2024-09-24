@@ -12,10 +12,10 @@
  * Version:         v0.0.1
  */
 
-#include "FreeRTOS.h"      
-#include "task.h"   
 #include "lib/delay/lib_delay.h"
+#include "FreeRTOS.h"
 #include "lib/debug/lib_debug.h"
+#include "task.h"
 
 /* Debug config */
 #if DELAY_DEBUG
@@ -36,29 +36,36 @@
 #define ASSERT(...)
 #endif /* DELAY_ASSERT */
 
-void delay_us(uint32_t us) {
-    uint32_t ticks = (SystemCoreClock / 1000000) * us;      /* 每微秒的Ticks */
-    SysTick->LOAD = ticks - 1;                              /* 设定加载值 */
-    SysTick->VAL = 0;                                       /* 清除当前计数值 */
-    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;               /* 启动计时器 */
+void
+delay_us(uint32_t us) {
+    uint32_t ticks = (SystemCoreClock / 1000000) * us; /* 每微秒的Ticks */
+    SysTick->LOAD = ticks - 1;                         /* 设定加载值 */
+    SysTick->VAL = 0;                                  /* 清除当前计数值 */
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;          /* 启动计时器 */
 
-    while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk));  /* 等待计时完成 */
+    while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)) {
+        /* Do nothing. */
+    }; /* 等待计时完成 */
 
-    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;              /* 关闭计时器 */
+    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; /* 关闭计时器 */
 }
 
-void os_delay_ms(uint32_t ms){
+void
+os_delay_ms(uint32_t ms) {
     vTaskDelay(pdMS_TO_TICKS(ms));
 }
 
-void hal_delay_ms(uint32_t ms){
+void
+hal_delay_ms(uint32_t ms) {
     HAL_Delay(ms);
 }
 
-void os_delay_s(uint32_t s) {
-    os_delay_ms(s * 1000); 
+void
+os_delay_s(uint32_t s) {
+    os_delay_ms(s * 1000);
 }
 
-void hal_delay_s(uint32_t s) {
-    hal_delay_ms(s * 1000); 
+void
+hal_delay_s(uint32_t s) {
+    hal_delay_ms(s * 1000);
 }

@@ -121,15 +121,6 @@ rbuf_status_t rbuf_cfg(rbuf_handle_t xHandle, void *pvBuffer, uint32_t ulBufSize
     }
 
 #if RBUF_RTOS
-//    osMessageQDef(RbufMsgQ, ulMsgQueueSize, uint32_t);
-//    pxCtrl->xMsgQueue        = osMessageCreate(osMessageQ(RbufMsgQ), NULL);
-//    pxCtrl->ulMsgQueueWaitMs = ulMsgQueueWaitMs;
-//    if (NULL == pxCtrl->xMsgQueue) {
-//        pxCtrl->bInit = FALSE;
-//        TRACE("rbuf_cfg osMessageCreate failed\n");
-//        return RBUF_STATUS_ERR_MSGQ;
-//    }
-
     pxCtrl->msg_queue = osMessageQueueNew(ulMsgQueueSize, sizeof(uint32_t), NULL);
     pxCtrl->msg_queue_wait_ms = ulMsgQueueWaitMs;
     if (pxCtrl->msg_queue == NULL) {

@@ -118,6 +118,15 @@ extern "C" {
 #define RTC_TEST                 (0)
 #define RTC_ENABLE_MSP           (0)
 
+/* Prot module */
+#define PROT_ENABLE              (1)
+#define PROT_RTOS                (1)
+#define PROT_DEBUG               (0)
+#define PROT_TEST                (0)
+#define PROT_ASSERT              (0)
+#define PROT_MAX_MARK_SIZE       (4)
+#define PROT_SHOW_CONT           (0)
+
 /* Wdog module */
 #define WDOG_ENABLE              (1)
 #define WDOG_RTOS                (1)

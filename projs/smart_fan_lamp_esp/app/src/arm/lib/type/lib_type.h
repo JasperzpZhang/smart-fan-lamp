@@ -28,7 +28,7 @@
  *
  * This file is all of the type library..
  *
- * Author:          Jasper <jasperzhangse@gmail.com>
+ * Author:          Jasper <jasperzpzhang@gmail.com>
  * Version:         v1.0.0
  */
 
@@ -49,11 +49,13 @@ extern "C"
 	{
         status_err,
 		status_ok
-		
+        
 	} status_t;
 
 	typedef uint8_t Bool_t;
+
 	typedef struct tm Time_t;
+    
 
 	typedef int SOCKET;
 

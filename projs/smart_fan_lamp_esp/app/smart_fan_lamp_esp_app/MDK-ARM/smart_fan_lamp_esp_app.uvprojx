@@ -1321,6 +1321,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\lib\delay\lib_delay.c</FilePath>
             </File>
+            <File>
+              <FileName>lib_prot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\prot\lib_prot.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1365,6 +1370,21 @@
               <FileName>drv_rtc_ds1338.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\rtc\drv_rtc_ds1338.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_sc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\drv_sc.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\drv_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_tp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\drv_tp.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -71,6 +71,7 @@ typedef enum { high = 1, low = 0 } i2c_line_status_t;
 
 status_t i2c_start(void);
 status_t i2c_stop(void);
+status_t i2c_wait_ack(void);
 status_t i2c_write_byte(uint8_t data);
 status_t i2c_read_byte(uint8_t* data, uint8_t ack);
 status_t i2c_write_data(uint8_t device_address, uint8_t* data, uint16_t length);

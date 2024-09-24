@@ -65,7 +65,7 @@ static void i2c_delay(void) {
 #if USE_SYS_TICK_DELAY_US
     delay_us(45);
 #else
-    osDelay(1);
+    os_delay_ms(1);
 #endif
 }
 
@@ -103,6 +103,32 @@ status_t i2c_stop(void) {
     I2C_SDA(high);
     i2c_delay();
     return status_ok;
+}
+
+status_t i2c_wait_ack(void)
+{
+    uint8_t waittime = 0;
+    status_t rack = status_err;
+
+    I2C_SDA(high);     /* 主机释放SDA线(此时外部器件可以拉低SDA线) */
+    i2c_delay();
+    I2C_SCL(high);     /* SCL=1, 此时从机可以返回ACK */
+    i2c_delay();
+
+    while (I2C_SDA_READ())    /* 等待应答 */
+    {
+        waittime++;
+        if (waittime > 250)
+        {
+            i2c_stop();
+            rack = status_ok;
+            break;
+        }
+    }
+
+    I2C_SCL(0);     /* SCL=0, 结束ACK检查 */
+    i2c_delay();
+    return rack;
 }
 
 status_t i2c_write_byte(uint8_t byte) {
