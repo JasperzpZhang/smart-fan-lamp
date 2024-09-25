@@ -56,7 +56,8 @@ static uint32_t prv_stm32_flash_if_set_wp_status(uint32_t ulObWrpPages, uint32_t
 static uint32_t prv_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint32_t ulSizeInUint32);
 
 /* Functions */
-status_t Stm32FlashIfInit(void) {
+status_t
+Stm32FlashIfInit(void) {
     /* Unlock the Program memory */
     HAL_FLASH_Unlock();
     /* Clear all FLASH flags */
@@ -66,12 +67,14 @@ status_t Stm32FlashIfInit(void) {
     return status_ok;
 }
 
-status_t Stm32FlashIfTerm(void) {
+status_t
+Stm32FlashIfTerm(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t Stm32FlashIfConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
+status_t
+Stm32FlashIfConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
     ASSERT(NULL != pxCtrl);
 
@@ -81,7 +84,8 @@ status_t Stm32FlashIfConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
     return status_ok;
 }
 
-status_t Stm32FlashIfCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExtraPara) {
+status_t
+Stm32FlashIfCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExtraPara) {
     status_t xRet;
     switch (xCtrlOp) {
         case MEM_CTRL_OP_STM32FLASH_ERASE: {
@@ -95,14 +99,13 @@ status_t Stm32FlashIfCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint3
                                                                                                          : status_err);
             break;
         }
-        default:
-            xRet = status_err;
-            break;
+        default: xRet = status_err; break;
     }
     return xRet;
 }
 
-status_t Stm32FlashIfRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
+status_t
+Stm32FlashIfRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
     ASSERT(NULL != pxCtrl);
 
@@ -118,7 +121,8 @@ status_t Stm32FlashIfRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLengt
     return status_ok;
 }
 
-status_t stm32_flash_if_write(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
+status_t
+stm32_flash_if_write(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
     ASSERT(NULL != pxCtrl);
 
@@ -134,11 +138,13 @@ status_t stm32_flash_if_write(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulL
     return status_ok;
 }
 
-uint32_t Stm32FlashIfGetWpStatus(MemHandle_t xHandle, uint32_t ulObWrpPages) {
+uint32_t
+Stm32FlashIfGetWpStatus(MemHandle_t xHandle, uint32_t ulObWrpPages) {
     return prv_stm32_flash_if_get_wp_status(ulObWrpPages);
 }
 
-uint32_t prv_stm32_flash_if_write_uint8(uint32_t ulAddr, uint8_t* pucSrc, uint32_t ulSizeInUint8) {
+uint32_t
+prv_stm32_flash_if_write_uint8(uint32_t ulAddr, uint8_t* pucSrc, uint32_t ulSizeInUint8) {
     uint32_t ulRet = 0;
     uint32_t ulSizeInUint32 = 0;
     uint32_t ulExtraByte = 0;
@@ -164,7 +170,8 @@ uint32_t prv_stm32_flash_if_write_uint8(uint32_t ulAddr, uint8_t* pucSrc, uint32
     return ulRet;
 }
 
-uint32_t prv_stm32_flash_if_write_uint16(uint32_t ulAddr, uint16_t* pusSrc, uint32_t ulSizeInUint16) {
+uint32_t
+prv_stm32_flash_if_write_uint16(uint32_t ulAddr, uint16_t* pusSrc, uint32_t ulSizeInUint16) {
     uint32_t ulRet = 0;
     uint32_t ulSizeInUint32 = 0;
     uint32_t ulExtraByte = 0;
@@ -190,7 +197,8 @@ uint32_t prv_stm32_flash_if_write_uint16(uint32_t ulAddr, uint16_t* pusSrc, uint
     return ulRet;
 }
 
-uint32_t prv_stm32_flash_if_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint32_t ulSizeInUint32) {
+uint32_t
+prv_stm32_flash_if_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint32_t ulSizeInUint32) {
     static uint32_t ulFlashBuffer[STM32_FLASH_PAGE_SIZE / 4];
     static FLASH_EraseInitTypeDef pEraseInit;
     uint32_t i = 0, ulSectorErr = 0, ulSectorOffset = 0, ulSectorLeft = 0, ulSectorNum = 0, ulAddrOffset = 0;
@@ -250,7 +258,8 @@ uint32_t prv_stm32_flash_if_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint
     return (FLASHIF_OK);
 }
 
-uint32_t prv_stm32_flash_if_read_uint8(uint32_t ulAddr, uint8_t* pucDest, uint32_t ulSizeInUint8) {
+uint32_t
+prv_stm32_flash_if_read_uint8(uint32_t ulAddr, uint8_t* pucDest, uint32_t ulSizeInUint8) {
     uint32_t ulNum = 0;
     ulAddr = (uint32_t)ulAddr;
     while (ulNum < ulSizeInUint8) {
@@ -261,7 +270,8 @@ uint32_t prv_stm32_flash_if_read_uint8(uint32_t ulAddr, uint8_t* pucDest, uint32
     return ulNum;
 }
 
-uint32_t prv_stm32_flash_if_read_uint16(uint32_t ulAddr, uint16_t* pusDest, uint32_t ulSizeInUint16) {
+uint32_t
+prv_stm32_flash_if_read_uint16(uint32_t ulAddr, uint16_t* pusDest, uint32_t ulSizeInUint16) {
     uint32_t ulNum = 0;
     ulAddr = (uint32_t)ulAddr;
     while (ulNum < ulSizeInUint16) {
@@ -272,7 +282,8 @@ uint32_t prv_stm32_flash_if_read_uint16(uint32_t ulAddr, uint16_t* pusDest, uint
     return ulNum;
 }
 
-uint32_t prv_stm32_flash_if_read_uint32(uint32_t ulAddr, uint32_t* pulDest, uint32_t ulSizeInUint32) {
+uint32_t
+prv_stm32_flash_if_read_uint32(uint32_t ulAddr, uint32_t* pulDest, uint32_t ulSizeInUint32) {
     uint32_t ulNum = 0;
     ulAddr = (uint32_t)ulAddr;
     while (ulNum < ulSizeInUint32) {
@@ -283,7 +294,8 @@ uint32_t prv_stm32_flash_if_read_uint32(uint32_t ulAddr, uint32_t* pulDest, uint
     return ulNum;
 }
 
-static uint32_t prv_stm32_flash_if_erace(uint32_t ulStartSector) {
+static uint32_t
+prv_stm32_flash_if_erace(uint32_t ulStartSector) {
     /* This function does an erase of all user flash area */
     uint32_t ulNbrOfPages = 0;
     uint32_t ulPageError = 0;
@@ -317,7 +329,8 @@ static uint32_t prv_stm32_flash_if_erace(uint32_t ulStartSector) {
     return FLASHIF_OK;
 }
 
-uint32_t prv_stm32_flash_if_get_wp_status(uint32_t ulObWrpPages) {
+uint32_t
+prv_stm32_flash_if_get_wp_status(uint32_t ulObWrpPages) {
     uint32_t ulProtectedPage = FLASHIF_PROTECTION_NONE;
     FLASH_OBProgramInitTypeDef OptionsBytesStruct;
 
@@ -339,7 +352,8 @@ uint32_t prv_stm32_flash_if_get_wp_status(uint32_t ulObWrpPages) {
     }
 }
 
-uint32_t prv_stm32_flash_if_set_wp_status(uint32_t ulObWrpPages, uint32_t ulStatus) {
+uint32_t
+prv_stm32_flash_if_set_wp_status(uint32_t ulObWrpPages, uint32_t ulStatus) {
     uint32_t ulProtectedPage = 0x0;
     FLASH_OBProgramInitTypeDef xCfgNew, xCfgOld;
     HAL_StatusTypeDef xResult = HAL_OK;
@@ -370,7 +384,8 @@ uint32_t prv_stm32_flash_if_set_wp_status(uint32_t ulObWrpPages, uint32_t ulStat
     return ((xResult == HAL_OK) ? FLASHIF_OK : FLASHIF_PROTECTION_ERRROR);
 }
 
-static uint32_t prv_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint32_t ulSizeInUint32) {
+static uint32_t
+prv_write_uint32(uint32_t ulAddr, uint32_t* pulSrc, uint32_t ulSizeInUint32) {
     uint32_t i = 0;
 
     for (i = 0; i < ulSizeInUint32; i++) {

@@ -46,6 +46,9 @@ extern "C"
 #include "drv/peri/sc/drv_lcd.h"
 #include "drv/peri/sc/drv_tp.h"
 
+/* screen device driver include */
+#include "drv/peri/sc/st7789/drv_st7789.h"
+
     typedef enum
     {
         dwin01 = 0,

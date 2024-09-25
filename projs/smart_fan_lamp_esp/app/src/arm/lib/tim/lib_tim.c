@@ -33,8 +33,8 @@
  */
 
 #include "lib/tim/lib_tim.h"
-#include "tim.h"
 #include "app/include.h"
+#include "tim.h"
 
 /* Debug config */
 #if LIB_TIM_DEBUG || 1
@@ -45,9 +45,9 @@
 #define TRACE(...)
 #endif /* LIB_TIM_DEBUG */
 
-void tim_init(void)
-{
-    
+void
+tim_init(void) {
+    /*Do nothing*/
 }
 
 /**
@@ -56,12 +56,12 @@ void tim_init(void)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim1_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim1_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim1_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -72,12 +72,12 @@ __weak void tim1_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim2_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim2_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim2_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -88,12 +88,12 @@ __weak void tim2_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim3_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim3_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim3_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -104,12 +104,12 @@ __weak void tim3_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim4_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim4_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim4_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -120,12 +120,12 @@ __weak void tim4_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim5_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim5_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim5_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -136,12 +136,12 @@ __weak void tim5_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim6_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim6_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim6_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -152,12 +152,12 @@ __weak void tim6_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim7_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim7_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim7_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -168,12 +168,12 @@ __weak void tim7_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim8_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim8_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim8_period_elapsed_cb can be implemented in the user file.
    */
 }
@@ -184,72 +184,54 @@ __weak void tim8_period_elapsed_cb(TIM_HandleTypeDef* htim)
   * @param  htim TIM handle
   * @retval None
   */
-__weak void tim9_period_elapsed_cb(TIM_HandleTypeDef* htim)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+__weak void
+tim9_period_elapsed_cb(TIM_HandleTypeDef* htim) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(htim);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             tim9_period_elapsed_cb can be implemented in the user file.
    */
 }
 
+void
+tim_period_elapsed_cb(TIM_HandleTypeDef* htim) {
 
-void tim_period_elapsed_cb(TIM_HandleTypeDef* htim) {
-    
     switch ((uint32_t)htim->Instance) {
 #ifdef TIM1
-        case (uint32_t)TIM1:
-            tim1_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM1: tim1_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM2
-        case (uint32_t)TIM2:
-            tim2_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM2: tim2_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM3
-        case (uint32_t)TIM3:
-            tim3_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM3: tim3_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM4
-        case (uint32_t)TIM4:
-            tim4_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM4: tim4_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM5
-        case (uint32_t)TIM5:
-            tim5_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM5: tim5_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM6
-        case (uint32_t)TIM6:
-            tim5_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM6: tim5_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM7
-        case (uint32_t)TIM7:
-            tim5_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM7: tim5_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM8
-        case (uint32_t)TIM8:
-            tim5_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM8: tim5_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM9
-        case (uint32_t)TIM9:
-            tim5_period_elapsed_cb(htim);
-            break;
+        case (uint32_t)TIM9: tim5_period_elapsed_cb(htim); break;
 #endif
     }
 }

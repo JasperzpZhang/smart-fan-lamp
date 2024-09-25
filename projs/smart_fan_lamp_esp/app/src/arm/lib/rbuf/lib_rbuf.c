@@ -16,13 +16,14 @@
 */
 
 /* Includes */
-#include <string.h>
 #include <cmsis_os.h>
-#include "cmsis_armcc.h"
+#include <string.h>
 #include "FreeRTOS.h"
-#include "task.h"
+#include "cmsis_armcc.h"
 #include "lib/rbuf/lib_rbuf.h"
 #include "lib/rbuf/lib_rbuf_internal.h"
+#include "task.h"
+
 
 #if RBUF_ENABLE
 
@@ -54,19 +55,19 @@
 #define RBUF_UNLOCK
 #endif /* RBUF_RTOS */
 
-#define RBUF_GET_CTRL(handle) ((rbuf_ctrl_t *)(handle))
+#define RBUF_GET_CTRL(handle) ((rbuf_ctrl_t*)(handle))
 
 /* Local types */
 typedef struct {
-    uint8_t  bInit;
+    uint8_t bInit;
     BUFFER_t xRbuf;
 #if RBUF_RTOS
     osMessageQId xMsgQueue;
-    uint32_t     ulMsgQueueWaitMs;
-    
+    uint32_t ulMsgQueueWaitMs;
+
     osMessageQueueId_t msg_queue;
     uint32_t msg_queue_wait_ms;
-    
+
 #endif /* RBUF_RTOS */
 #if RBUF_TEST
     uint32_t ulTotalWriteCnt;
@@ -80,33 +81,38 @@ typedef struct {
 static int inHandlerMode(void);
 
 /* Functions */
-rbuf_status_t rbuf_init(void) {
+rbuf_status_t
+rbuf_init(void) {
     /* Do nothing */
     return RBUF_STATUS_OK;
 }
 
-rbuf_status_t rbuf_term(void) {
+rbuf_status_t
+rbuf_term(void) {
     /* Do nothing */
     return RBUF_STATUS_OK;
 }
 
-rbuf_handle_t rbuf_create(void) {
-    rbuf_ctrl_t *pxCtrl = NULL;
-    pxCtrl             = (rbuf_ctrl_t *)malloc(sizeof(rbuf_ctrl_t));
+rbuf_handle_t
+rbuf_create(void) {
+    rbuf_ctrl_t* pxCtrl = NULL;
+    pxCtrl = (rbuf_ctrl_t*)malloc(sizeof(rbuf_ctrl_t));
     memset(pxCtrl, 0, sizeof(rbuf_ctrl_t));
     return (rbuf_handle_t)pxCtrl;
 }
 
-rbuf_status_t rbuf_delete(rbuf_handle_t xHandle) {
+rbuf_status_t
+rbuf_delete(rbuf_handle_t xHandle) {
     if (xHandle) {
-        free((void *)xHandle);
+        free((void*)xHandle);
     }
     return RBUF_STATUS_OK;
 }
 
-rbuf_status_t rbuf_cfg(rbuf_handle_t xHandle, void *pvBuffer, uint32_t ulBufSize, uint32_t ulMsgQueueSize,
-                        uint32_t ulMsgQueueWaitMs) {
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+rbuf_status_t
+rbuf_cfg(rbuf_handle_t xHandle, void* pvBuffer, uint32_t ulBufSize, uint32_t ulMsgQueueSize,
+         uint32_t ulMsgQueueWaitMs) {
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
 
     ASSERT(NULL != pxCtrl);
     if (pxCtrl->bInit) {
@@ -128,25 +134,26 @@ rbuf_status_t rbuf_cfg(rbuf_handle_t xHandle, void *pvBuffer, uint32_t ulBufSize
         TRACE("rbuf_cfg osMessageCreate failed\n");
         return RBUF_STATUS_ERR_MSGQ;
     }
-    
+
 #endif /* RBUF_RTOS */
 
 #if RBUF_TEST
     pxCtrl->ulTotalWriteCnt = 0;
-    pxCtrl->ulTotalReadCnt  = 0;
+    pxCtrl->ulTotalReadCnt = 0;
     pxCtrl->ulBufFullErrCnt = 0;
-    pxCtrl->ulBufMsgErrCnt  = 0;
+    pxCtrl->ulBufMsgErrCnt = 0;
 #endif /* RBUF_TEST */
     pxCtrl->bInit = TRUE;
 
     return RBUF_STATUS_OK;
 }
 
-uint32_t RbufWrite(rbuf_handle_t xHandle, const void *pvData, uint32_t ulCount) {
-    uint32_t    ulFree = 0;
-    uint32_t    ulSent = 0;
-    uint32_t    msg    = 1; 
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+uint32_t
+RbufWrite(rbuf_handle_t xHandle, const void* pvData, uint32_t ulCount) {
+    uint32_t ulFree = 0;
+    uint32_t ulSent = 0;
+    uint32_t msg = 1;
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
 #if RBUF_RTOS
     int isr;
 #endif /* RBUF_RTOS */
@@ -159,7 +166,7 @@ uint32_t RbufWrite(rbuf_handle_t xHandle, const void *pvData, uint32_t ulCount) 
 #endif /* RBUF_TEST */
         /* Notify the client to read the data immediately */
         msg = 1;
-        if (osOK != osMessageQueuePut(pxCtrl->xMsgQueue, &msg, 0, 0)) {    
+        if (osOK != osMessageQueuePut(pxCtrl->xMsgQueue, &msg, 0, 0)) {
 #if RBUF_TEST
             pxCtrl->ulBufMsgErrCnt++;
 #endif /* RBUF_TEST */
@@ -201,21 +208,22 @@ uint32_t RbufWrite(rbuf_handle_t xHandle, const void *pvData, uint32_t ulCount) 
     return ulSent;
 }
 
-uint32_t RbufRead(rbuf_handle_t xHandle, void *pvData, uint32_t ulCount) {
-    uint32_t    ulUsed = 0;
-    uint32_t    ulRead = 0;
-    
+uint32_t
+RbufRead(rbuf_handle_t xHandle, void* pvData, uint32_t ulCount) {
+    uint32_t ulUsed = 0;
+    uint32_t ulRead = 0;
+
     uint32_t msg;
     osStatus_t status;
 
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
 #if RBUF_RTOS
     int isr;
 #endif /* RBUF_RTOS */
-    
+
     ASSERT((NULL != pxCtrl) && pxCtrl->bInit);
 #if RBUF_RTOS
-//    ev     = osMessageGet(pxCtrl->xMsgQueue, pxCtrl->ulMsgQueueWaitMs);
+    //    ev     = osMessageGet(pxCtrl->xMsgQueue, pxCtrl->ulMsgQueueWaitMs);
     status = osMessageQueueGet(pxCtrl->xMsgQueue, &msg, NULL, pxCtrl->ulMsgQueueWaitMs);
     ulUsed = BUFFER_GetFull(&(pxCtrl->xRbuf)); /* In case of the msg facility is something wrong! */
     if ((osOK != status) && (0 == ulUsed)) {
@@ -249,10 +257,11 @@ uint32_t RbufRead(rbuf_handle_t xHandle, void *pvData, uint32_t ulCount) {
     return ulRead;
 }
 
-uint32_t RbufReadDirect(rbuf_handle_t xHandle, void *pvData, uint32_t ulCount) {
-    uint32_t    ulUsed = 0;
-    uint32_t    ulRead = 0;
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+uint32_t
+RbufReadDirect(rbuf_handle_t xHandle, void* pvData, uint32_t ulCount) {
+    uint32_t ulUsed = 0;
+    uint32_t ulRead = 0;
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
 #if RBUF_RTOS
     int isr;
 #endif /* RBUF_RTOS */
@@ -283,22 +292,25 @@ uint32_t RbufReadDirect(rbuf_handle_t xHandle, void *pvData, uint32_t ulCount) {
     return ulRead;
 }
 
-uint32_t RbufGetFree(rbuf_handle_t xHandle) {
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+uint32_t
+RbufGetFree(rbuf_handle_t xHandle) {
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
     ASSERT((NULL != pxCtrl) && pxCtrl->bInit);
     return BUFFER_GetFree(&(pxCtrl->xRbuf));
 }
 
-uint32_t RbufGetFull(rbuf_handle_t xHandle) {
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+uint32_t
+RbufGetFull(rbuf_handle_t xHandle) {
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
     ASSERT((NULL != pxCtrl) && pxCtrl->bInit);
     return BUFFER_GetFull(&(pxCtrl->xRbuf));
 }
 
 #if RBUF_DEBUG
 
-rbuf_status_t RbufShowStatus(rbuf_handle_t xHandle) {
-    rbuf_ctrl_t *pxCtrl = RBUF_GET_CTRL(xHandle);
+rbuf_status_t
+RbufShowStatus(rbuf_handle_t xHandle) {
+    rbuf_ctrl_t* pxCtrl = RBUF_GET_CTRL(xHandle);
     ASSERT(NULL != pxCtrl);
     TRACE("RbufShowStatus\n");
     TRACE("    TotalWriteCnt: %d\n", pxCtrl->ulTotalWriteCnt);
@@ -310,13 +322,15 @@ rbuf_status_t RbufShowStatus(rbuf_handle_t xHandle) {
 
 #else
 
-rbuf_status_t RbufShowStatus(rbuf_handle_t xHandle) {
+rbuf_status_t
+RbufShowStatus(rbuf_handle_t xHandle) {
     return RBUF_STATUS_OK;
 }
 
 #endif /* RBUF_DEBUG */
 
-static int inHandlerMode(void) {
+static int
+inHandlerMode(void) {
     return __get_IPSR() != 0;
 }
 

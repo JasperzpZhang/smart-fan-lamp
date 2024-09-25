@@ -14,12 +14,13 @@
 
 /* Includes */
 #include "drv/peri/mem/drv_mem.h"
-#include "drv/peri/mem/drv_mem_fram.h"
-#include "drv/peri/mem/drv_mem_spi_flash_if.h"
-#include "drv/peri/mem/drv_mem_stm32_flash_if.h"
 #include <cmsis_os.h>
 #include <stdlib.h>
 #include <string.h>
+#include "drv/peri/mem/drv_mem_fram.h"
+#include "drv/peri/mem/drv_mem_spi_flash_if.h"
+#include "drv/peri/mem/drv_mem_stm32_flash_if.h"
+
 
 #if MEM_ENABLE
 
@@ -66,23 +67,18 @@ static osMutexId_t MUTEX_NAME; // ÉùÃ÷»¥³âËø±äÁ¿
 static Bool_t s_bMutexInit = FALSE;
 
 /* Functions */
-status_t MemInit(MemDevice_t xDevice) {
+status_t
+MemInit(MemDevice_t xDevice) {
     status_t xRet = status_err;
     switch (xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramInit();
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramInit(); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
-        case MEM_DEVICE_SPIFLASH:
-            xRet = SpiFlashIfInit();
-            break;
+        case MEM_DEVICE_SPIFLASH: xRet = SpiFlashIfInit(); break;
 #endif /* MEM_ENABLE_SPIFLASH */
 #if MEM_ENABLE_STM32FLASH
-        case MEM_DEVICE_STM32FLASH:
-            xRet = Stm32FlashIfInit();
-            break;
+        case MEM_DEVICE_STM32FLASH: xRet = Stm32FlashIfInit(); break;
 #endif /* MEM_ENABLE_STM32FLASH */
         default:
             xRet = status_err;
@@ -96,23 +92,18 @@ status_t MemInit(MemDevice_t xDevice) {
     return xRet;
 }
 
-status_t MemTerm(MemDevice_t xDevice) {
+status_t
+MemTerm(MemDevice_t xDevice) {
     status_t xRet = status_err;
     switch (xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramTerm();
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramTerm(); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
-        case MEM_DEVICE_SPIFLASH:
-            xRet = SpiFlashIfTerm();
-            break;
+        case MEM_DEVICE_SPIFLASH: xRet = SpiFlashIfTerm(); break;
 #endif /* MEM_ENABLE_SPIFLASH */
 #if MEM_ENABLE_STM32FLASH
-        case MEM_DEVICE_STM32FLASH:
-            xRet = Stm32FlashIfTerm();
-            break;
+        case MEM_DEVICE_STM32FLASH: xRet = Stm32FlashIfTerm(); break;
 #endif /* MEM_ENABLE_STM32FLASH */
         default:
             ASSERT(0); /* We should never get here! */
@@ -121,7 +112,8 @@ status_t MemTerm(MemDevice_t xDevice) {
     return xRet;
 }
 
-MemHandle_t MemCreate(MemDevice_t xDevice) {
+MemHandle_t
+MemCreate(MemDevice_t xDevice) {
     MemCtrl_t* pxCtrl = NULL;
     //    pxCtrl = (MemCtrl_t*)malloc(sizeof(MemCtrl_t));
     pxCtrl = (MemCtrl_t*)pvPortMalloc(sizeof(MemCtrl_t));
@@ -130,33 +122,38 @@ MemHandle_t MemCreate(MemDevice_t xDevice) {
     return (MemHandle_t)pxCtrl;
 }
 
-status_t MemDelete(MemHandle_t xHandle) {
+status_t
+MemDelete(MemHandle_t xHandle) {
     if (xHandle) {
         free((void*)xHandle);
     }
     return status_ok;
 }
 
-status_t MemConfigInit(MemConfig_t* pxConfig) {
+status_t
+MemConfigInit(MemConfig_t* pxConfig) {
     ASSERT(NULL != pxConfig);
     memset(pxConfig, 0, sizeof(MemConfig_t));
     return status_ok;
 }
 
-status_t MemConfigSpi(MemConfig_t* pxConfig, SPI_TypeDef* pxSpi) {
+status_t
+MemConfigSpi(MemConfig_t* pxConfig, SPI_TypeDef* pxSpi) {
     ASSERT(NULL != pxConfig);
     pxConfig->pxSpi = pxSpi;
     return status_ok;
 }
 
-status_t MemConfigCsPin(MemConfig_t* pxConfig, GPIO_TypeDef* pxPinPort, uint16_t usPin) {
+status_t
+MemConfigCsPin(MemConfig_t* pxConfig, GPIO_TypeDef* pxPinPort, uint16_t usPin) {
     ASSERT(NULL != pxConfig);
     pxConfig->xCs.pxPinPort = pxPinPort;
     pxConfig->xCs.usPin = usPin;
     return status_ok;
 }
 
-status_t MemConfigCapacity(MemConfig_t* pxConfig, uint32_t ulStAddr, uint32_t ulEdAddr, uint32_t ulCapacity) {
+status_t
+MemConfigCapacity(MemConfig_t* pxConfig, uint32_t ulStAddr, uint32_t ulEdAddr, uint32_t ulCapacity) {
     ASSERT(NULL != pxConfig);
     pxConfig->ulStAddr = ulStAddr;
     pxConfig->ulEdAddr = ulEdAddr;
@@ -164,7 +161,8 @@ status_t MemConfigCapacity(MemConfig_t* pxConfig, uint32_t ulStAddr, uint32_t ul
     return status_ok;
 }
 
-status_t MemConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
+status_t
+MemConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
     status_t xRet = status_err;
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
@@ -173,19 +171,13 @@ status_t MemConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
     pxCtrl->bConfig = TRUE;
     switch (pxCtrl->xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramConfig(xHandle, pxConfig);
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramConfig(xHandle, pxConfig); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
-        case MEM_DEVICE_SPIFLASH:
-            xRet = SpiFlashIfConfig(xHandle, pxConfig);
-            break;
+        case MEM_DEVICE_SPIFLASH: xRet = SpiFlashIfConfig(xHandle, pxConfig); break;
 #endif /* MEM_ENABLE_SPIFLASH */
 #if MEM_ENABLE_STM32FLASH
-        case MEM_DEVICE_STM32FLASH:
-            xRet = Stm32FlashIfConfig(xHandle, pxConfig);
-            break;
+        case MEM_DEVICE_STM32FLASH: xRet = Stm32FlashIfConfig(xHandle, pxConfig); break;
 #endif /* MEM_ENABLE_STM32FLASH */
         default:
             xRet = status_err;
@@ -196,7 +188,8 @@ status_t MemConfig(MemHandle_t xHandle, MemConfig_t* pxConfig) {
     return xRet;
 }
 
-status_t MemCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExtraPara) {
+status_t
+MemCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExtraPara) {
     status_t xRet = status_err;
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
@@ -204,19 +197,13 @@ status_t MemCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExt
     ASSERT(NULL != pxCtrl);
     switch (pxCtrl->xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramCtrl(xHandle, xCtrlOp, ulExtraPara);
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramCtrl(xHandle, xCtrlOp, ulExtraPara); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
-        case MEM_DEVICE_SPIFLASH:
-            xRet = SpiFlashIfCtrl(xHandle, xCtrlOp, ulExtraPara);
-            break;
+        case MEM_DEVICE_SPIFLASH: xRet = SpiFlashIfCtrl(xHandle, xCtrlOp, ulExtraPara); break;
 #endif /* MEM_ENABLE_SPIFLASH */
 #if MEM_ENABLE_STM32FLASH
-        case MEM_DEVICE_STM32FLASH:
-            xRet = Stm32FlashIfCtrl(xHandle, xCtrlOp, ulExtraPara);
-            break;
+        case MEM_DEVICE_STM32FLASH: xRet = Stm32FlashIfCtrl(xHandle, xCtrlOp, ulExtraPara); break;
 #endif /* MEM_ENABLE_STM32FLASH */
         default:
             ASSERT(0); /* We should never get here! */
@@ -228,7 +215,8 @@ status_t MemCtrl(MemHandle_t xHandle, MemCtrlOperation_t xCtrlOp, uint32_t ulExt
     return xRet;
 }
 
-status_t MemRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
+status_t
+MemRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
     status_t xRet = status_err;
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
@@ -236,9 +224,7 @@ status_t MemRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT ui
     ASSERT(NULL != pxCtrl);
     switch (pxCtrl->xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramRead(xHandle, ulAddr + pxCtrl->xConfig.ulStAddr, ulLength, pucData);
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramRead(xHandle, ulAddr + pxCtrl->xConfig.ulStAddr, ulLength, pucData); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
         case MEM_DEVICE_SPIFLASH:
@@ -260,7 +246,8 @@ status_t MemRead(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, OUT ui
     return xRet;
 }
 
-status_t MemWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
+status_t
+MemWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
     status_t xRet = status_err;
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
@@ -268,9 +255,7 @@ status_t MemWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN ui
     ASSERT(NULL != pxCtrl);
     switch (pxCtrl->xDevice) {
 #if MEM_ENABLE_FRAM
-        case MEM_DEVICE_FRAM:
-            xRet = FramWrite(xHandle, ulAddr + pxCtrl->xConfig.ulStAddr, ulLength, pucData);
-            break;
+        case MEM_DEVICE_FRAM: xRet = FramWrite(xHandle, ulAddr + pxCtrl->xConfig.ulStAddr, ulLength, pucData); break;
 #endif /* MEM_ENABLE_FRAM */
 #if MEM_ENABLE_SPIFLASH
         case MEM_DEVICE_SPIFLASH:
@@ -292,7 +277,8 @@ status_t MemWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN ui
     return xRet;
 }
 
-status_t MemEraseWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
+status_t
+MemEraseWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
     status_t xRet = status_err;
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
@@ -315,7 +301,8 @@ status_t MemEraseWrite(MemHandle_t xHandle, uint32_t ulAddr, uint32_t ulLength, 
     return xRet;
 }
 
-status_t MemShow(MemHandle_t xHandle) {
+status_t
+MemShow(MemHandle_t xHandle) {
     MemCtrl_t* pxCtrl = MEM_GET_CTRL(xHandle);
 
     ASSERT(NULL != pxCtrl);

@@ -61,13 +61,19 @@
 static void sys_task(void* parameter);
 
 /* Functions */
-status_t sys_init(void) {
+status_t
+sys_init(void) {
+    
+    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+    __HAL_TIM_SET_COMPARE(&htim10, TIM_CHANNEL_1, 100);
+    
     xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
     return status_ok;
 }
 
-static void sys_task(void* parameter) {
+static void
+sys_task(void* parameter) {
     while (1) {
         wdog_feed();
         osDelay(500);
