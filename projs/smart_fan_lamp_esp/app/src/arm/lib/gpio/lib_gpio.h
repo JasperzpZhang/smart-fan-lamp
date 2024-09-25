@@ -19,6 +19,11 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#include "main.h"
+
+
+
+
 #ifdef __cplusplus
 }
 #endif /*__cplusplus */

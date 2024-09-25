@@ -1,16 +1,21 @@
-/**
- * \file            lib_debug_uart.c
- * \brief           Debug uart library
- */
+/*
+    lib_debug.c
+
+    Implementation File for Debug Module
+*/
+
+/* Copyright (c) 2024 Jasper. */
 
 /*
- * Copyright (c) 2024 Jasper
- *
- * This file is part of the debug library.
- *
- * Author:          Jasper <jasperzhangse@gmail.com>
- * Version:         v1.0.0
- */
+    modification history
+    --------------------
+    01a, 12Sep18, Karl Created
+    01b, 15Nov18, Karl Modified
+    01c, 15Jul19, Karl Reconstructured Debug module
+    01d, 26Aug19, Karl Modified include files
+    01e, 24Sep24, Jasper, Renamed functions from camel case to snake case.
+*/
+
 
 /* Includes */
 #include "lib/debug/lib_debug_uart.h"
@@ -37,23 +42,27 @@ static Bool_t g_debug_cfg = FALSE;
 #endif /* __GNUC__ */
 
 /* Functions */
-status_t debug_uart_init(void) {
+status_t
+debug_uart_init(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t debug_uart_term(void) {
+status_t
+debug_uart_term(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t debug_uart_cfg(UART_HandleTypeDef* huart) {
+status_t
+debug_uart_cfg(UART_HandleTypeDef* huart) {
     g_huart = huart;
     g_debug_cfg = TRUE;
     return status_ok;
 }
 
-status_t debug_uart_printf(char* cFormat, ...) {
+status_t
+debug_uart_printf(char* cFormat, ...) {
     static char tx_buf[DEBUG_BUF_SIZE];
     int vsp_cnt = 0;
 
@@ -72,7 +81,8 @@ status_t debug_uart_printf(char* cFormat, ...) {
     }
 }
 
-status_t debug_uart_printf_direct(char* cStr, uint16_t usLength) {
+status_t
+debug_uart_printf_direct(char* cStr, uint16_t usLength) {
     while (HAL_UART_GetState(g_huart) == HAL_UART_STATE_BUSY_TX) {
         /* Do nothing. */
     };

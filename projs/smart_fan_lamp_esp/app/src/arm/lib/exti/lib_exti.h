@@ -1,7 +1,7 @@
 /*
-    lib_debug.h
+    lib_exti.c
 
-    Implementation File for Debug Module
+    Implementation File for exti Module
 */
 
 /* Copyright (c) 2024 Jasper. */
@@ -12,28 +12,29 @@
     01a, 25Sep24, Jasper Created
 */
 
-#ifndef __LIB_UART_H__
-#define __LIB_UART_H__
+#ifndef __LIB_EXTI_H__
+#define __LIB_EXTI_H__
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /*__cplusplus */
 
 /* Includes */
-#include <stdint.h>
+#include "lib/exti/lib_exti_cfg.h"
 #include "lib/type/lib_type.h"
-#include "lib/uart/lib_uart_cfg.h"
 #include "main.h"
 
-typedef enum {
-    UART_DMA_ENABLE,
-    UART_DMA_DISABLE,
-} uart_dma_en_t;
 
 /* Types */
+
+/* Packet head length type */
+
+/* Packet process callback function */
+
+/* Functions */
 
 #ifdef __cplusplus
 }
 #endif /*__cplusplus */
 
-#endif /* __LIB_UART_H__ */
+#endif /* __LIB_EXTI_H__ */

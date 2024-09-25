@@ -1,5 +1,5 @@
 /*
-    Prot.c
+    lib_prot.c
 
     Implementation File for Prot Module
 */
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lib/prot/lib_prot.h"
+#include "lib/debug/lib_debug.h"
 
 #if PROT_ENABLE
 
@@ -27,7 +28,7 @@
 /* Debug config */
 #if PROT_DEBUG
 #undef TRACE
-#define TRACE(...) DebugPrintf(__VA_ARGS__)
+#define TRACE(...) debug_printf(__VA_ARGS__)
 #else
 #undef TRACE
 #define TRACE(...)
@@ -36,7 +37,7 @@
 #undef ASSERT
 #define ASSERT(a)                                                                                                      \
     while (!(a)) {                                                                                                     \
-        DebugPrintf("ASSERT failed: %s %d\n", __FILE__, __LINE__);                                                     \
+        debug_printf("ASSERT failed: %s %d\n", __FILE__, __LINE__);                                                     \
     }
 #else
 #undef ASSERT
@@ -222,7 +223,7 @@ prot_proc(prot_handle_t xHandle, IN uint8_t* pucRecvBuf, IN uint16_t usRecvd, IN
 
         /* Accumulate the proc data buf */
         pucProcBuf[ucRecvIndex++] = *(pucBuf + n);
-
+        
         /* Get the pkt data length */
         ASSERT(pxCtrl->length_type < PROT_LENGTH_TYPE_SIZE);
         Bool_t bGetLength = FALSE;
@@ -310,7 +311,7 @@ prv_get_length(IN uint8_t* pucBuf, prot_length_t length_type, uint8_t length_off
 #if PROT_DEBUG
 
 status_t
-ProtShowPara(prot_handle_t xHandle) {
+prot_show_para(prot_handle_t xHandle) {
     uint16_t n = 0;
     prot_ctrl_t* pxCtrl = PROT_GET_CTRL(xHandle);
 
@@ -368,7 +369,7 @@ ProtShowPara(prot_handle_t xHandle) {
 #else
 
 status_t
-ProtShowPara(prot_handle_t xHandle) {
+prot_show_para(prot_handle_t xHandle) {
     return status_ok;
 }
 

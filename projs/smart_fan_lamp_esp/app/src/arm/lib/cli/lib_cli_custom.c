@@ -22,7 +22,7 @@
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
  * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
@@ -33,12 +33,11 @@
  */
 
 #include "lib/cli/lib_cli_custom.h"
-#include "lib/debug/lib_debug.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-
+#include "lib/debug/lib_debug.h"
 
 #if (CLI_ENABLE && CLI_ENABLE_CUSTOM)
 
@@ -83,7 +82,8 @@ static const cli_command_t commands[] = {
  * \param[in]       command: pointer to command string for which we are searching
  * \return          pointer of the command if we found a match, else NULL
  */
-const cli_command_t* cli_lookup_command(char* command) {
+const cli_command_t*
+cli_lookup_command(char* command) {
     uint32_t module_index, command_index;
     for (module_index = 0; module_index < num_of_modules; module_index++) {
         for (command_index = 0; command_index < cli_command_table[module_index].num_of_commands; command_index++) {
@@ -102,7 +102,8 @@ const cli_command_t* cli_lookup_command(char* command) {
  * \param[in]       cmd_pos: pointer to current courser postion in command buffer
  * \param[in]       print_options: additional prints in case of double tab
  */
-void cli_tab_auto_complete(cli_printf cliprintf, char* cmd_buffer, uint32_t* cmd_pos, bool print_options) {
+void
+cli_tab_auto_complete(cli_printf cliprintf, char* cmd_buffer, uint32_t* cmd_pos, bool print_options) {
     const char* matched_command = NULL;
     uint32_t module_index, command_index;
     uint32_t num_of_matched_commands = 0;
@@ -168,13 +169,14 @@ void cli_tab_auto_complete(cli_printf cliprintf, char* cmd_buffer, uint32_t* cmd
  * \param[in]       num_of_commands: Number of new commands
  * \return          true when new commands where succesfully added, else false
  */
-status_t cli_custom_load_cmd(const cli_command_t* commands, size_t num_of_commands) {
+status_t
+cli_custom_load_cmd(const cli_command_t* commands, size_t num_of_commands) {
     ASSERT(num_of_modules < CLI_MAX_MODULES);
     if (num_of_modules >= CLI_MAX_MODULES) {
         TRACE("Exceeded the maximum number of CLI modules\n\r");
         return status_err;
     }
-    
+
     /*
      * Warning: Not threadsafe!
      * TODO: add mutex that is initialized in init function
@@ -189,7 +191,8 @@ status_t cli_custom_load_cmd(const cli_command_t* commands, size_t num_of_comman
 /**
  * \brief           CLI Init function
  */
-status_t cli_custom_init(void) {
+status_t
+cli_custom_init(void) {
     cli_custom_load_cmd(commands, sizeof(commands) / sizeof(commands[0]));
     return status_ok;
 }
@@ -197,7 +200,8 @@ status_t cli_custom_init(void) {
 /**
  * \brief           CLI Term function
  */
-status_t cli_custom_terminal(void) {
+status_t
+cli_custom_terminal(void) {
     /* Do nothing */
     return status_ok;
 }
@@ -208,7 +212,8 @@ status_t cli_custom_terminal(void) {
  * \param[in]       argc: Number fo arguments in argv
  * \param[in]       argv: Pointer to the commands arguments
  */
-static void cli_help(cli_printf cliprintf, int argc, char** argv) {
+static void
+cli_help(cli_printf cliprintf, int argc, char** argv) {
     const cli_command_t* command;
 
     if (argc < 2) {
@@ -232,7 +237,8 @@ static void cli_help(cli_printf cliprintf, int argc, char** argv) {
  * \param[in]       argc: Number fo arguments in argv
  * \param[in]       argv: Pointer to the commands arguments
  */
-static void cli_list(cli_printf cliprintf, int argc, char** argv) {
+static void
+cli_list(cli_printf cliprintf, int argc, char** argv) {
     uint32_t module_index, command_index;
 
     cliprintf("%-20s%s" CLI_NL, "Command", "Description");
@@ -258,7 +264,8 @@ static uint32_t cmd_history_full;
 /**
  * \brief           Clear the command buffer and reset the position
  */
-static void clear_cmd_buffer(void) {
+static void
+clear_cmd_buffer(void) {
     memset(cmd_buffer, 0x0, sizeof(cmd_buffer));
     cmd_pos = 0;
     cmd_cur_pos = 0;
@@ -267,7 +274,8 @@ static void clear_cmd_buffer(void) {
 /**
  * \brief           Stores the command to history
  */
-static void store_command_to_history(void) {
+static void
+store_command_to_history(void) {
     uint32_t hist_count;
     if (strcmp(cmd_history_buffer[0], cmd_buffer)) {
         for (hist_count = CLI_CMD_HISTORY - 1; hist_count > 0; hist_count--) {
@@ -295,7 +303,8 @@ static void store_command_to_history(void) {
  * \param[in]       ch: input char from CLI
  * \return          true when special key sequence is active, else false
  */
-static bool cli_special_key_check(cli_printf cliprintf, char ch) {
+static bool
+cli_special_key_check(cli_printf cliprintf, char ch) {
     static uint32_t key_sequence;
     static char last_ch;
     bool special_key_found = false;
@@ -387,7 +396,8 @@ static bool cli_special_key_check(cli_printf cliprintf, char ch) {
  * \param[in]       input: input string to parse
  * \return          `true` when command is found and parsed, else `false`
  */
-static bool cli_parse_and_execute_command(cli_printf cliprintf, char* input) {
+static bool
+cli_parse_and_execute_command(cli_printf cliprintf, char* input) {
     const cli_command_t* command;
     char* argv[CLI_MAX_NUM_OF_ARGS];
     uint32_t argc = 0;
@@ -412,7 +422,8 @@ static bool cli_parse_and_execute_command(cli_printf cliprintf, char* input) {
  * \param[in]       cliprintf: Pointer to CLI printf function
  * \param[in]       ch: new character to CLI
  */
-void cli_custom_input(cli_printf cliprintf, char ch) {
+void
+cli_custom_input(cli_printf cliprintf, char ch) {
     static char last_ch;
 
     if (!cli_special_key_check(cliprintf, ch)) {

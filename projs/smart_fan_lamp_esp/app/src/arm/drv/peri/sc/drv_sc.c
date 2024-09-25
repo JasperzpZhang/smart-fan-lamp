@@ -30,14 +30,13 @@
  *
  * Author:          Jasper <jasperzhangse@gmail.com>
  * Version:         v1.0.0-dev
- * Last edit:       2024-06-18
+ * Last edit:       2024-06-18 
  */
 
 #include "drv/peri/sc/drv_sc.h"
 #include "lib/debug/lib_debug.h"
 #include "lib/type/lib_type.h"
 #include "main.h"
-
 
 /* Debug config */
 #if SCREEN_DEBUG
@@ -58,23 +57,18 @@
 #define ASSERT(...)
 #endif /* SCREEN_ASSERT */
 
-status_t sc_init(sc_id_t sc_id) {
+status_t
+sc_init(sc_id_t sc_id) {
     switch (sc_id) {
-        case dwin01:
+        case dwin01: break;
 
-            break;
+        case atk_lcd_4_3: break;
 
-        case atk_lcd_4_3:
+        case hxc_lcd_1_8: break;
 
-            break;
-        
-        case hxc_lcd_1_8:
-            
-            break;
-
-        default:
-            break;
+        default: break;
     }
     return status_ok;
 }
+
 // transmit git

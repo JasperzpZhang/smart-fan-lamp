@@ -73,6 +73,7 @@ extern "C"
 #include "gpio.h"
 #include "usart.h"
 #include "iwdg.h"
+#include "tim.h"
 
 /* Library */
 #include "lib/type/lib_type.h"

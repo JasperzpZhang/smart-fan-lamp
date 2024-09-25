@@ -5,6 +5,8 @@
         "lib_type.h": "c",
         "lib_debug.h": "c",
         "lib_i2c.h": "c",
-        "define.h": "c"
+        "define.h": "c",
+        "lib_exti.h": "c",
+        "lib_uart.h": "c"
     }
 }

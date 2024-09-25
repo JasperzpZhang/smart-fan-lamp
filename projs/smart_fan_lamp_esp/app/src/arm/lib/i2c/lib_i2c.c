@@ -25,7 +25,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
+ * 
  * This file contrains all the software i2c functions.
  *
  * Author:          Jasper <jasperzpzhang@gmail.com>
@@ -33,12 +33,13 @@
  */
 
 #include "lib/i2c/lib_i2c.h"
+#include <cmsis_os.h>
 #include "FreeRTOS.h"
 #include "app/config.h"
 #include "lib/debug/lib_debug.h"
-#include "lib/type/lib_type.h"
-#include <cmsis_os.h>
 #include "lib/delay/lib_delay.h"
+#include "lib/type/lib_type.h"
+
 
 /* Debug config */
 #if I2C_DEBUG
@@ -61,7 +62,8 @@
 
 #if SORTWARE_I2C_ENABLE
 
-static void i2c_delay(void) {
+static void
+i2c_delay(void) {
 #if USE_SYS_TICK_DELAY_US
     delay_us(45);
 #else
@@ -69,7 +71,8 @@ static void i2c_delay(void) {
 #endif
 }
 
-status_t i2c_start(void) {
+status_t
+i2c_start(void) {
     /*    __________
      *SCL           \________
      *    ______
@@ -88,7 +91,8 @@ status_t i2c_start(void) {
     return status_ok;
 }
 
-status_t i2c_stop(void) {
+status_t
+i2c_stop(void) {
     /*          ____________
      *SCL _____/
      *               _______
@@ -105,33 +109,33 @@ status_t i2c_stop(void) {
     return status_ok;
 }
 
-status_t i2c_wait_ack(void)
-{
+status_t
+i2c_wait_ack(void) {
     uint8_t waittime = 0;
     status_t rack = status_err;
 
-    I2C_SDA(high);     /* 主机释放SDA线(此时外部器件可以拉低SDA线) */
+    I2C_SDA(high); /* 主机释放SDA线(此时外部器件可以拉低SDA线) */
     i2c_delay();
-    I2C_SCL(high);     /* SCL=1, 此时从机可以返回ACK */
+    I2C_SCL(high); /* SCL=1, 此时从机可以返回ACK */
     i2c_delay();
 
-    while (I2C_SDA_READ())    /* 等待应答 */
+    while (I2C_SDA_READ()) /* 等待应答 */
     {
         waittime++;
-        if (waittime > 250)
-        {
+        if (waittime > 250) {
             i2c_stop();
             rack = status_ok;
             break;
         }
     }
 
-    I2C_SCL(0);     /* SCL=0, 结束ACK检查 */
+    I2C_SCL(0); /* SCL=0, 结束ACK检查 */
     i2c_delay();
     return rack;
 }
 
-status_t i2c_write_byte(uint8_t byte) {
+status_t
+i2c_write_byte(uint8_t byte) {
     TRACE("i2c write byte = ");
     for (uint8_t i = 0; i < 8; i++) {
         if (byte & 0x80) {
@@ -161,7 +165,8 @@ status_t i2c_write_byte(uint8_t byte) {
     return status_ok;
 }
 
-status_t i2c_read_byte(uint8_t* byte, uint8_t ack) {
+status_t
+i2c_read_byte(uint8_t* byte, uint8_t ack) {
 
     if (!byte) {
         return status_err;
@@ -201,7 +206,8 @@ status_t i2c_read_byte(uint8_t* byte, uint8_t ack) {
     return status_ok;
 }
 
-status_t i2c_write_data(uint8_t device_address, uint8_t* data, uint16_t length) {
+status_t
+i2c_write_data(uint8_t device_address, uint8_t* data, uint16_t length) {
 
     if (!data) {
         return status_err;
@@ -229,7 +235,8 @@ status_t i2c_write_data(uint8_t device_address, uint8_t* data, uint16_t length) 
     return status_ok;
 }
 
-status_t i2c_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ack) {
+status_t
+i2c_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ack) {
 
     if (!data) {
         TRACE("data is NULL\r\n");
@@ -261,7 +268,8 @@ status_t i2c_read_data(uint8_t device_address, uint8_t* data, uint16_t length, u
     return status_ok;
 }
 
-status_t i2c_write_register(uint8_t device_address, uint8_t register_address, uint8_t* data, uint8_t length) {
+status_t
+i2c_write_register(uint8_t device_address, uint8_t register_address, uint8_t* data, uint8_t length) {
 
     if (!data) {
         return status_err;
@@ -292,7 +300,8 @@ status_t i2c_write_register(uint8_t device_address, uint8_t register_address, ui
     return status_ok;
 }
 
-status_t i2c_read_register(uint8_t device_address, uint8_t register_address, uint8_t* data, uint8_t length) {
+status_t
+i2c_read_register(uint8_t device_address, uint8_t register_address, uint8_t* data, uint8_t length) {
 
     if (!data) {
         return status_err;

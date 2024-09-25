@@ -1,5 +1,5 @@
 /*
-    Prot.h
+    lib_prot.h
 
     Head File for Prot Module
 */
@@ -11,10 +11,11 @@
     --------------------
     01a, 22Nov18, Karl Created
     01b, 13Jul19, Karl Reconstructured Prot library
+    01c, 24Sep24, Jasper, Rename functions from camel case to snake case.
 */
 
-#ifndef __PROT_H__
-#define __PROT_H__
+#ifndef __LIB_PROT_H__
+#define __LIB_PROT_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,11 +57,11 @@ status_t        prot_cfg(prot_handle_t xHandle);
 status_t        prot_proc(prot_handle_t xHandle, IN uint8_t* pucRecvBuf, IN uint16_t usRecvd, INOUT uint16_t *pusRecvIndex, INOUT uint8_t* pucProcBuf, IN void* pvPara);
 
 #if PROT_TEST
-status_t        ProtTest(void);
+status_t        prot_test(void);
 #endif /* PROT_TEST */
 
 #ifdef __cplusplus
 }
 #endif /*__cplusplus */
 
-#endif /* __PROT_H__ */
+#endif /* __LIB_PROT_H__ */

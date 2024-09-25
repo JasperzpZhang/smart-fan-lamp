@@ -14,12 +14,11 @@
 
 /* Includes. */
 #include "lib/cli/lib_cli.h"
+#include <stdio.h>
+#include <string.h>
 #include "FreeRTOS.h"
 #include "lib/debug/lib_debug.h"
 #include "task.h"
-#include <stdio.h>
-#include <string.h>
-
 
 #if CLI_ENABLE
 
@@ -43,17 +42,20 @@
 #endif /* CLI_ASSERT */
 
 /* Functions */
-status_t lib_cli_init(void) {
+status_t
+lib_cli_init(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t lib_cli_terminal(void) {
+status_t
+lib_cli_terminal(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t lib_cli_load_cmd(void* pvCmd) {
+status_t
+lib_cli_load_cmd(void* pvCmd) {
 #if (CLI_ENABLE_UART || CLI_ENABLE_UDP)
     FreeRTOS_CLIRegisterCommand(pvCmd);
 #endif /* (CLI_ENABLE_UART || CLI_ENABLE_UDP) */

@@ -16,10 +16,11 @@
 
 /* Includes */
 #include "lib/wdog/lib_wdog.h"
-#include "iwdg.h"
-#include "lib/debug/lib_debug.h"
 #include <main.h>
 #include <string.h>
+#include "iwdg.h"
+#include "lib/debug/lib_debug.h"
+
 
 #pragma diag_suppress 1035 /* warning: #1035-D: single-precision operand implicitly converted to double-precision */
 
@@ -44,7 +45,8 @@
 #define ASSERT(...)
 #endif /* WDOG_ASSERT */
 
-status_t wdog_set_timeout(uint32_t us) {
+status_t
+wdog_set_timeout(uint32_t us) {
     /*
      *  Min/max IWDG timeout period (in ms) at 40 kHz (LSI)
      *  Prescaler   PR[2:0]     Min timeout     Max timeout
@@ -103,12 +105,14 @@ status_t wdog_set_timeout(uint32_t us) {
     return status_ok;
 }
 
-status_t wdog_start(uint32_t ms) {
+status_t
+wdog_start(uint32_t ms) {
     wdog_set_timeout(ms * 1000L);
     return status_ok;
 }
 
-status_t wdog_feed(void) {
+status_t
+wdog_feed(void) {
     HAL_IWDG_Refresh(&hiwdg);
     return status_ok;
 }
@@ -164,7 +168,8 @@ static IWDG_HandleTypeDef s_xWdog;
 static IWDG_HandleTypeDef* s_pxWdog = NULL;
 
 /* Functions */
-Status_t WdogInit(void) {
+Status_t
+WdogInit(void) {
     WdogCtrl_t* pxCtrl = WDOG_GET_CTRL();
 
     ASSERT(NULL != pxCtrl);
@@ -178,12 +183,14 @@ Status_t WdogInit(void) {
     return STATUS_OK;
 }
 
-Status_t WdogTerm(void) {
+Status_t
+WdogTerm(void) {
     /* Do nothing */
     return STATUS_OK;
 }
 
-static Status_t prvWdgConfig(IWDG_HandleTypeDef* pxWdg, uint32_t ulUs) {
+static Status_t
+prvWdgConfig(IWDG_HandleTypeDef* pxWdg, uint32_t ulUs) {
     /*
      *  Min/max IWDG timeout period (in ms) at 40 kHz (LSI)
      *  Prescaler   PR[2:0]     Min timeout     Max timeout
@@ -243,7 +250,8 @@ static Status_t prvWdgConfig(IWDG_HandleTypeDef* pxWdg, uint32_t ulUs) {
     return STATUS_OK;
 }
 
-Status_t WdogTaskStart(void) {
+Status_t
+WdogTaskStart(void) {
     ASSERT(NULL != s_xWdogTask);
     ASSERT(NULL != s_pxWdog);
     HAL_IWDG_Start(s_pxWdog);
@@ -251,7 +259,8 @@ Status_t WdogTaskStart(void) {
     return STATUS_OK;
 }
 
-Status_t WdogTaskEnable(osThreadId xTaskId) {
+Status_t
+WdogTaskEnable(osThreadId xTaskId) {
     uint16_t n;
     WdogCtrl_t* pxCtrl = WDOG_GET_CTRL();
 
@@ -275,7 +284,8 @@ Status_t WdogTaskEnable(osThreadId xTaskId) {
     }
 }
 
-Status_t WdogTaskFeed(void) {
+Status_t
+WdogTaskFeed(void) {
     uint16_t n;
     osThreadId xCurTaskId;
     uint8_t bFind = FALSE;
@@ -302,20 +312,23 @@ Status_t WdogTaskFeed(void) {
     }
 }
 
-Status_t WdogStart(uint32_t ulMs) {
+Status_t
+WdogStart(uint32_t ulMs) {
     prvWdgConfig(&s_xWdog, ulMs * 1000L);
     ASSERT(NULL != s_pxWdog);
     HAL_IWDG_Start(s_pxWdog);
     return STATUS_OK;
 }
 
-Status_t WdogFeed(void) {
+Status_t
+WdogFeed(void) {
     ASSERT(NULL != s_pxWdog);
     HAL_IWDG_Refresh(s_pxWdog);
     return STATUS_OK;
 }
 
-static Status_t prvWdogCheck(void) {
+static Status_t
+prvWdogCheck(void) {
     EventBits_t xWdEvBits;
     EventBits_t xWdEvBitsAll;
     WdogCtrl_t* pxCtrl = WDOG_GET_CTRL();
@@ -337,7 +350,8 @@ static Status_t prvWdogCheck(void) {
     return STATUS_OK;
 }
 
-static void prvWdogTask(void const* pvData) {
+static void
+prvWdogTask(void const* pvData) {
     TRACE("Enter prvWdogTask\n");
 
     /* Wait for WdogSart function to trigger! */

@@ -24,7 +24,7 @@
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
+ * OTHER DEALINGS IN THE SOFTWARE. 
  *
  * This file is part of the aht30 driver.
  *
@@ -34,13 +34,12 @@
  */
 
 #include "drv/peri/humiture/drv_aht30.h"
+#include <cmsis_os.h>
 #include "FreeRTOS.h"
 #include "lib/cli/lib_cli.h"
 #include "lib/debug/lib_debug.h"
 #include "lib/i2c/lib_i2c.h"
 #include "main.h"
-#include <cmsis_os.h>
-
 
 /* Pragmas */
 #pragma diag_suppress 177 /* warning: #177-D: variable was declared but never referenced */
@@ -102,15 +101,20 @@ static uint8_t a_aht30_calc_crc(uint8_t* data, uint8_t len);
 
 uint8_t aht30_start_data[3] = {0xAC, 0x33, 0x00};
 
-status_t aht30_init(void) { return status_ok; }
+status_t
+aht30_init(void) {
+    return status_ok;
+}
 
-status_t aht30_read_data(uint8_t* rx_buffer) {
+status_t
+aht30_read_data(uint8_t* rx_buffer) {
     i2c_read_data(AHT30_I2C_ADDRESS, rx_buffer, 7, 0);
 
     return status_ok;
 }
 
-status_t aht30_read_humiture(int* temperature, uint16_t* humidity) {
+status_t
+aht30_read_humiture(int* temperature, uint16_t* humidity) {
     TRACE("aht30_read_humiture run\r\n");
 
     osDelay(10);
@@ -162,7 +166,8 @@ status_t aht30_read_humiture(int* temperature, uint16_t* humidity) {
  * @return    crc
  * @note      none 
  */
-static uint8_t a_aht30_calc_crc(uint8_t* data, uint8_t len) {
+static uint8_t
+a_aht30_calc_crc(uint8_t* data, uint8_t len) {
     uint8_t i;
     uint8_t byte;
     uint8_t crc = 0xFF;
@@ -184,7 +189,8 @@ static uint8_t a_aht30_calc_crc(uint8_t* data, uint8_t len) {
     return crc; /* return crc */
 }
 
-static void cli_get_humiture(cli_printf cliprintf, int argc, char** argv) {
+static void
+cli_get_humiture(cli_printf cliprintf, int argc, char** argv) {
     int temperature = 0;
     uint16_t humidity = 0;
 

@@ -25,7 +25,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
+ * 
  * This file is part of the ds1338 driver.
  *
  * Author:          Jasper <jasperzhangse@gmail.com>
@@ -35,10 +35,11 @@
 
 /* Includes */
 #include "drv/peri/rtc/drv_rtc_ds1338.h"
+#include <cmsis_os2.h>
 #include "app/include.h"
 #include "lib/debug/lib_debug.h"
 #include "lib/i2c/lib_i2c.h"
-#include <cmsis_os2.h>
+
 
 #if (RTC_ENABLE && RTC_DS1338_ENABLE)
 
@@ -126,7 +127,8 @@ static osMutexId s_xMutex;
 #define DS1338_RAM_SIZE (31)
 
 /* Functions */
-status_t RtcDs1338Init(void) {
+status_t
+RtcDs1338Init(void) {
     if (s_bInit == FALSE) {
         DS1338_MUTEX_INIT();
 #if RTC_RTOSS
@@ -142,7 +144,8 @@ status_t RtcDs1338Init(void) {
     }
 }
 
-Time_t RtcDs1338ReadTime(void) {
+Time_t
+RtcDs1338ReadTime(void) {
     DsTime_t xDsTm;
     ASSERT((TRUE == s_bInit) && (TRUE == s_bConfig));
     DS1338_LOCK();
@@ -151,7 +154,8 @@ Time_t RtcDs1338ReadTime(void) {
     return prvDs1338ToStdCTime(&xDsTm);
 }
 
-status_t RtcDs1338WriteTime(Time_t xTm) {
+status_t
+RtcDs1338WriteTime(Time_t xTm) {
     DsTime_t xDsTm;
     ASSERT((TRUE == s_bInit) && (TRUE == s_bConfig));
     DS1338_LOCK();
@@ -162,7 +166,8 @@ status_t RtcDs1338WriteTime(Time_t xTm) {
 }
 
 #if (RTC_STDC_TIME == 3)
-time_t time(time_t* timer) {
+time_t
+time(time_t* timer) {
     Time_t tm;
     time_t t;
     tm = RtcDs1338ReadTime();
@@ -176,7 +181,8 @@ time_t time(time_t* timer) {
 }
 #endif /* (RTC_STDC_TIME == 3) */
 
-static uint8_t prvDs1338ReadTime(DsTime_t* time) {
+static uint8_t
+prvDs1338ReadTime(DsTime_t* time) {
     uint8_t buf[7];
 #if 1
 
@@ -209,7 +215,8 @@ static uint8_t prvDs1338ReadTime(DsTime_t* time) {
     return 0;
 }
 
-static uint8_t prvDs1338WriteTime(DsTime_t* time) {
+static uint8_t
+prvDs1338WriteTime(DsTime_t* time) {
     uint8_t buf[7];
     buf[0] = prvDecToBcd(time->ucSec);
     buf[1] = prvDecToBcd(time->ucMin);
@@ -228,7 +235,8 @@ static uint8_t prvDs1338WriteTime(DsTime_t* time) {
     return 0;
 }
 
-static Time_t prvDs1338ToStdCTime(DsTime_t* pxDsTm) {
+static Time_t
+prvDs1338ToStdCTime(DsTime_t* pxDsTm) {
     Time_t cTm;
     cTm.tm_sec = (pxDsTm->ucSec); /* seconds after the minute, 0 to 60 (0 - 60 allows for the occasional leap second) */
     cTm.tm_min = (pxDsTm->ucMin); /* minutes after the hour, 0 to 59 */
@@ -243,7 +251,8 @@ static Time_t prvDs1338ToStdCTime(DsTime_t* pxDsTm) {
     return cTm;
 }
 
-static DsTime_t prvStdCToDs1338Time(Time_t* pxTm) {
+static DsTime_t
+prvStdCToDs1338Time(Time_t* pxTm) {
     DsTime_t xDsTm;
     xDsTm.ucYear = (pxTm->tm_year - 100); /* 0~99 */
     xDsTm.ucMon = (pxTm->tm_mon + 1);     /* 1~12 */
@@ -256,11 +265,18 @@ static DsTime_t prvStdCToDs1338Time(Time_t* pxTm) {
     return xDsTm;
 }
 
-static uint8_t prvBcdToDec(uint8_t ucBcd) { return ((ucBcd >> 4) * 10 + (ucBcd & 0x0F)); }
+static uint8_t
+prvBcdToDec(uint8_t ucBcd) {
+    return ((ucBcd >> 4) * 10 + (ucBcd & 0x0F));
+}
 
-static uint8_t prvDecToBcd(uint8_t ucDec) { return ((((ucDec / 10) & 0x0F) << 4) + (ucDec % 10)); }
+static uint8_t
+prvDecToBcd(uint8_t ucDec) {
+    return ((((ucDec / 10) & 0x0F) << 4) + (ucDec % 10));
+}
 
-static status_t prvPrintDs1338Time(DsTime_t* pxDsTm) {
+static status_t
+prvPrintDs1338Time(DsTime_t* pxDsTm) {
     TRACE("prvPrintDs1302Time:\n");
     TRACE("    ucYear:   %02X\n", pxDsTm->ucYear);
     TRACE("    ucMon:    %02X\n", pxDsTm->ucMon);
@@ -272,7 +288,8 @@ static status_t prvPrintDs1338Time(DsTime_t* pxDsTm) {
     return status_ok;
 }
 
-static status_t prvPrintStdCTime(Time_t* pxTm) {
+static status_t
+prvPrintStdCTime(Time_t* pxTm) {
     TRACE("prvPrintStdCTime:\n");
     TRACE("    tm_year:   %d\n", pxTm->tm_year);
     TRACE("    tm_mon:    %d\n", pxTm->tm_mon);
@@ -286,7 +303,8 @@ static status_t prvPrintStdCTime(Time_t* pxTm) {
     return status_ok;
 }
 
-static status_t prvPrintBcdCode(uint8_t* Buf, uint8_t Size) {
+static status_t
+prvPrintBcdCode(uint8_t* Buf, uint8_t Size) {
     uint8_t i, j, byte = 0;
 
     for (i = 0; i < Size; i++) {

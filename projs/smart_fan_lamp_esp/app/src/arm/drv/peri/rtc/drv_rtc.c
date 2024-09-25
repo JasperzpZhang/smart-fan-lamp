@@ -25,7 +25,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
+ * 
  * This file is part of the rtc driver.
  *
  * Author:          Jasper <jasperzhangse@gmail.com> 
@@ -37,7 +37,6 @@
 #include "drv/peri/rtc/drv_rtc.h"
 #include <string.h>
 #include <time.h>
-
 
 #if RTC_ENABLE
 
@@ -61,7 +60,8 @@
 #endif /* RTC_ASSERT */
 
 /* Functions */
-status_t RtcInit(void) {
+status_t
+RtcInit(void) {
     status_t ret;
 #if RTC_DS1302_ENABLE
     ret = RtcDs1302Init();
@@ -84,7 +84,8 @@ status_t RtcInit(void) {
     return ret;
 }
 
-status_t RtcTerm(void) {
+status_t
+RtcTerm(void) {
     status_t ret;
 #if RTC_DS1302_ENABLE
     ret = RtcDs1302Term();
@@ -104,7 +105,8 @@ status_t RtcTerm(void) {
     return ret;
 }
 
-status_t RtcConfig(RtcType_t xRtcType, const void* pvConfig, uint16_t usConfigSize) {
+status_t
+RtcConfig(RtcType_t xRtcType, const void* pvConfig, uint16_t usConfigSize) {
     status_t ret;
     switch (xRtcType) {
 #if RTC_STM32_ENABLE
@@ -120,36 +122,26 @@ status_t RtcConfig(RtcType_t xRtcType, const void* pvConfig, uint16_t usConfigSi
             break;
 #endif
 #if RTC_DS1338_ENABLE
-        case RTC_TYPE_DS1338:
-            ret = status_ok;
-            break;
+        case RTC_TYPE_DS1338: ret = status_ok; break;
 #endif
 
-        default:
-            ASSERT(0);
-            break;
+        default: ASSERT(0); break;
     }
     return ret;
 }
 
-Time_t RtcReadTime(RtcType_t xRtcType) {
+Time_t
+RtcReadTime(RtcType_t xRtcType) {
     Time_t xTm;
     switch (xRtcType) {
 #if RTC_STM32_ENABLE
-        case RTC_TYPE_STM32:
-            xTm = RtcStm32ReadTime();
-            break;
+        case RTC_TYPE_STM32: xTm = RtcStm32ReadTime(); break;
 #endif
 #if RTC_DS1302_ENABLE
-        case RTC_TYPE_DS1302:
-            xTm = RtcDs1302ReadTimeBurst();
-            break;
+        case RTC_TYPE_DS1302: xTm = RtcDs1302ReadTimeBurst(); break;
 #endif
 #if RTC_DS1338_ENABLE
-        case RTC_TYPE_DS1338:
-            xTm = RtcDs1338ReadTime();
-
-            break;
+        case RTC_TYPE_DS1338: xTm = RtcDs1338ReadTime(); break;
 #endif
         default:
             /* We should never get here! */
@@ -159,23 +151,18 @@ Time_t RtcReadTime(RtcType_t xRtcType) {
     return xTm;
 }
 
-status_t RtcWriteTime(RtcType_t xRtcType, Time_t xTm) {
+status_t
+RtcWriteTime(RtcType_t xRtcType, Time_t xTm) {
     status_t ret;
     switch (xRtcType) {
 #if RTC_STM32_ENABLE
-        case RTC_TYPE_STM32:
-            ret = RtcStm32WriteTime(xTm);
-            break;
+        case RTC_TYPE_STM32: ret = RtcStm32WriteTime(xTm); break;
 #endif
 #if RTC_DS1302_ENABLE
-        case RTC_TYPE_DS1302:
-            ret = RtcDs1302WriteTimeBurst(xTm);
-            break;
+        case RTC_TYPE_DS1302: ret = RtcDs1302WriteTimeBurst(xTm); break;
 #endif
 #if RTC_DS1338_ENABLE
-        case RTC_TYPE_DS1338:
-            ret = RtcDs1338WriteTime(xTm);
-            break;
+        case RTC_TYPE_DS1338: ret = RtcDs1338WriteTime(xTm); break;
 #endif
         default:
             /* We should never get here! */

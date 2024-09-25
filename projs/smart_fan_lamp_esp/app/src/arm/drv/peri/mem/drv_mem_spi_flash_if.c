@@ -22,7 +22,6 @@
 #include "lib/debug/lib_debug.h"
 #include "spi.h"
 
-
 #if (MEM_ENABLE && MEM_ENABLE_SPIFLASH)
 
 /* Debug config */

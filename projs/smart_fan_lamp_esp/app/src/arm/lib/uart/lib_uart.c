@@ -1,41 +1,21 @@
-/**
- * \file            lib_uart.c
- * \brief           Uart library
- */
+/*
+    lib_debug.c
+
+    Implementation File for Debug Module
+*/
+
+/* Copyright (c) 2024 Jasper. */
 
 /*
- * Copyright (c) 2024 Jasper
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge,
- * publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
- * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *
- * This file includes all the library functions for uart.
- *
- * Author:          Jasper <jasperzhangse@gmail.com>
- * Version:         v1.1.0
- */
+    modification history
+    --------------------
+    01a, 25Sep24, Jasper Created
+*/
 
 /* Includes */
 #include <cmsis_os.h>
-#include "lib/uart/lib_uart.h"
 #include "lib/debug/lib_debug.h"
+#include "lib/uart/lib_uart.h"
 
 #if UART_ENABLE
 
@@ -51,7 +31,9 @@
 #endif /* UART_DEBUG */
 #if UART_ASSERT
 #undef ASSERT
-#define ASSERT(a)  while (!(a)) debug_printf("ASSERT failed: %s %d\n", __FILE__, __LINE__);
+#define ASSERT(a)                                                                                                      \
+    while (!(a))                                                                                                       \
+        debug_printf("ASSERT failed: %s %d\n", __FILE__, __LINE__);
 #else
 #undef ASSERT
 #define ASSERT(...)
@@ -63,20 +45,20 @@
 
 /* Functions */
 /**
-  * @brief  UART1 Reception Event Callback (Rx event notification).
+  * @brief  UART1 Reception Event Callback (Rx event notification). 
   *         This function is called after data is received using advanced reception service.
   * @param  huart UART handle
   * @param  size  Number of bytes received in the reception buffer.
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart1_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) 
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(huart);
-  UNUSED(size);
+__weak void
+uart1_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+    UNUSED(size);
 
-  /* NOTE : This function should not be modified. When the callback is needed,
+    /* NOTE : This function should not be modified. When the callback is needed,
             uart1_rx_event_callback can be implemented in the user file.
    */
 }
@@ -89,7 +71,8 @@ __weak void uart1_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size)
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart2_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart2_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -107,7 +90,8 @@ __weak void uart2_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart3_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -125,7 +109,8 @@ __weak void uart3_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart4_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart4_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -143,7 +128,8 @@ __weak void uart4_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart5_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart5_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -161,7 +147,8 @@ __weak void uart5_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart6_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart6_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -179,7 +166,8 @@ __weak void uart6_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart7_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart7_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -197,7 +185,8 @@ __weak void uart7_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-__weak void uart8_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
+__weak void
+uart8_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
     UNUSED(size);
@@ -216,56 +205,39 @@ __weak void uart8_rx_event_callback(UART_HandleTypeDef *huart, uint16_t size) {
   *               Indicates the position in the buffer until which data is available.
   * @retval None
   */
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
-{
-    switch ((uint32_t)huart->Instance)
-    {
+void
+HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
+    switch ((uint32_t)huart->Instance) {
 #ifdef USART1
-        case (uint32_t)USART1:
-            uart1_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)USART1: uart1_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef USART2
-        case (uint32_t)USART2:
-            uart2_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)USART2: uart2_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef USART3
-        case (uint32_t)USART3:
-            uart3_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)USART3: uart3_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef UART4
-        case (uint32_t)UART4:
-            uart4_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)UART4: uart4_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef UART5
-        case (uint32_t)UART5:
-            uart5_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)UART5: uart5_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef USART6
-        case (uint32_t)USART6:
-            uart6_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)USART6: uart6_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef UART7
-        case (uint32_t)UART7:
-            uart7_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)UART7: uart7_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef UART8
-        case (uint32_t)UART8:
-            uart8_rx_event_callback(huart, Size);
-            break;
+        case (uint32_t)UART8: uart8_rx_event_callback(huart, Size); break;
 #endif
 
         default:
@@ -280,7 +252,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart1_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart1_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -295,7 +268,8 @@ __weak void uart1_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart2_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart2_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -310,7 +284,8 @@ __weak void uart2_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart3_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart3_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -325,7 +300,8 @@ __weak void uart3_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart4_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart4_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -340,7 +316,8 @@ __weak void uart4_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart5_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart5_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -355,7 +332,8 @@ __weak void uart5_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart6_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart6_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -370,7 +348,8 @@ __weak void uart6_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart7_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart7_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -385,7 +364,8 @@ __weak void uart7_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-__weak void uart8_rx_cplt_callback(UART_HandleTypeDef *huart) {
+__weak void
+uart8_rx_cplt_callback(UART_HandleTypeDef* huart) {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(huart);
 
@@ -401,56 +381,39 @@ __weak void uart8_rx_cplt_callback(UART_HandleTypeDef *huart) {
   * @param  huart UART handle
   * @retval None
   */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    switch ((uint32_t)huart->Instance)
-    {
+void
+HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+    switch ((uint32_t)huart->Instance) {
 #ifdef USART1
-        case (uint32_t)USART1:
-            uart1_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)USART1: uart1_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef USART2
-        case (uint32_t)USART2:
-            uart2_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)USART2: uart2_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef USART3
-        case (uint32_t)USART3:
-            uart3_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)USART3: uart3_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef UART4
-        case (uint32_t)UART4:
-            uart4_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)UART4: uart4_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef UART5
-        case (uint32_t)UART5:
-            uart5_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)UART5: uart5_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef USART6
-        case (uint32_t)USART6:
-            uart6_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)USART6: uart6_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef UART7
-        case (uint32_t)UART7:
-            uart7_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)UART7: uart7_rx_cplt_callback(huart); break;
 #endif
 
 #ifdef UART8
-        case (uint32_t)UART8:
-            uart8_rx_cplt_callback(huart);
-            break;
+        case (uint32_t)UART8: uart8_rx_cplt_callback(huart); break;
 #endif
 
         default:

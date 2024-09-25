@@ -80,8 +80,8 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
+            <RunUserProg1>1</RunUserProg1>
+            <RunUserProg2>1</RunUserProg2>
             <UserProg1Name>D:\Program Files\MDK\Keil5\ARM\ARM_Complier_5.06\bin\fromelf.exe --bin -o ..\..\src\script\app.bin smart_fan_lamp_esp_app\smart_fan_lamp_esp_app.axf</UserProg1Name>
             <UserProg2Name>..\..\src\script\auto_copy.bat</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -1326,6 +1326,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\lib\prot\lib_prot.c</FilePath>
             </File>
+            <File>
+              <FileName>lib_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\exti\lib_exti.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1375,6 +1380,11 @@
               <FileName>drv_sc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\drv_sc.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_st7789.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\st7789\drv_st7789.c</FilePath>
             </File>
             <File>
               <FileName>drv_lcd.c</FileName>

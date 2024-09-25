@@ -24,28 +24,29 @@
  * |----------------------------------------------------------------------
  */
 
-#include "lib/rbuf/lib_rbuf_cfg.h"
 #include "lib/rbuf/lib_rbuf_internal.h"
+#include "lib/rbuf/lib_rbuf_cfg.h"
+
 
 #if RBUF_ENABLE
 
-uint8_t BUFFER_Init(BUFFER_t *Buffer, uint32_t Size, void *BufferPtr) {
+uint8_t
+BUFFER_Init(BUFFER_t* Buffer, uint32_t Size, void* BufferPtr) {
     if (Buffer == NULL) { /* Check buffer structure */
         return 1;
     }
     memset(Buffer, 0, sizeof(BUFFER_t)); /* Set buffer values to all zeros */
 
-    Buffer->Size            = Size; /* Set default values */
-    Buffer->Buffer          = BufferPtr;
+    Buffer->Size = Size; /* Set default values */
+    Buffer->Buffer = BufferPtr;
     Buffer->StringDelimiter = '\n';
 
-    if (!Buffer->Buffer) {                                                  /* Check if malloc should be used */
-        Buffer->Buffer = (uint8_t *)LIB_ALLOC_FUNC(Size * sizeof(uint8_t)); /* Try to allocate */
-        if (!Buffer->Buffer) {                                              /* Check if allocated */
-            Buffer->Size = 0;                                               /* Reset size */
-            return 1;                                                       /* Return error */
-        }
-        else {
+    if (!Buffer->Buffer) {                                                 /* Check if malloc should be used */
+        Buffer->Buffer = (uint8_t*)LIB_ALLOC_FUNC(Size * sizeof(uint8_t)); /* Try to allocate */
+        if (!Buffer->Buffer) {                                             /* Check if allocated */
+            Buffer->Size = 0;                                              /* Reset size */
+            return 1;                                                      /* Return error */
+        } else {
             Buffer->Flags |= BUFFER_MALLOC; /* Set flag for malloc */
         }
     }
@@ -54,7 +55,8 @@ uint8_t BUFFER_Init(BUFFER_t *Buffer, uint32_t Size, void *BufferPtr) {
     return 0; /* Initialized OK */
 }
 
-void BUFFER_Free(BUFFER_t *Buffer) {
+void
+BUFFER_Free(BUFFER_t* Buffer) {
     if (Buffer == NULL) { /* Check buffer structure */
         return;
     }
@@ -62,13 +64,14 @@ void BUFFER_Free(BUFFER_t *Buffer) {
         LIB_FREE_FUNC(Buffer->Buffer);   /* Free memory */
     }
     Buffer->Flags = 0;
-    Buffer->Size  = 0;
+    Buffer->Size = 0;
 }
 
-uint32_t BUFFER_Write(BUFFER_t *Buffer, const void *Data, uint32_t count) {
-    uint32_t       i = 0;
-    uint32_t       free;
-    const uint8_t *d = (const uint8_t *)Data;
+uint32_t
+BUFFER_Write(BUFFER_t* Buffer, const void* Data, uint32_t count) {
+    uint32_t i = 0;
+    uint32_t free;
+    const uint8_t* d = (const uint8_t*)Data;
 #if BUFFER_FAST
     uint32_t tocopy;
 #endif
@@ -94,12 +97,12 @@ uint32_t BUFFER_Write(BUFFER_t *Buffer, const void *Data, uint32_t count) {
         tocopy = count;
     }
     memcpy(&Buffer->Buffer[Buffer->In], d, tocopy); /* Copy content to buffer */
-    i          += tocopy;                           /* Increase number of bytes we copied already */
+    i += tocopy;                                    /* Increase number of bytes we copied already */
     Buffer->In += tocopy;
-    count      -= tocopy;
-    if (count > 0) {                                  /* Check if anything to write */
-        memcpy(Buffer->Buffer, (void *)&d[i], count); /* Copy content */
-        Buffer->In = count;                           /* Set input pointer */
+    count -= tocopy;
+    if (count > 0) {                                 /* Check if anything to write */
+        memcpy(Buffer->Buffer, (void*)&d[i], count); /* Copy content */
+        Buffer->In = count;                          /* Set input pointer */
     }
     if (Buffer->In >= Buffer->Size) { /* Check input overflow */
         Buffer->In = 0;
@@ -117,10 +120,11 @@ uint32_t BUFFER_Write(BUFFER_t *Buffer, const void *Data, uint32_t count) {
 #endif
 }
 
-uint32_t BUFFER_WriteToTop(BUFFER_t *Buffer, const void *Data, uint32_t count) {
+uint32_t
+BUFFER_WriteToTop(BUFFER_t* Buffer, const void* Data, uint32_t count) {
     uint32_t i = 0;
     uint32_t free;
-    uint8_t *d = (uint8_t *)Data;
+    uint8_t* d = (uint8_t*)Data;
 
     if (Buffer == NULL || count == 0) { /* Check buffer structure */
         return 0;
@@ -142,8 +146,7 @@ uint32_t BUFFER_WriteToTop(BUFFER_t *Buffer, const void *Data, uint32_t count) {
     while (count--) {           /* Go through all elements */
         if (Buffer->Out == 0) { /* Check output pointer */
             Buffer->Out = Buffer->Size - 1;
-        }
-        else {
+        } else {
             Buffer->Out--;
         }
         Buffer->Buffer[Buffer->Out] = *d--; /* Add to buffer */
@@ -152,9 +155,10 @@ uint32_t BUFFER_WriteToTop(BUFFER_t *Buffer, const void *Data, uint32_t count) {
     return i; /* Return number of elements written */
 }
 
-uint32_t BUFFER_Read(BUFFER_t *Buffer, void *Data, uint32_t count) {
+uint32_t
+BUFFER_Read(BUFFER_t* Buffer, void* Data, uint32_t count) {
     uint32_t i = 0, full;
-    uint8_t *d = (uint8_t *)Data;
+    uint8_t* d = (uint8_t*)Data;
 #if BUFFER_FAST
     uint32_t tocopy;
 #endif
@@ -178,9 +182,9 @@ uint32_t BUFFER_Read(BUFFER_t *Buffer, void *Data, uint32_t count) {
         tocopy = count;
     }
     memcpy(d, &Buffer->Buffer[Buffer->Out], tocopy); /* Copy content from buffer */
-    i           += tocopy;                           /* Increase number of bytes we copied already */
+    i += tocopy;                                     /* Increase number of bytes we copied already */
     Buffer->Out += tocopy;
-    count       -= tocopy;
+    count -= tocopy;
     if (count > 0) {                          /* Check if anything to read */
         memcpy(&d[i], Buffer->Buffer, count); /* Copy content */
         Buffer->Out = count;                  /* Set input pointer */
@@ -201,66 +205,67 @@ uint32_t BUFFER_Read(BUFFER_t *Buffer, void *Data, uint32_t count) {
 #endif
 }
 
-uint32_t BUFFER_GetFree(BUFFER_t *Buffer) {
+uint32_t
+BUFFER_GetFree(BUFFER_t* Buffer) {
     uint32_t size = 0, in, out;
 
     if (Buffer == NULL) { /* Check buffer structure */
         return 0;
     }
-    in  = Buffer->In; /* Save values */
+    in = Buffer->In; /* Save values */
     out = Buffer->Out;
     if (in == out) { /* Check if the same */
         size = Buffer->Size;
-    }
-    else if (out > in) { /* Check normal mode */
+    } else if (out > in) { /* Check normal mode */
         size = out - in;
-    }
-    else { /* Check if overflow mode */
+    } else { /* Check if overflow mode */
         size = Buffer->Size - (in - out);
     }
     return size - 1; /* Return free memory */
 }
 
-uint32_t BUFFER_GetFull(BUFFER_t *Buffer) {
+uint32_t
+BUFFER_GetFull(BUFFER_t* Buffer) {
     uint32_t in, out, size;
 
     if (Buffer == NULL) { /* Check buffer structure */
         return 0;
     }
-    in  = Buffer->In; /* Save values */
+    in = Buffer->In; /* Save values */
     out = Buffer->Out;
     if (in == out) { /* Pointer are same? */
         size = 0;
-    }
-    else if (in > out) { /* Buffer is not in overflow mode */
+    } else if (in > out) { /* Buffer is not in overflow mode */
         size = in - out;
-    }
-    else { /* Buffer is in overflow mode */
+    } else { /* Buffer is in overflow mode */
         size = Buffer->Size - (out - in);
     }
     return size; /* Return number of elements in buffer */
 }
 
-uint32_t BUFFER_GetFullFast(BUFFER_t *Buffer) {
+uint32_t
+BUFFER_GetFullFast(BUFFER_t* Buffer) {
     uint32_t in, out;
 
     if (Buffer == NULL) { /* Check buffer structure */
         return 0;
     }
-    in  = Buffer->In; /* Save values */
+    in = Buffer->In; /* Save values */
     out = Buffer->Out;
     return (Buffer->Size + in - out) % Buffer->Size;
 }
 
-void BUFFER_Reset(BUFFER_t *Buffer) {
+void
+BUFFER_Reset(BUFFER_t* Buffer) {
     if (Buffer == NULL) { /* Check buffer structure */
         return;
     }
-    Buffer->In  = 0; /* Reset values */
+    Buffer->In = 0; /* Reset values */
     Buffer->Out = 0;
 }
 
-int32_t BUFFER_FindElement(BUFFER_t *Buffer, uint8_t Element) {
+int32_t
+BUFFER_FindElement(BUFFER_t* Buffer, uint8_t Element) {
     uint32_t Num, Out, retval = 0;
 
     if (Buffer == NULL) { /* Check buffer structure */
@@ -283,13 +288,14 @@ int32_t BUFFER_FindElement(BUFFER_t *Buffer, uint8_t Element) {
     return -1; /* Element is not in buffer */
 }
 
-int32_t BUFFER_Find(BUFFER_t *Buffer, const void *Data, uint32_t Size) {
+int32_t
+BUFFER_Find(BUFFER_t* Buffer, const void* Data, uint32_t Size) {
     uint32_t Num, Out, i, retval = 0;
-    uint8_t  found = 0;
-    uint8_t *d     = (uint8_t *)Data;
+    uint8_t found = 0;
+    uint8_t* d = (uint8_t*)Data;
 
-    if (Buffer == NULL ||
-        (Num = BUFFER_GetFull(Buffer)) < Size) { /* Check buffer structure and number of elements in buffer */
+    if (Buffer == NULL
+        || (Num = BUFFER_GetFull(Buffer)) < Size) { /* Check buffer structure and number of elements in buffer */
         return -1;
     }
     Out = Buffer->Out;             /* Create temporary variables */
@@ -297,8 +303,8 @@ int32_t BUFFER_Find(BUFFER_t *Buffer, const void *Data, uint32_t Size) {
         if (Out >= Buffer->Size) { /* Check output overflow */
             Out = 0;
         }
-        if ((uint8_t)Buffer->Buffer[Out] ==
-            d[0]) { /* Check if current element in buffer matches first element in data array */
+        if ((uint8_t)Buffer->Buffer[Out]
+            == d[0]) { /* Check if current element in buffer matches first element in data array */
             found = 1;
         }
 
@@ -311,8 +317,8 @@ int32_t BUFFER_Find(BUFFER_t *Buffer, const void *Data, uint32_t Size) {
                 if (Out >= Buffer->Size) { /* Check output overflow */
                     Out = 0;
                 }
-                if ((uint8_t)Buffer->Buffer[Out] !=
-                    d[i]) { /* Check if current character in buffer matches character in string */
+                if ((uint8_t)Buffer->Buffer[Out]
+                    != d[i]) { /* Check if current character in buffer matches character in string */
                     retval += i - 1;
                     break;
                 }
@@ -328,13 +334,15 @@ int32_t BUFFER_Find(BUFFER_t *Buffer, const void *Data, uint32_t Size) {
     return -1; /* Data sequence is not in buffer */
 }
 
-uint32_t BUFFER_WriteString(BUFFER_t *Buffer, const char *buff) {
-    return BUFFER_Write(Buffer, (uint8_t *)buff, strlen(buff)); /* Write string to buffer */
+uint32_t
+BUFFER_WriteString(BUFFER_t* Buffer, const char* buff) {
+    return BUFFER_Write(Buffer, (uint8_t*)buff, strlen(buff)); /* Write string to buffer */
 }
 
-uint32_t BUFFER_ReadString(BUFFER_t *Buffer, char *buff, uint32_t buffsize) {
+uint32_t
+BUFFER_ReadString(BUFFER_t* Buffer, char* buff, uint32_t buffsize) {
     uint32_t i = 0, freeMem, fullMem;
-    uint8_t  ch;
+    uint8_t ch;
     if (Buffer == NULL) {
         return 0; /* Check value buffer */
     }
@@ -359,20 +367,20 @@ uint32_t BUFFER_ReadString(BUFFER_t *Buffer, char *buff, uint32_t buffsize) {
     }
     if (i == (buffsize - 1)) { /* Add zero to the end of string */
         buff[i] = 0;
-    }
-    else {
+    } else {
         buff[++i] = 0;
     }
     return i; /* Return number of characters in buffer */
 }
 
-int8_t BUFFER_CheckElement(BUFFER_t *Buffer, uint32_t pos, uint8_t *element) {
+int8_t
+BUFFER_CheckElement(BUFFER_t* Buffer, uint32_t pos, uint8_t* element) {
     uint32_t In, Out, i = 0;
     if (Buffer == NULL) { /* Check value buffer */
         return 0;
     }
 
-    In  = Buffer->In; /* Read current values */
+    In = Buffer->In; /* Read current values */
     Out = Buffer->Out;
     while (i < pos && (In != Out)) { /* Set pointers to right location */
         Out++;                       /* Increase output pointer */

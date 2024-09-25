@@ -60,7 +60,8 @@
 static MemHandle_t s_xMem;
 
 /* Functions */
-status_t mem_init(void) {
+status_t
+mem_init(void) {
     MemInit(MEM_DEVICE_SPIFLASH);
     s_xMem = MemCreate(MEM_DEVICE_SPIFLASH);
 
@@ -74,20 +75,24 @@ status_t mem_init(void) {
     return status_ok;
 }
 
-status_t mem_term(void) {
+status_t
+mem_term(void) {
     /* Do nothing */
     return status_ok;
 }
 
-status_t mem_flash_read(uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
+status_t
+mem_flash_read(uint32_t ulAddr, uint32_t ulLength, OUT uint8_t* pucData) {
     return MemRead(s_xMem, ulAddr, ulLength, pucData);
 }
 
-status_t mem_flash_write(uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
+status_t
+mem_flash_write(uint32_t ulAddr, uint32_t ulLength, IN uint8_t* pucData) {
     return MemEraseWrite(s_xMem, ulAddr, ulLength, pucData);
 }
 
-static uint8_t* prvParseHexStr(const char* pcStr, uint8_t* pucLength) {
+static uint8_t*
+prvParseHexStr(const char* pcStr, uint8_t* pucLength) {
     static uint8_t ucBuffer[80];
     uint8_t ucData = 0;
     uint8_t ucCnt = 0;
@@ -125,9 +130,9 @@ static uint8_t* prvParseHexStr(const char* pcStr, uint8_t* pucLength) {
     return ucBuffer;
 }
 
-static void prvCliCmdMemRead(cli_printf cliprintf, int argc, char** argv) {
+static void
+prvCliCmdMemRead(cli_printf cliprintf, int argc, char** argv) {
 #define CLI_MEM_SIZE (16)
-
     CHECK_CLI();
 
     if (argc != 3) {
@@ -159,13 +164,14 @@ static void prvCliCmdMemRead(cli_printf cliprintf, int argc, char** argv) {
 }
 CLI_CMD_EXPORT(mem_read, read from fram, prvCliCmdMemRead)
 
-static void prvCliCmdMemWrite(cli_printf cliprintf, int argc, char** argv) {
+static void
+prvCliCmdMemWrite(cli_printf cliprintf, int argc, char** argv) {
     CHECK_CLI();
 
     if (argc != 3) {
         cliprintf("mem_write ADDRESS DATA\n");
     }
-    
+
     int lAddr = atoi(argv[1]);
     uint8_t ucLength = 0;
     uint8_t* ucData = prvParseHexStr(argv[2], &ucLength);
@@ -175,7 +181,8 @@ static void prvCliCmdMemWrite(cli_printf cliprintf, int argc, char** argv) {
 CLI_CMD_EXPORT(mem_write, write to fram, prvCliCmdMemWrite)
 
 #if MEM_TEST
-static void prvCliCmdMemTest(cli_printf cliprintf, int argc, char** argv) {
+static void
+prvCliCmdMemTest(cli_printf cliprintf, int argc, char** argv) {
 #define SPIF_PAGE_SIZE 256
     MemSpiFlashErase_t xErase;
     static uint8_t ucData[4096];
