@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      drv_tp.c
- * @brief     Implementation File for TouchPad Module
+ * @file      ctrl.h
+ * @brief     Implementation File for ctrl Module
  * @version   1.0.0
  * @author    Jasper
  * @date      2024-09-26
@@ -34,8 +34,8 @@
    01a, 26Sep24, Jasper Created
  */
 
-#ifndef __TP_H__
-#define __TP_H__
+#ifndef __CTRL_H__
+#define __CTRL_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,44 +48,57 @@ extern "C" {
 #include "main.h"
 #include "queue.h"
 
-typedef struct {
-    uint8_t slider_value;
-
-    struct {
-        uint8_t _KEY_LED1 : 1;
-        uint8_t _KEY_LED2 : 1;
-        uint8_t _KEY_LED3 : 1;
-        uint8_t _KEY_LED4 : 1;
-        uint8_t _KEY_LED5 : 1;
-        uint8_t _KEY_LED6 : 1;
-        uint8_t _KEY_LED7 : 1;
-    } key;
-
-} led_msg_t;
+typedef enum {
+    PWR_OFF,
+    PWR_ON,
+    LED_OFF,
+    LED_ON,
+    FAN_OFF,
+    FAN_ON,
+    NIGHT_LIGHT_OFF,
+    NIGHT_LIGHT_ON,
+    LED_BRIGHT_CTRL,
+    LED_COLOR_CTRL,
+} ctrl_status_t;
 
 typedef struct {
-    uint8_t slider_value;
-    uint8_t slider_en;
+    ctrl_status_t slider_target;
 
     struct {
-        uint16_t _TP_KEY1 : 1;
-        uint16_t _TP_KEY4 : 1;
-        uint16_t _TP_KEY5 : 1;
-        uint16_t _TP_KEY6 : 1;
-        uint16_t _TP_KEY7 : 1;
-        uint16_t _TP_KEY8 : 1;
-        uint16_t _TP_KEY9 : 1;
-    } tp;
+        uint32_t _LED1  : 1;
+        uint32_t _LED2  : 1;
+        uint32_t _LED3  : 1;
+        uint32_t _LED4  : 1;
+        uint32_t _LED5  : 1;
+        uint32_t _LED6  : 1;
+        uint32_t _LED7  : 1;
+        uint32_t _LED8  : 1;
+        uint32_t _LED9  : 1;
+        uint32_t _LED10 : 1;
+        uint32_t _LED11 : 1;
+        uint32_t _LED12 : 1;
+        uint32_t _LED13 : 1;
+        uint32_t _LED14 : 1;
+        uint32_t _LED15 : 1;
+        uint32_t _LED16 : 1;
+        uint32_t _LED17 : 1;
+    } led;
 
-} ctrl_msg_t;
+    struct {
+        uint16_t _PWR         : 1;
+        uint16_t _LED_SW      : 1;
+        uint16_t _LED_CTRL    : 1;
+        uint16_t _FAN_CTRL    : 1;
+        uint16_t _NIGHT_LIGHT : 1;
+        uint16_t _USB         : 1;
+    } status;
 
-extern QueueHandle_t g_led_queue;
-extern QueueHandle_t g_ctrl_queue;
+} ctrl_t;
 
-void tp_init(void);
+status_t ctrl_init(void);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __TP_H__ */
+#endif /* __CTRL_H__ */

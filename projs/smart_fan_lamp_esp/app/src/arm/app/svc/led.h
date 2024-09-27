@@ -31,30 +31,42 @@
  * Author:          Jasper <jasperzhangse@gmail.com>
  * Version:         v1.0.0-dev
  */
- 
+
 #ifndef __LED_H__
 #define __LED_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
-#include "stm32f1xx_hal.h"
 #include "lib/type/lib_type.h"
+#include "main.h"
 
-    extern uint16_t g_last_led_brightness;
-    extern uint16_t g_last_led_color_temperature;
+typedef struct {
+    uint16_t last_led_brightness;
+    uint16_t last_led_color_temperature;
+    uint16_t led_brightness;
+    uint16_t led_color_temperature;
+    struct {
+        uint16_t _MAIN_PWR           : 1;
+        uint16_t _LED_STATUS         : 1;
+        uint16_t _NIGHT_LIGHT_STATUS : 1;
 
-    status_t led_init(void);
-    status_t adjust_led_brightness(uint16_t led_brightness);
-    status_t adjust_led_color_temperature(uint16_t led_color_temperature);
-    status_t save_led_data(void);
-    status_t stop_led_pwm(void);
-    status_t start_led_pwm(void);
-    status_t toggle_led(uint16_t on_off);
-    status_t smooth_adjust_led_brightness(uint16_t target_led_brightness);
-    status_t smooth_adjust_led_color_temperature(uint16_t target_led_color_temperature);
+    } status;
+} led_ctrl_t;
+
+extern led_ctrl_t led_ctrl;
+
+
+status_t led_init(void);
+status_t led_set_brightness(uint16_t led_brightness);
+status_t led_set_color_temperature(uint16_t led_color_temperature);
+status_t led_save_status(void);
+status_t led_stop_pwm(void);
+status_t led_start_pwm(void);
+status_t led_set_status(uint16_t on_off);
+status_t led_set_brightness_smooth(uint16_t target_led_brightness);
+status_t led_set_color_temperature_smooth(uint16_t target_led_color_temperature);
 
 #ifdef __cplusplus
 }

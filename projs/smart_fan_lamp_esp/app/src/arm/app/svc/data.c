@@ -194,8 +194,8 @@ static void prv_cli_cmd_cfg_show(cli_printf cliprintf, int argc, char **argv)
 {
     CHECK_CLI();
 
-    cliprintf("led_brightness        :  %d %%.\r\n", th_led_brightness);
-    cliprintf("led_color_temperature :  %d %%.\r\n", th_led_color_temperature);
+    cliprintf("led_brightness        :  %d %%\r\n", th_led_brightness);
+    cliprintf("led_color_temperature :  %d %%\r\n", th_led_color_temperature);
     cliprintf("led_status            :  %d \r\n", th_led_status);
     cliprintf("fan_polarity          :  %d \r\n", th_fan_polarity);
     cliprintf("fan_speed             :  %d %%\r\n", th_fan_speed);

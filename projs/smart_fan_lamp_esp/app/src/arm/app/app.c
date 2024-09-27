@@ -62,6 +62,8 @@ app_init(void) {
     data_init();
     fan_init();
     tp_init();
+    led_init();
+    ctrl_init();
     sys_init();
 }
 

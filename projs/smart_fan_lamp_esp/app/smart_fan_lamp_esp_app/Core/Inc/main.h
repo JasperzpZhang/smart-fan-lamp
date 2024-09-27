@@ -63,8 +63,8 @@ void Error_Handler(void);
 #define GYRO_INT2_Pin GPIO_PIN_3
 #define GYRO_INT2_GPIO_Port GPIOE
 #define GYRO_INT2_EXTI_IRQn EXTI3_IRQn
-#define NIGHT_LIGHT_EN_Pin GPIO_PIN_4
-#define NIGHT_LIGHT_EN_GPIO_Port GPIOE
+#define SYS_LED_Pin GPIO_PIN_4
+#define SYS_LED_GPIO_Port GPIOE
 #define BEEP_Pin GPIO_PIN_5
 #define BEEP_GPIO_Port GPIOE
 #define GES_INT_Pin GPIO_PIN_6
@@ -74,12 +74,12 @@ void Error_Handler(void);
 #define VBUS_EN_GPIO_Port GPIOC
 #define WAVE_EN_Pin GPIO_PIN_3
 #define WAVE_EN_GPIO_Port GPIOA
-#define WAVE_DETC_Pin GPIO_PIN_4
-#define WAVE_DETC_GPIO_Port GPIOA
+#define NIGHT_LIGHT_EN_Pin GPIO_PIN_4
+#define NIGHT_LIGHT_EN_GPIO_Port GPIOA
 #define USB_POWER_EN_Pin GPIO_PIN_10
 #define USB_POWER_EN_GPIO_Port GPIOE
-#define SYS_LED_Pin GPIO_PIN_14
-#define SYS_LED_GPIO_Port GPIOE
+#define KEY_TP_POWER_Pin GPIO_PIN_14
+#define KEY_TP_POWER_GPIO_Port GPIOE
 #define AUDIO_EN_Pin GPIO_PIN_15
 #define AUDIO_EN_GPIO_Port GPIOE
 #define KEY_LED15_Pin GPIO_PIN_12

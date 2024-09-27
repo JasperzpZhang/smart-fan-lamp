@@ -58,36 +58,36 @@ typedef enum {
 } gpio_out_t;
 
 /* Led moudle */
-#define LED_COLD_TIM                    &htim3
-#define LED_COLD_TIM_CHANNEL            TIM_CHANNEL_1
-#define LED_WARM_TIM                    &htim3
-#define LED_WARM_TIM_CHANNEL            TIM_CHANNEL_2
-#define LED_NIGHT_LIGHT_GPIO_PORT       GPIOC
-#define LED_NIGHT_LIGHT_GPIO_PIN        GPIO_PIN_13
+#define LED_COLD_TIM              &htim2
+#define LED_COLD_TIM_CHANNEL      TIM_CHANNEL_1
+#define LED_WARM_TIM              &htim2
+#define LED_WARM_TIM_CHANNEL      TIM_CHANNEL_2
+#define LED_NIGHT_LIGHT_GPIO_PORT GPIOC
+#define LED_NIGHT_LIGHT_GPIO_PIN  GPIO_PIN_13
 
 /* Fan moudle */
-#define FAN_FORWARD_TIM                 &htim3
-#define FAN_FORWARD_CHANNEL             TIM_CHANNEL_4
+#define FAN_FORWARD_TIM           &htim3
+#define FAN_FORWARD_CHANNEL       TIM_CHANNEL_4
 //#define FAN_REVERSE_TIM                 &htim2
 //#define FAN_REVERSE_CHANNEL             TIM_CHANNEL_1
 
 /* Wave moudle */
-#define WAVE_GPIO_PORT                  GPIOB
-#define WAVE_GPIO_PIN                   GPIO_PIN_7
+#define WAVE_GPIO_PORT            GPIOB
+#define WAVE_GPIO_PIN             GPIO_PIN_7
 
 /* Usb moudle */
-#define USB_SW_GPIO_PORT                GPIOB
-#define USB_SW_GPIO_PIN                 GPIO_PIN_15
+#define USB_SW_GPIO_PORT          GPIOB
+#define USB_SW_GPIO_PIN           GPIO_PIN_15
 
 /* Spi flash moudle */
-#define SPI1_CS_GPIO_PORT               GPIOB
-#define SPI1_CS_GPIO_PIN                GPIO_PIN_6
+#define SPI1_CS_GPIO_PORT         GPIOB
+#define SPI1_CS_GPIO_PIN          GPIO_PIN_6
 
 /* wifi moudle */
-#define WIFI_XIAOMI_EN_PORT             GPIOB
-#define WIFI_XIAOMI_EN_PIN              GPIO_PIN_0
-#define WIFI_XIAOMI_EN_ON               GPIO_PIN_RESET
-#define WIFI_XIAOMI_EN_OFF              GPIO_PIN_SET
+#define WIFI_XIAOMI_EN_PORT       GPIOB
+#define WIFI_XIAOMI_EN_PIN        GPIO_PIN_0
+#define WIFI_XIAOMI_EN_ON         GPIO_PIN_RESET
+#define WIFI_XIAOMI_EN_OFF        GPIO_PIN_SET
 
 #ifdef __cplusplus
 }

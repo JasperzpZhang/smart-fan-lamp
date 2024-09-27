@@ -33,7 +33,6 @@
    --------------------
    01a, 26Sep24, Jasper Created
  */
- 
 
 #ifndef __DRV_TP_H__
 #define __DRV_TP_H__
@@ -43,14 +42,21 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Includes */
+#include "FreeRTOS.h"
+#include "cmsis_os.h"
 #include "lib/type/lib_type.h"
 #include "main.h"
+#include "queue.h"
 
 
+typedef struct {
+    uint8_t buf[2];
+} tp_msg_t;
 
+extern QueueHandle_t g_tp_queue;
 
-
-
+status_t drv_tp_init(void);
+status_t tp_read_data(uint8_t* buf);
 
 #ifdef __cplusplus
 }

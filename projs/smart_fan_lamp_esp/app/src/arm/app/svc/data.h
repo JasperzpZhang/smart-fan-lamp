@@ -53,7 +53,6 @@ extern "C" {
 #define th_fan_polarity             g_xData.fan_polarity
 #define th_fan_speed                g_xData.fan_speed
 #define th_mem_en                   g_xData.mem_en
-#define th_wifi_init_en             g_xData.wifi_init_en
 
 
 #define FLASH_DATA_HEAD     (0xA5)
@@ -64,16 +63,12 @@ extern "C" {
 #define APP_DATA_INIT       { \
                                 .head = FLASH_DATA_HEAD, \
                                 .led_status = 0, \
-                                .led_brightness = 500, \
-                                .led_color_temperature = 500, \
+                                .led_brightness = 50, \
+                                .led_color_temperature = 50, \
                                 .fan_status = 0, \
                                 .fan_polarity = 1, \
                                 .fan_speed = 50, \
                                 .mem_en = 1, \
-                                .wifi_init_en = 1, \
-                                .test = 1, \
-                                .test001 = 1, \
-                                .test002 = 2, \
                                 .crc  = 0 \
                             }
 //      .pid = "12345678901234", 
@@ -86,17 +81,13 @@ extern "C" {
 typedef struct {
     uint8_t  head;              /* Head mark */
 //    char     pid[20];       /* Pwr ID */ /* Use uint8_t will warnning */
-    uint16_t led_status;
+    uint8_t  led_status;
     uint16_t led_brightness;
     uint16_t led_color_temperature;
     uint16_t fan_status;
     uint16_t fan_polarity;
     uint16_t fan_speed;
     uint16_t mem_en;
-    uint16_t wifi_init_en;
-    uint16_t test;
-    uint16_t test001;
-    uint16_t test002;
     uint8_t  crc;               /* Check code */
 }Data_t;
 

@@ -29,7 +29,7 @@
  */
 
 /**
-   modification history
+   modification history 
    --------------------
    01a, 26Sep24, Jasper Created
  */
@@ -68,9 +68,9 @@ extern "C" {
 /**
  * @brief iic gpio contral function
  */
-#define IIC_SCL(state)        HAL_GPIO_WritePin(IIC_SCL_GPIO_Port, IIC_SCL_Pin, (state ? GPIO_PIN_SET : GPIO_PIN_RESET))
-#define IIC_SDA(state)        HAL_GPIO_WritePin(IIC_SDA_GPIO_Port, IIC_SDA_Pin, (state ? GPIO_PIN_SET : GPIO_PIN_RESET))
-#define IIC_READ_SDA          HAL_GPIO_ReadPin(IIC_SDA_GPIO_Port, IIC_SDA_Pin)
+#define IIC_SCL(state) HAL_GPIO_WritePin(IIC_SCL_GPIO_Port, IIC_SCL_Pin, (state ? GPIO_PIN_SET : GPIO_PIN_RESET))
+#define IIC_SDA(state) HAL_GPIO_WritePin(IIC_SDA_GPIO_Port, IIC_SDA_Pin, (state ? GPIO_PIN_SET : GPIO_PIN_RESET))
+#define IIC_READ_SDA   HAL_GPIO_ReadPin(IIC_SDA_GPIO_Port, IIC_SDA_Pin)
 
 typedef enum {
     high = 1,
@@ -84,8 +84,7 @@ typedef enum {
  *         - status_ok  success
  * @note   none
  */
-status_t
-iic_init(void);
+status_t iic_init(void);
 
 /**
  * @brief  iic bus deinit
@@ -94,8 +93,7 @@ iic_init(void);
  *         - status_ok  success
  * @note   none
  */
-status_t
-iic_deinit(void);
+status_t iic_deinit(void);
 
 /**
  * @brief     iic bus write command
@@ -107,7 +105,7 @@ iic_deinit(void);
  *            - status_err write failed
  * @note      addr = addr_7bits
  */
-status_t iic_write_cmd(uint8_t addr, uint8_t *buf, uint16_t len);
+status_t iic_write_cmd(uint8_t addr, uint8_t* buf, uint16_t len);
 
 /**
  * @brief     iic bus write
@@ -120,8 +118,7 @@ status_t iic_write_cmd(uint8_t addr, uint8_t *buf, uint16_t len);
  *            - status_err write failed
  * @note      addr = device_address_7bits
  */
-status_t
-iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
+status_t iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
 
 /**
  * @brief     iic bus write with 16 bits register address 
@@ -134,7 +131,7 @@ iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
  *            - status_err write failed
  * @note      addr = addr_7bits
  */
-status_t iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);
+status_t iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len);
 
 /**
  * @brief      iic bus read command
@@ -146,7 +143,7 @@ status_t iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len
  *             - status_err read failed
  * @note       addr = device_address_7bits
  */
-status_t iic_read_cmd(uint8_t addr, uint8_t *buf, uint16_t len);
+status_t iic_read_cmd(uint8_t addr, uint8_t* buf, uint16_t len);
 
 /**
  * @brief      iic bus read
@@ -159,8 +156,7 @@ status_t iic_read_cmd(uint8_t addr, uint8_t *buf, uint16_t len);
  *             - status_err read failed
  * @note       addr = device_address_7bits
  */
-status_t
-iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
+status_t iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
 
 /**
  * @brief      iic bus read with 16 bits register address 
@@ -173,12 +169,10 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
  *             - status_err read failed
  * @note       addr = addr_7bits
  */
-status_t iic_read_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);
+status_t iic_read_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len);
 
-
-status_t iic_write_data(uint8_t device_address, uint8_t *data, uint16_t length);
-status_t iic_read_data(uint8_t device_address, uint8_t *data, uint16_t length, uint8_t ack);
-
+status_t iic_write_data(uint8_t device_address, uint8_t* data, uint16_t length);
+status_t iic_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ack);
 
 #endif
 

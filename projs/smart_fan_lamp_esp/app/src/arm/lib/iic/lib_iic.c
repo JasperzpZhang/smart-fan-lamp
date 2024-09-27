@@ -63,11 +63,11 @@
 #if IIC_RTOS || 1
 #undef MUTEX_NAME
 #define MUTEX_NAME iic_mutex
-static osMutexId_t MUTEX_NAME; 
+static osMutexId_t MUTEX_NAME;
 #define IIC_MUTEX_INIT()                                                                                               \
     do {                                                                                                               \
         osMutexAttr_t mutex_attr = {0};                                                                                \
-        MUTEX_NAME = osMutexNew(&mutex_attr);                                                                         \
+        MUTEX_NAME = osMutexNew(&mutex_attr);                                                                          \
     } while (0)
 #define IIC_LOCK()   osMutexAcquire(MUTEX_NAME, osWaitForever)
 #define IIC_UNLOCK() osMutexRelease(MUTEX_NAME)
@@ -113,7 +113,8 @@ iic_deinit(void) {
  * @brief iic bus delay
  * @note  none
  */
-static void prv_iic_delay(void) {
+static void
+prv_iic_delay(void) {
     delay_us(45);
 }
 
@@ -170,36 +171,33 @@ prv_iic_stop(void) {
  *         - status_err no ack
  * @note   none
  */
-static status_t prv_iic_wait_ack(void)
-{
+static status_t
+prv_iic_wait_ack(void) {
     uint16_t uc_err_time = 0;
 
-    IIC_SDA(high); 
+    IIC_SDA(high);
     prv_iic_delay();
-    IIC_SCL(high); 
+    IIC_SCL(high);
     prv_iic_delay();
-    while (IIC_READ_SDA != 0)
-    {
+    while (IIC_READ_SDA != 0) {
         uc_err_time++;
-        if (uc_err_time > 250)
-        {
+        if (uc_err_time > 250) {
             prv_iic_stop();
-            
+
             return status_err;
         }
     }
     IIC_SCL(low);
-    
+
     return status_ok;
 }
-
 
 /**
  * @brief iic bus send ack
  * @note  none
  */
-static void prv_iic_ack(void)
-{
+static void
+prv_iic_ack(void) {
     IIC_SCL(low);
     IIC_SDA(low);
     prv_iic_delay();
@@ -214,14 +212,14 @@ static void prv_iic_ack(void)
  * @brief iic bus send nack
  * @note  none
  */
-static void prv_iic_nack(void)
-{
+static void
+prv_iic_nack(void) {
     IIC_SCL(low);
     IIC_SDA(high);
     prv_iic_delay();
     IIC_SCL(high);
     prv_iic_delay();
-    IIC_SCL(low); 
+    IIC_SCL(low);
     IIC_SDA(high);
 }
 
@@ -245,16 +243,16 @@ prv_iic_send_byte(uint8_t txd) {
         prv_iic_delay();
         txd <<= 1;
     }
-    
-    if (prv_iic_wait_ack() == status_err){
+
+    if (prv_iic_wait_ack() == status_err) {
         return status_err;
     }
-    
+
     return status_ok;
 }
 
 /**
- * @brief     iic read one byte
+ * @brief     iic read one byte 
  * @param[in] ack is the sent ack
  * @return    status code
  *            - status_ok  success
@@ -267,7 +265,6 @@ prv_iic_read_byte(uint8_t* byte, uint8_t ack) {
     if (!byte) {
         return status_err;
     }
-
 
     *byte = 0;
     prv_iic_delay();
@@ -283,11 +280,10 @@ prv_iic_read_byte(uint8_t* byte, uint8_t ack) {
         IIC_SCL(low);
         prv_iic_delay();
     }
-    
+
     if (ack != 0) {
         prv_iic_ack();
-    }
-    else {
+    } else {
         prv_iic_nack();
     }
 
@@ -304,44 +300,41 @@ prv_iic_read_byte(uint8_t* byte, uint8_t ack) {
  *            - status_err write failed
  * @note      addr = addr_7bits
  */
-status_t iic_write_cmd(uint8_t addr, uint8_t *buf, uint16_t len)
-{
+status_t
+iic_write_cmd(uint8_t addr, uint8_t* buf, uint16_t len) {
     IIC_LOCK();
-    
-    uint16_t i; 
-    
+
+    uint16_t i;
+
     /* send a start */
     prv_iic_start();
-    
+
     /* send the write addr */
     prv_iic_send_byte(addr << 1);
-    if (prv_iic_wait_ack() != 0)
-    {
+    if (prv_iic_wait_ack() != 0) {
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
-    
+
     /* write the data */
-    for (i = 0; i < len; i++)
-    {
+    for (i = 0; i < len; i++) {
         /* send one byte */
         prv_iic_send_byte(buf[i]);
-        if (prv_iic_wait_ack() != 0)
-        {
+        if (prv_iic_wait_ack() != 0) {
             prv_iic_stop();
             IIC_UNLOCK();
             return status_err;
         }
     }
-    
+
     /* send a stop */
     prv_iic_stop();
-    
+
     IIC_UNLOCK();
-    
+
     return status_ok;
-} 
+}
 
 /**
  * @brief     iic bus write
@@ -358,7 +351,7 @@ status_t
 iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
 
     IIC_LOCK();
-    
+
     if (!buf) {
         IIC_UNLOCK();
         return status_err;
@@ -391,9 +384,9 @@ iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
     }
 
     prv_iic_stop();
-    
+
     IIC_UNLOCK();
-    
+
     return status_ok;
 }
 
@@ -408,57 +401,52 @@ iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
  *            - status_err write failed
  * @note      addr = addr_7bits
  */
-status_t iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len)
-{
+status_t
+iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len) {
     IIC_LOCK();
-    
-    uint16_t i; 
-    
+
+    uint16_t i;
+
     /* send a start */
     if (prv_iic_start() != status_ok) {
         IIC_UNLOCK();
         return status_err;
     }
-    
+
     /* send the write addr */
-    if (prv_iic_send_byte(addr << 1) != status_ok)
-    {
+    if (prv_iic_send_byte(addr << 1) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
-    
+
     /* send the reg high part */
-    if (prv_iic_send_byte((reg >> 8) & 0xFF) != status_ok)
-    {
-        prv_iic_stop();
-        IIC_UNLOCK();
-       return status_err;
-    }
-    
-    /* send the reg low part */
-    if (prv_iic_send_byte(reg & 0xFF) != status_ok)
-    {
+    if (prv_iic_send_byte((reg >> 8) & 0xFF) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
-    
+
+    /* send the reg low part */
+    if (prv_iic_send_byte(reg & 0xFF) != status_ok) {
+        prv_iic_stop();
+        IIC_UNLOCK();
+        return status_err;
+    }
+
     /* write the data */
-    for (i = 0; i < len; i++)
-    {
+    for (i = 0; i < len; i++) {
         /* send one byte */
-        if (prv_iic_send_byte(buf[i]) != status_ok)
-        {
+        if (prv_iic_send_byte(buf[i]) != status_ok) {
             prv_iic_stop();
             IIC_UNLOCK();
             return status_err;
         }
     }
-    
+
     /* send a stop */
     prv_iic_stop();
-    
+
     IIC_UNLOCK();
     return status_ok;
 }
@@ -473,48 +461,41 @@ status_t iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len
  *             - status_err read failed
  * @note       addr = device_address_7bits
  */
-status_t iic_read_cmd(uint8_t addr, uint8_t *buf, uint16_t len)
-{
+status_t
+iic_read_cmd(uint8_t addr, uint8_t* buf, uint16_t len) {
     IIC_LOCK();
-    
+
     /* send a start */
     prv_iic_start();
-    
-    
+
     /* send the read addr */
-    
-    if (prv_iic_send_byte((addr << 1) + 1) != status_ok)
-    {
+
+    if (prv_iic_send_byte((addr << 1) + 1) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
-       return status_err;
+        return status_err;
     }
     /* read the data */
-    while (len != 0)
-    {
+    while (len != 0) {
         /* if the last */
-        if (len == 1)
-        {
+        if (len == 1) {
             /* send nack */
             prv_iic_read_byte(buf, 0);
-        }
-        else
-        {
+        } else {
             /* send ack */
-            prv_iic_read_byte(buf, 1); 
+            prv_iic_read_byte(buf, 1);
         }
         len--;
         buf++;
     }
-    
+
     /* send a stop */
-    prv_iic_stop(); 
-    
+    prv_iic_stop();
+
     IIC_UNLOCK();
-    
+
     return status_ok;
 }
-
 
 /**
  * @brief      iic bus read
@@ -531,7 +512,7 @@ status_t
 iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
 
     IIC_LOCK();
-    
+
     if (!buf) {
         IIC_UNLOCK();
         return status_err;
@@ -584,12 +565,11 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
     }
 
     prv_iic_stop();
-    
+
     IIC_UNLOCK();
-    
+
     return status_ok;
 }
-
 
 /**
  * @brief      iic bus read with 16 bits register address 
@@ -602,85 +582,78 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
  *             - status_err read failed
  * @note       addr = addr_7bits
  */
-status_t iic_read_addr16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len)
-{
+status_t
+iic_read_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len) {
     IIC_LOCK();
-    
+
     /* send a start */
     prv_iic_start();
-    
+
     /* send the write addr */
-    
-    if (prv_iic_send_byte(addr << 1) != status_ok)
-    {
+
+    if (prv_iic_send_byte(addr << 1) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
-       return status_err;
+        return status_err;
     }
-    
+
     /* send the reg high part */
-    
-    if (prv_iic_send_byte((reg >> 8) & 0xFF) != status_ok)
-    {
+
+    if (prv_iic_send_byte((reg >> 8) & 0xFF) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
-       return status_err;
+        return status_err;
     }
-    
+
     /* send the reg low part */
-    
-    if (prv_iic_send_byte(reg & 0xFF) != status_ok)
-    {
+
+    if (prv_iic_send_byte(reg & 0xFF) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
-       return status_err;
+        return status_err;
     }
-    
+
     /* send a start */
     prv_iic_start();
-    
+
     /* send the read addr */
-    
-    if (prv_iic_send_byte((addr << 1) + 1) != status_ok)
-    {
+
+    if (prv_iic_send_byte((addr << 1) + 1) != status_ok) {
         prv_iic_stop();
         IIC_UNLOCK();
-       return status_err;
+        return status_err;
     }
-    
+
     /* read the data */
-    while (len != 0)
-    {
+    while (len != 0) {
         /* if the last */
-        if (len == 1)
-        {
+        if (len == 1) {
             /* send nack */
             prv_iic_read_byte(buf, 0);
-        }
-        else
-        {
+        } else {
             /* send ack */
             prv_iic_read_byte(buf, 1);
         }
         len--;
         buf++;
     }
-    
+
     /* send a stop */
     prv_iic_stop();
-    
+
     IIC_UNLOCK();
-    
+
     return status_ok;
 }
 
-status_t iic_write_data(uint8_t device_address, uint8_t *data, uint16_t length) {
-    
+status_t
+iic_write_data(uint8_t device_address, uint8_t* data, uint16_t length) {
+
     /* 检查空指针 */
     if (!data) {
         return status_err;
     }
-    
+
     IIC_LOCK();
 
     /* 发送启动信号 */
@@ -713,14 +686,15 @@ status_t iic_write_data(uint8_t device_address, uint8_t *data, uint16_t length) 
     return status_ok;
 }
 
-status_t iic_read_data(uint8_t device_address, uint8_t *data, uint16_t length, uint8_t ack) {
-    
+status_t
+iic_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ack) {
+
     /* 检查空指针 */
     if (!data) {
         TRACE("data is NULL\r\n");
         return status_err;
     }
-    
+
     IIC_LOCK();
 
     /* 发送启动信号 */

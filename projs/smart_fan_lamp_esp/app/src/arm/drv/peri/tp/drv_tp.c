@@ -33,15 +33,13 @@
    --------------------
    01a, 26Sep24, Jasper Created
  */
- 
+
 #include "drv/peri/tp/drv_tp.h"
-#include "lib/iic/lib_iic.h"
-#include "lib/cli/lib_cli.h"
-#include "cmsis_os.h"
-#include "FreeRTOS.h"
-#include "queue.h"
 #include "app/svc/tp.h"
+#include "lib/cli/lib_cli.h"
 #include "lib/debug/lib_debug.h"
+#include "lib/iic/lib_iic.h"
+
 
 /* Debug config */
 #if TP_DEBUG || 1
@@ -62,81 +60,60 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
+#define TP_HY16009A_ADDR 0x53
+#define TP_REG_ADDR      0x00
 
-#define TP_HY16009A_ADDR    0x53
-#define TP_REG_ADDR         0x00
+QueueHandle_t g_tp_queue;
 
+status_t
+drv_tp_init(void) {
+    g_tp_queue = xQueueCreate(10, sizeof(tp_msg_t));
+    return status_ok;
+}
 
-status_t tp_read_data(uint8_t *buf)
-{
-//    iic_read_addr8(TP_HY16009A_ADDR, TP_REG_ADDR, buf, 2);    
+status_t
+tp_read_data(uint8_t* buf) {
+    //    iic_read_addr8(TP_HY16009A_ADDR, TP_REG_ADDR, buf, 2);
     iic_read_data(TP_HY16009A_ADDR, buf, 2, 1);
-    
-    if (buf[1] > 191 && buf[1] <= 223) {
-        buf[1] = 191;
-    }
-    else if (buf[1] >= 224 && buf[1] <= 255) {
+
+    if (buf[1] >= 190 && buf[1] <= 223) {
+        buf[1] = 190;
+    } else if ((buf[1] >= 224 && buf[1] <= 255) || (buf[1] <= 15)) {
         buf[1] = 0;
     }
-    buf[1] = 191 - buf[1];
+    buf[1] = 190 - buf[1];
     return status_ok;
+}
+
+void
+gpio_5_exti_cb(uint16_t gpio_pin) {
+    tp_msg_t msg;
+    tp_read_data(msg.buf);
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xQueueSendFromISR(g_tp_queue, &msg, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 static void
 cli_cmd_tp_get(cli_printf cliprintf, int argc, char** argv) {
-    
+
     uint8_t buf[2] = {0};
     uint8_t i = 0;
     
     if (1 == argc) {
-        
+
         tp_read_data(buf);
-        
+
         cliprintf("buf[0] : ");
-        for (i = 0; i < 8; i++){
+        for (i = 0; i < 8; i++) {
             cliprintf("%d ", ((buf[0] & 0x80) >> 7));
             buf[0] <<= 1;
         }
         cliprintf("\n");
-       
-        
-        cliprintf("buf[1] : %d",buf[1]);
+
+        cliprintf("buf[1] : %d", buf[1]);
     } else {
         cliprintf("parameter length error\r\n");
     }
 }
 CLI_CMD_EXPORT(tp_get, get tp info, cli_cmd_tp_get)
-
-void gpio_5_exti_cb(uint16_t gpio_pin) {
-    
-    uint8_t buf[2] = {0};
-    tp_read_data(buf);
-    
-    tp_msg_t msg;
-
-    msg.buf[0] = buf[0];
-    msg.buf[1] = buf[1];
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xQueueSendFromISR(g_tp_queue, &msg, &xHigherPriorityTaskWoken);
-
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-//    TRACE("buf[1] : %d\n",buf[1]);
-    
-    
-    
-//    if (HAL_GPIO_ReadPin(KEY_INT_GPIO_Port, KEY_INT_Pin) == GPIO_PIN_RESET)
-//    {
-////        if ((buf[1] & 0x10))
-////        {
-//            msg.buf[0] = buf[0];
-//            msg.buf[1] = buf[1];
-//             BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-//             xQueueSendFromISR(g_tp_queue, &msg, &xHigherPriorityTaskWoken);
-
-//            portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-////        }
-//    }
-//    
-}
-
