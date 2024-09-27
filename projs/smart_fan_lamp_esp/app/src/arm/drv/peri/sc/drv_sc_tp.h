@@ -1,7 +1,7 @@
 
 
-#ifndef __DRV_TP_H__
-#define __DRV_TP_H__
+#ifndef __DRV_SC_TP_H__
+#define __DRV_SC_TP_H__
 
 #include "lib/sys/lib_sys.h"
 

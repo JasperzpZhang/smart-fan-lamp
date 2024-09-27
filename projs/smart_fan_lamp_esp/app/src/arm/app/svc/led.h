@@ -1,6 +1,6 @@
 /**
- * \file            drv_screen.h
- * \brief           Screen driver file
+ * \file            led.h
+ * \brief           Led driver and application file
  */
 
 /*
@@ -26,41 +26,38 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * This file is part of the screen driver.
+ * This file contains the entire led driver and application.
  *
  * Author:          Jasper <jasperzhangse@gmail.com>
  * Version:         v1.0.0-dev
- * Last edit:       2024-06-18
  */
  
-#ifndef __DRV_SC_H__
-#define __DRV_SC_H__
+#ifndef __LED_H__
+#define __LED_H__
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
 
-#include "main.h"
+#include "stm32f1xx_hal.h"
 #include "lib/type/lib_type.h"
-#include "drv/peri/sc/drv_lcd.h"
-#include "drv/peri/sc/drv_sc_tp.h"
 
-/* screen device driver include */
-#include "drv/peri/sc/st7789/drv_st7789.h"
+    extern uint16_t g_last_led_brightness;
+    extern uint16_t g_last_led_color_temperature;
 
-    typedef enum
-    {
-        dwin01 = 0,
-        atk_lcd_4_3,
-        hxc_lcd_1_8,
-        
-    } sc_id_t;
-
-    status_t sc_init(sc_id_t sc_id);
+    status_t led_init(void);
+    status_t adjust_led_brightness(uint16_t led_brightness);
+    status_t adjust_led_color_temperature(uint16_t led_color_temperature);
+    status_t save_led_data(void);
+    status_t stop_led_pwm(void);
+    status_t start_led_pwm(void);
+    status_t toggle_led(uint16_t on_off);
+    status_t smooth_adjust_led_brightness(uint16_t target_led_brightness);
+    status_t smooth_adjust_led_color_temperature(uint16_t target_led_color_temperature);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __DRV_SC_H__ */
+#endif /* __LED_H__ */

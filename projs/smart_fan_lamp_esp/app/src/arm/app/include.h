@@ -83,15 +83,23 @@ extern "C"
 #include "lib/rbuf/lib_rbuf.h"
 #include "lib/wdog/lib_wdog.h"
 #include "lib/delay/lib_delay.h"
+#include "lib/iic/lib_iic.h"
 
 /* Driver moudle */
 #include "drv/peri/mem/drv_mem.h"
+#include "drv/peri/rtc/drv_rtc.h"
+//#include "drv/peri/humiture/drv_aht20_basic.h"
 
 /* Application */
 #include "app/app.h"
 #include "app/svc/mem.h"
 #include "app/sys.h"
 #include "app/svc/cli.h"
+#include "app/svc/data.h"
+#include "app/svc/fan.h"
+#include "app/svc/time.h"
+#include "app/svc/tp.h"
+
 
 
 #if 0

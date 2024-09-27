@@ -38,7 +38,7 @@
 #include "FreeRTOS.h"
 #include "lib/cli/lib_cli.h"
 #include "lib/debug/lib_debug.h"
-#include "lib/i2c/lib_i2c.h"
+#include "lib/iic/lib_iic.h"
 #include "main.h"
 
 /* Pragmas */
@@ -108,7 +108,7 @@ aht30_init(void) {
 
 status_t
 aht30_read_data(uint8_t* rx_buffer) {
-    i2c_read_data(AHT30_I2C_ADDRESS, rx_buffer, 7, 0);
+    iic_read_addr8(AHT30_I2C_ADDRESS,0x00, rx_buffer, 7);
 
     return status_ok;
 }
@@ -119,7 +119,7 @@ aht30_read_humiture(int* temperature, uint16_t* humidity) {
 
     osDelay(10);
     AHT30_LOCK();
-    i2c_write_data(AHT30_I2C_ADDRESS, aht30_start_data, 3);
+    iic_write_addr8(AHT30_I2C_ADDRESS, 0x00, aht30_start_data, 3);
 
     osDelay(100);
 
@@ -185,7 +185,6 @@ a_aht30_calc_crc(uint8_t* data, uint8_t len) {
             }
         }
     }
-
     return crc; /* return crc */
 }
 
@@ -193,7 +192,7 @@ static void
 cli_get_humiture(cli_printf cliprintf, int argc, char** argv) {
     int temperature = 0;
     uint16_t humidity = 0;
-
+    
     if (1 == argc) {
         aht30_read_humiture(&temperature, &humidity);
 

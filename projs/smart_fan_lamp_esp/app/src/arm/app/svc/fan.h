@@ -1,6 +1,6 @@
 /**
- * \file            drv_screen.h
- * \brief           Screen driver file
+ * \file            fan.h
+ * \brief           Fan driver file
  */
 
 /*
@@ -26,15 +26,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * This file is part of the screen driver.
+ * This file contains the entire fan driver and application.
  *
  * Author:          Jasper <jasperzhangse@gmail.com>
  * Version:         v1.0.0-dev
- * Last edit:       2024-06-18
  */
  
-#ifndef __DRV_SC_H__
-#define __DRV_SC_H__
+#ifndef __FAN_H__
+#define __FAN_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -43,24 +42,15 @@ extern "C"
 
 #include "main.h"
 #include "lib/type/lib_type.h"
-#include "drv/peri/sc/drv_lcd.h"
-#include "drv/peri/sc/drv_sc_tp.h"
 
-/* screen device driver include */
-#include "drv/peri/sc/st7789/drv_st7789.h"
-
-    typedef enum
-    {
-        dwin01 = 0,
-        atk_lcd_4_3,
-        hxc_lcd_1_8,
-        
-    } sc_id_t;
-
-    status_t sc_init(sc_id_t sc_id);
+    void fan_init(void);
+    void prv_fan_set_pwm_duty(uint16_t fan_polarity, uint16_t fan_pwm_duty);
+    void fan_set_speed(uint16_t fan_polarity, uint16_t fan_speed);
+    status_t fan_toggle(uint16_t on_off);
+    status_t fan_set_level(uint16_t fan_level);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __DRV_SC_H__ */
+#endif /* __FAN_H__ */
