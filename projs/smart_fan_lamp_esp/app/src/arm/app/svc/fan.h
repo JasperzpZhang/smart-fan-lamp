@@ -31,23 +31,22 @@
  * Author:          Jasper <jasperzhangse@gmail.com>
  * Version:         v1.0.0-dev
  */
- 
+
 #ifndef __FAN_H__
 #define __FAN_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
-#include "main.h"
 #include "lib/type/lib_type.h"
+#include "main.h"
 
-    void fan_init(void);
-    void prv_fan_set_pwm_duty(uint16_t fan_polarity, uint16_t fan_pwm_duty);
-    void fan_set_speed(uint16_t fan_polarity, uint16_t fan_speed);
-    status_t fan_toggle(uint16_t on_off);
-    status_t fan_set_level(uint16_t fan_level);
+void fan_init(void);
+void prv_fan_set_pwm_duty(uint16_t fan_polarity, uint16_t fan_pwm_duty);
+void fan_set_speed(uint16_t fan_polarity, uint16_t fan_speed);
+status_t fan_set_status(uint16_t on_off);
+status_t fan_set_level(uint16_t fan_level);
 
 #ifdef __cplusplus
 }

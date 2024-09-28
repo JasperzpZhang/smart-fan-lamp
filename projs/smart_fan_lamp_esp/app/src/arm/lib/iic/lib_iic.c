@@ -115,7 +115,7 @@ iic_deinit(void) {
  */
 static void
 prv_iic_delay(void) {
-    delay_us(45);
+    delay_us(20);
 }
 
 /**

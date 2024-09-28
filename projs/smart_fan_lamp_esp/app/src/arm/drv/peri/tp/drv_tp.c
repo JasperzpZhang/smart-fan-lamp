@@ -75,6 +75,8 @@ status_t
 tp_read_data(uint8_t* buf) {
     //    iic_read_addr8(TP_HY16009A_ADDR, TP_REG_ADDR, buf, 2);
     iic_read_data(TP_HY16009A_ADDR, buf, 2, 1);
+    
+    
 
     if (buf[1] >= 190 && buf[1] <= 223) {
         buf[1] = 190;
@@ -82,6 +84,8 @@ tp_read_data(uint8_t* buf) {
         buf[1] = 0;
     }
     buf[1] = 190 - buf[1];
+    
+//    TRACE("buf[1] : %d\n", buf[1]);
     return status_ok;
 }
 

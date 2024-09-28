@@ -64,19 +64,19 @@ typedef struct {
 } led_msg_t;
 
 typedef struct {
+    uint16_t _TP_KEY1 : 1;
+    uint16_t _TP_KEY4 : 1;
+    uint16_t _TP_KEY5 : 1;
+    uint16_t _TP_KEY6 : 1;
+    uint16_t _TP_KEY7 : 1;
+    uint16_t _TP_KEY8 : 1;
+    uint16_t _TP_KEY9 : 1;
+} ctrl_msg_tp_t;
+
+typedef struct {
     uint8_t slider_value;
     uint8_t slider_en;
-
-    struct {
-        uint16_t _TP_KEY1 : 1;
-        uint16_t _TP_KEY4 : 1;
-        uint16_t _TP_KEY5 : 1;
-        uint16_t _TP_KEY6 : 1;
-        uint16_t _TP_KEY7 : 1;
-        uint16_t _TP_KEY8 : 1;
-        uint16_t _TP_KEY9 : 1;
-    } tp;
-
+    ctrl_msg_tp_t tp;
 } ctrl_msg_t;
 
 extern QueueHandle_t g_led_queue;

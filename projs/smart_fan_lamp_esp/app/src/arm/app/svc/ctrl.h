@@ -49,53 +49,58 @@ extern "C" {
 #include "queue.h"
 
 typedef enum {
-    PWR_OFF,
-    PWR_ON,
-    LED_OFF,
-    LED_ON,
-    FAN_OFF,
-    FAN_ON,
+    MODE_LED_BRIGHT,
+    MODE_LED_COLOR,
+    MODE_FAN,
+} ctrl_slider_target_t;
+
+typedef enum {
+    MAIN_PWR_OFF,
+    MAIN_PWR_ON,
     NIGHT_LIGHT_OFF,
     NIGHT_LIGHT_ON,
-    LED_BRIGHT_CTRL,
-    LED_COLOR_CTRL,
+    USB_CHARGE_OFF,
+    USB_CHARGE_ON,
+    FAN_OFF,
+    FAN_ON,
 } ctrl_status_t;
 
 typedef struct {
-    ctrl_status_t slider_target;
+    uint16_t _SW_MAIN        : 1;
+    uint16_t _SW_FAN         : 1;
+    uint16_t _SW_NIGHT_LIGHT : 1;
+    uint16_t _SW_MODE        : 1;
+} ctrl_sw_t;
 
-    struct {
-        uint32_t _LED1  : 1;
-        uint32_t _LED2  : 1;
-        uint32_t _LED3  : 1;
-        uint32_t _LED4  : 1;
-        uint32_t _LED5  : 1;
-        uint32_t _LED6  : 1;
-        uint32_t _LED7  : 1;
-        uint32_t _LED8  : 1;
-        uint32_t _LED9  : 1;
-        uint32_t _LED10 : 1;
-        uint32_t _LED11 : 1;
-        uint32_t _LED12 : 1;
-        uint32_t _LED13 : 1;
-        uint32_t _LED14 : 1;
-        uint32_t _LED15 : 1;
-        uint32_t _LED16 : 1;
-        uint32_t _LED17 : 1;
-    } led;
-
-    struct {
-        uint16_t _PWR         : 1;
-        uint16_t _LED_SW      : 1;
-        uint16_t _LED_CTRL    : 1;
-        uint16_t _FAN_CTRL    : 1;
-        uint16_t _NIGHT_LIGHT : 1;
-        uint16_t _USB         : 1;
-    } status;
-
+typedef struct {
+    ctrl_slider_target_t slider_target;
+    ctrl_status_t status;
+    ctrl_sw_t sw;
 } ctrl_t;
 
+//typedef struct {
+//    uint32_t _LED1  : 1;
+//    uint32_t _LED2  : 1;
+//    uint32_t _LED3  : 1;
+//    uint32_t _LED4  : 1;
+//    uint32_t _LED5  : 1;
+//    uint32_t _LED6  : 1;
+//    uint32_t _LED7  : 1;
+//    uint32_t _LED8  : 1;
+//    uint32_t _LED9  : 1;
+//    uint32_t _LED10 : 1;
+//    uint32_t _LED11 : 1;
+//    uint32_t _LED12 : 1;
+//    uint32_t _LED13 : 1;
+//    uint32_t _LED14 : 1;
+//    uint32_t _LED15 : 1;
+//    uint32_t _LED16 : 1;
+//    uint32_t _LED17 : 1;
+//} ctrl_led_t;
+
 status_t ctrl_init(void);
+
+extern ctrl_t g_ctrl;
 
 #ifdef __cplusplus
 }

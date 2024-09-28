@@ -70,9 +70,12 @@ led_init(void) {
     led_set_brightness(th_led_brightness);
     led_set_color_temperature(th_led_color_temperature);
     if (1 == th_led_status) {
-        HAL_TIM_PWM_Start(LED_COLD_TIM, LED_COLD_TIM_CHANNEL);
-        HAL_TIM_PWM_Start(LED_WARM_TIM, LED_WARM_TIM_CHANNEL);
+        g_ctrl.sw._SW_MAIN = 1;
+        HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, GPIO_PIN_RESET);
+        led_set_status(1);
     }
+    
+    
 
     xTaskCreate(led_task, "led task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
@@ -93,6 +96,7 @@ led_task(void* para) {
 
         if (bright_lock == 1) {
             led_set_brightness_smooth(bright);
+
             if (led_ctrl.led_brightness == bright) {
                 bright_lock = 0;
             }
@@ -174,7 +178,7 @@ led_set_status(uint16_t on_off) {
         led_stop_pwm();
         led_ctrl.status._LED_STATUS = 0;
     }
-    led_save_status();
+    // led_save_status();
     return status_ok;
 }
 
@@ -184,9 +188,9 @@ night_light_set_status(uint16_t on_off) {
         TRACE("night light on_off num error\r\n");
         return status_err;
     }
-    HAL_GPIO_WritePin(LED_NIGHT_LIGHT_GPIO_PORT, LED_NIGHT_LIGHT_GPIO_PIN, (on_off ? GPIO_PIN_SET : GPIO_PIN_RESET));
+    HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, (on_off ? GPIO_PIN_SET : GPIO_PIN_RESET));
     led_ctrl.status._NIGHT_LIGHT_STATUS = on_off;
-    led_save_status();
+    // led_save_status();
     return status_ok;
 }
 
@@ -202,7 +206,7 @@ led_set_brightness_smooth(uint16_t target_led_brightness) {
             led_ctrl.led_brightness--;
             led_set_brightness(led_ctrl.led_brightness);
         }
-        osDelay(8);
+        osDelay(4);
     }
     led_ctrl.status._LED_STATUS = 1;
     //    led_save_status();
@@ -211,7 +215,7 @@ led_set_brightness_smooth(uint16_t target_led_brightness) {
 
 status_t
 led_set_color_temperature_smooth(uint16_t target_led_color_temperature) {
-    while (led_ctrl.led_color_temperature != target_led_color_temperature) {
+    if (led_ctrl.led_color_temperature != target_led_color_temperature) {
         if (led_ctrl.led_color_temperature < target_led_color_temperature) {
             led_ctrl.led_color_temperature++;
             led_set_color_temperature(led_ctrl.led_color_temperature);
@@ -221,9 +225,9 @@ led_set_color_temperature_smooth(uint16_t target_led_color_temperature) {
             led_ctrl.led_color_temperature--;
             led_set_color_temperature(led_ctrl.led_color_temperature);
         }
-        osDelay(8);
+        osDelay(4);
     }
-//    led_save_status();
+    //    led_save_status();
     return status_ok;
 }
 

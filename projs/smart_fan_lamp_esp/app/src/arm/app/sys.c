@@ -86,6 +86,8 @@ sys_init(void) {
 static void
 sys_task(void* parameter) {
     while (1) {
+        
+//        TRACE("sys wdog feed\n");
         wdog_feed();
         osDelay(500);
         osDelay(SYS_TASK_DELAY);
