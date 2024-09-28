@@ -47,8 +47,9 @@ extern "C"
 	/* Types */
 	typedef enum
 	{
+        status_ok,
         status_err,
-		status_ok
+		
         
 	} status_t;
 

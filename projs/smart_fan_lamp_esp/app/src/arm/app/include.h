@@ -36,30 +36,31 @@
 #define __INCLUDE_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
 /* Includes */
 /* Std C */
-#include <time.h>
-#include <stdio.h>
+#include <assert.h>
+#include <math.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <math.h>
+#include <time.h>
+
 
 /* RTOS */
 #include "FreeRTOS.h"
-#include "task.h"
-#include "timers.h"
+#include "cmsis_os.h"
+#include "event_groups.h"
 #include "queue.h"
 #include "semphr.h"
-#include "event_groups.h"
-#include "cmsis_os.h"
+#include "task.h"
+#include "timers.h"
+
 
 /* HAL */
 #include <stm32f4xx_hal.h>
@@ -69,33 +70,43 @@ extern "C"
 #include "app/define.h"
 
 /* Bsp */
-#include "main.h"
 #include "gpio.h"
-#include "usart.h"
 #include "iwdg.h"
+#include "main.h"
 #include "tim.h"
+#include "usart.h"
+
 
 /* Library */
-#include "lib/type/lib_type.h"
 #include "lib/cli/lib_cli.h"
 #include "lib/debug/lib_debug.h"
-#include "lib/uart/lib_uart.h"
-#include "lib/rbuf/lib_rbuf.h"
-#include "lib/wdog/lib_wdog.h"
 #include "lib/delay/lib_delay.h"
+#include "lib/iic/lib_iic.h"
+#include "lib/rbuf/lib_rbuf.h"
+#include "lib/type/lib_type.h"
+#include "lib/uart/lib_uart.h"
+#include "lib/wdog/lib_wdog.h"
+
 
 /* Driver moudle */
 #include "drv/peri/mem/drv_mem.h"
+#include "drv/peri/rtc/drv_rtc.h"
+#include "drv/peri/tp/drv_tp.h"
+//#include "drv/peri/humiture/drv_aht20_basic.h"
 
 /* Application */
 #include "app/app.h"
-#include "app/svc/mem.h"
-#include "app/sys.h"
 #include "app/svc/cli.h"
-
+#include "app/svc/data.h"
+#include "app/svc/fan.h"
+#include "app/svc/mem.h"
+#include "app/svc/time.h"
+#include "app/svc/tp.h"
+#include "app/sys.h"
+#include "app/svc/led.h"
+#include "app/svc/ctrl.h"
 
 #if 0
-#include "debug/debug.h"
 #include "Gpio/Gpio.h"
 #include "Mem/Mem.h"
 #include "Mem/MemFram.h"
@@ -106,18 +117,21 @@ extern "C"
 #include "Rtc/Rtc.h"
 #include "Uart/Uart.h"
 #include "Wdog/Wdog.h"
+#include "debug/debug.h"
+
 
 /* Bsp library */
 #include "BspGpio.h"
-#include "BspSpi.h"
-#include "BspUart.h"
-#include "BspTim.h"
 #include "BspI2C.h"
+#include "BspSpi.h"
+#include "BspTim.h"
+#include "BspUart.h"
+
 
 /* User application */
-#include "User/_Type.h"
-#include "User/_Config.h"
-#include "User/_Include.h"
+#include "User/Cli.h"
+#include "User/Com.h"
+#include "User/Data.h"
 #include "User/Drv/Adc.h"
 #include "User/Drv/Can.h"
 #include "User/Drv/Dac.h"
@@ -129,10 +143,11 @@ extern "C"
 #include "User/Drv/Pwr/Pwr2Prot.h"
 #include "User/Drv/Stc.h"
 #include "User/Drv/Time.h"
-#include "User/Cli.h"
-#include "User/Com.h"
-#include "User/Data.h"
 #include "User/Sys.h"
+#include "User/_Config.h"
+#include "User/_Include.h"
+#include "User/_Type.h"
+
 #endif
 
 #ifdef __cplusplus

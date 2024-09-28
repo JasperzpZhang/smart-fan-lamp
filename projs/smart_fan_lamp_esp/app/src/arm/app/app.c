@@ -50,12 +50,20 @@
 /* Functions */
 void
 app_init(void) {
-    wdog_start(5000);
+    wdog_start(10000);
     debug_init();
     debug_uart_cfg(&huart1);
     debug_channel_set(DEBUG_CHAN_UART);
     cli_init(&huart1, UART_DMA_ENABLE);
+    delay_init();
+    iic_init();
+    time_init();
     mem_init();
+    data_init();
+    fan_init();
+    tp_init();
+    led_init();
+    ctrl_init();
     sys_init();
 }
 

@@ -7,6 +7,11 @@
         "lib_i2c.h": "c",
         "define.h": "c",
         "lib_exti.h": "c",
-        "lib_uart.h": "c"
+        "lib_uart.h": "c",
+        "lib_iic.h": "c",
+        "lib_delay.h": "c",
+        "random": "c",
+        "drv_tp.h": "c",
+        "ctrl.h": "c"
     }
 }

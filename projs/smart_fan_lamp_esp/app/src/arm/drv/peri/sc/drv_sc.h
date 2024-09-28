@@ -44,7 +44,7 @@ extern "C"
 #include "main.h"
 #include "lib/type/lib_type.h"
 #include "drv/peri/sc/drv_lcd.h"
-#include "drv/peri/sc/drv_tp.h"
+#include "drv/peri/sc/drv_sc_tp.h"
 
 /* screen device driver include */
 #include "drv/peri/sc/st7789/drv_st7789.h"

@@ -38,7 +38,7 @@
 #include <cmsis_os2.h>
 #include "app/include.h"
 #include "lib/debug/lib_debug.h"
-#include "lib/i2c/lib_i2c.h"
+#include "lib/iic/lib_iic.h"
 
 
 #if (RTC_ENABLE && RTC_DS1338_ENABLE)
@@ -188,7 +188,11 @@ prvDs1338ReadTime(DsTime_t* time) {
 
     //      i2c_read_data(DS1338_ADDR, buf, 7, 0);
 
-    i2c_read_register(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
+//    i2c_read_register(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
+    
+    iic_read_addr8(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
+    
+    
 
 #else
     i2c_read_data(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
@@ -230,7 +234,9 @@ prvDs1338WriteTime(DsTime_t* time) {
     prvPrintBcdCode(buf, 7);
 #endif
     //    i2c_write_data(DS1338_ADDR, buf, 7);
-    i2c_write_register(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
+//    i2c_write_register(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
+    
+    iic_write_addr8(DS1338_ADDR, DS1338_REG_SECONDS, buf, 7);
 
     return 0;
 }

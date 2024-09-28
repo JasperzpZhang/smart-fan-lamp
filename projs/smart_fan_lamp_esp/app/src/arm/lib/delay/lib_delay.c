@@ -36,18 +36,65 @@
 #define ASSERT(...)
 #endif /* DELAY_ASSERT */
 
-void
-delay_us(uint32_t us) {
-    uint32_t ticks = (SystemCoreClock / 1000000) * us; /* 每微秒的Ticks */
-    SysTick->LOAD = ticks - 1;                         /* 设定加载值 */
-    SysTick->VAL = 0;                                  /* 清除当前计数值 */
-    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;          /* 启动计时器 */
+static volatile uint32_t gs_fac_us = 0;        /**< fac cnt */
 
-    while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)) {
-        /* Do nothing. */
-    }; /* 等待计时完成 */
+/**
+ * @brief  delay clock init
+ * @return status code
+ *         - 0 success
+ * @note   none
+ */
+uint8_t delay_init(void)
+{
+    /* usr HCLK */
+    HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+    
+    /* set fac */
+    gs_fac_us = 168;
+    
+    return 0;
+}
 
-    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; /* 关闭计时器 */
+/**
+ * @brief     delay us
+ * @param[in] us
+ * @note      none
+ */
+void delay_us(uint32_t us)
+{
+    uint32_t ticks;
+    uint32_t told;
+    uint32_t tnow;
+    uint32_t tcnt;
+    uint32_t reload;
+    
+    /* set the used param */
+    tcnt = 0;
+    reload = SysTick->LOAD;
+    ticks = us * gs_fac_us;
+    told = SysTick->VAL;
+    
+    /* delay */
+    while (1)
+    {
+        tnow = SysTick->VAL;
+        if (tnow != told)
+        {
+            if (tnow < told)
+            {
+                tcnt += told - tnow;
+            }
+            else 
+            {
+                tcnt += reload - tnow + told;
+            }
+            told = tnow;
+            if (tcnt >= ticks)
+            {
+                break;
+            }
+        }
+    }
 }
 
 void
