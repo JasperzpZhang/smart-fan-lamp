@@ -22,69 +22,35 @@
  * SOFTWARE. 
  *
  * @file      drv_tp.c
- * @brief     Implementation File for TouchPad Module
+ * @brief     Implementation File for wave Module
  * @version   1.0.0
  * @author    Jasper
- * @date      2024-09-26
+ * @date      2024-09-28
  */
 
 /**
    modification history
    --------------------
-   01a, 26Sep24, Jasper Created
+   01a, 28Sep24, Jasper Created
  */
 
-#ifndef __TP_H__
-#define __TP_H__
+#ifndef __WAVE_H__
+#define __WAVE_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
+
 /* Includes */
-#include "FreeRTOS.h"
-#include "cmsis_os.h"
-#include "lib/type/lib_type.h"
-#include "main.h"
-#include "queue.h"
+    #include "lib/type/lib_type.h"
 
-typedef struct {
-    uint8_t slider_value;
 
-    struct {
-        uint8_t _KEY_LED1 : 1;
-        uint8_t _KEY_LED2 : 1;
-        uint8_t _KEY_LED3 : 1;
-        uint8_t _KEY_LED4 : 1;
-        uint8_t _KEY_LED5 : 1;
-        uint8_t _KEY_LED6 : 1;
-        uint8_t _KEY_LED7 : 1;
-    } key;
+status_t wave_init(void);
 
-} led_msg_t;
-
-typedef struct {
-    uint16_t _TP_KEY1 : 1;
-    uint16_t _TP_KEY4 : 1;
-    uint16_t _TP_KEY5 : 1;
-    uint16_t _TP_KEY6 : 1;
-    uint16_t _TP_KEY7 : 1;
-    uint16_t _TP_KEY8 : 1;
-    uint16_t _TP_KEY9 : 1;
-} ctrl_msg_tp_t;
-
-typedef struct {
-    uint8_t slider_value;
-    uint8_t slider_en;
-    ctrl_msg_tp_t tp;
-} ctrl_msg_t;
-
-extern QueueHandle_t g_ctrl_queue;
-
-void tp_init(void);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __TP_H__ */
+#endif /* __WAVE_H__ */

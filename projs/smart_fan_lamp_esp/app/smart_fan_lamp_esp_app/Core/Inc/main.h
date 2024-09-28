@@ -76,6 +76,8 @@ void Error_Handler(void);
 #define WAVE_EN_GPIO_Port GPIOA
 #define NIGHT_LIGHT_EN_Pin GPIO_PIN_4
 #define NIGHT_LIGHT_EN_GPIO_Port GPIOA
+#define WAVE_DETC_Pin GPIO_PIN_5
+#define WAVE_DETC_GPIO_Port GPIOA
 #define USB_POWER_EN_Pin GPIO_PIN_10
 #define USB_POWER_EN_GPIO_Port GPIOE
 #define KEY_TP_POWER_Pin GPIO_PIN_14

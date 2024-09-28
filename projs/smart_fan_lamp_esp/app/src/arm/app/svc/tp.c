@@ -55,7 +55,6 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
-QueueHandle_t g_led_queue;
 QueueHandle_t g_ctrl_queue;
 
 static void tp_task(void* parameter);
@@ -63,11 +62,7 @@ static void tp_task(void* parameter);
 void
 tp_init(void) {
     drv_tp_init();
-    g_led_queue = xQueueCreate(10, sizeof(led_msg_t));
     g_ctrl_queue = xQueueCreate(20, sizeof(ctrl_msg_t));
-    if (g_led_queue != NULL) {
-        TRACE("g_led_queue create sucess.\n");
-    }
     xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 }
 

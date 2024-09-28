@@ -53,6 +53,7 @@ extern "C" {
 #define th_fan_polarity             g_xData.fan_polarity
 #define th_fan_speed                g_xData.fan_speed
 #define th_mem_en                   g_xData.mem_en
+#define th_scence_mode              g_xData.scence_mode
 
 
 #define FLASH_DATA_HEAD     (0xA5)
@@ -69,6 +70,7 @@ extern "C" {
                                 .fan_polarity = 1, \
                                 .fan_speed = 50, \
                                 .mem_en = 1, \
+                                .scence_mode = 0, \
                                 .crc  = 0 \
                             }
 //      .pid = "12345678901234", 
@@ -88,6 +90,7 @@ typedef struct {
     uint16_t fan_polarity;
     uint16_t fan_speed;
     uint16_t mem_en;
+    uint8_t  scence_mode;
     uint8_t  crc;               /* Check code */
 }Data_t;
 

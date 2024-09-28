@@ -1163,6 +1163,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\lib\iic\lib_iic.c</FilePath>
             </File>
+            <File>
+              <FileName>lib_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\adc\lib_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1287,6 +1292,11 @@
               <FileName>ctrl.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\svc\ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\app\svc\wave.c</FilePath>
             </File>
           </Files>
         </Group>

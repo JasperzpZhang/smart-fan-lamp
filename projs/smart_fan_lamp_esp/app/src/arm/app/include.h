@@ -63,7 +63,7 @@ extern "C" {
 
 
 /* HAL */
-#include <stm32f4xx_hal.h>
+#include "main.h"
 
 /* Config */
 #include "app/config.h"
@@ -72,10 +72,9 @@ extern "C" {
 /* Bsp */
 #include "gpio.h"
 #include "iwdg.h"
-#include "main.h"
 #include "tim.h"
 #include "usart.h"
-
+#include "adc.h"
 
 /* Library */
 #include "lib/cli/lib_cli.h"
@@ -105,6 +104,7 @@ extern "C" {
 #include "app/sys.h"
 #include "app/svc/led.h"
 #include "app/svc/ctrl.h"
+#include "app/svc/wave.h"
 
 #if 0
 #include "Gpio/Gpio.h"

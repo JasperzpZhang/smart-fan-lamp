@@ -75,8 +75,6 @@ led_init(void) {
         led_set_status(1);
     }
     
-    
-
     xTaskCreate(led_task, "led task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
     return status_ok;
@@ -84,25 +82,10 @@ led_init(void) {
 
 void
 led_task(void* para) {
-    led_msg_t led_msg;
-    uint8_t bright = 0;
-    uint8_t bright_lock = 0;
+
     while (1) {
-        if (xQueueReceive(g_led_queue, &led_msg, 0) == pdPASS) {
-            TRACE("buf[1] : %d\n", led_msg.slider_value * 100 / 180);
-            bright = (uint8_t)(led_msg.slider_value * 100 / 180);
-            bright_lock = 1;
-        }
-
-        if (bright_lock == 1) {
-            led_set_brightness_smooth(bright);
-
-            if (led_ctrl.led_brightness == bright) {
-                bright_lock = 0;
-            }
-        }
-
-        osDelay(2);
+        
+        osDelay(20);
     }
 }
 

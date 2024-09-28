@@ -64,6 +64,7 @@ app_init(void) {
     tp_init();
     led_init();
     ctrl_init();
+    wave_init();
     sys_init();
 }
 

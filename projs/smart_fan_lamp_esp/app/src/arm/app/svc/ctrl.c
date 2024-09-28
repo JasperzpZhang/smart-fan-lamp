@@ -199,7 +199,7 @@ tp_key_proc(ctrl_msg_t* msg) {
             fan_set_status(0);
         }
     }
-
+    
     /* mode sw */
     if (msg->tp._TP_KEY7 == 1) {
         TRACE("msg->tp._TP_KEY7 : %d\n", msg->tp._TP_KEY7);
