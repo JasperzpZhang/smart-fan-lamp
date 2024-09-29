@@ -50,7 +50,7 @@
 /* Functions */
 void
 app_init(void) {
-    wdog_start(10000);
+    wdog_start(16000);
     debug_init();
     debug_uart_cfg(&huart1);
     debug_channel_set(DEBUG_CHAN_UART);
@@ -65,6 +65,7 @@ app_init(void) {
     led_init();
     panel_init();
     wave_init();
+    LCD_1in83_test();
     sys_init();
 }
 

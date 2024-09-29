@@ -71,4 +71,3 @@ sc_init(sc_id_t sc_id) {
     return status_ok;
 }
 
-// transmit git

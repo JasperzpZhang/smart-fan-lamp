@@ -91,6 +91,7 @@ extern "C" {
 #include "drv/peri/mem/drv_mem.h"
 #include "drv/peri/rtc/drv_rtc.h"
 #include "drv/peri/tp/drv_tp.h"
+#include "drv/peri/sc/drv_sc.h"
 //#include "drv/peri/humiture/drv_aht20_basic.h"
 
 /* Application */
@@ -105,6 +106,7 @@ extern "C" {
 #include "app/svc/led.h"
 #include "app/svc/panel.h"
 #include "app/svc/wave.h"
+
 
 #if 0
 #include "Gpio/Gpio.h"

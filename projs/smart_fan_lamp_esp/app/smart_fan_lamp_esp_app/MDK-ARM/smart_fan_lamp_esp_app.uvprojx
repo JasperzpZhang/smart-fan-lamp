@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;../../src/arm/drv/peri/sc/lcd_1in83/fonts</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1168,6 +1168,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\lib\adc\lib_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>lib_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\spi\lib_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1209,14 +1214,19 @@
               <FilePath>..\..\src\arm\drv\peri\rtc\drv_rtc_ds1338.c</FilePath>
             </File>
             <File>
+              <FileName>drv_aht30.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\humiture\drv_aht30.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_tp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\tp\drv_tp.c</FilePath>
+            </File>
+            <File>
               <FileName>drv_sc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\drv_sc.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_st7789.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\drv\peri\sc\st7789\drv_st7789.c</FilePath>
             </File>
             <File>
               <FileName>drv_lcd.c</FileName>
@@ -1229,14 +1239,44 @@
               <FilePath>..\..\src\arm\drv\peri\sc\drv_sc_tp.c</FilePath>
             </File>
             <File>
-              <FileName>drv_aht30.c</FileName>
+              <FileName>drv_lcd_1in83.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\arm\drv\peri\humiture\drv_aht30.c</FilePath>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_lcd_1in83.c</FilePath>
             </File>
             <File>
-              <FileName>drv_tp.c</FileName>
+              <FileName>drv_lcd_1in83_cfg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\arm\drv\peri\tp\drv_tp.c</FilePath>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_lcd_1in83_cfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_image.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_image.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_gui_paint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_gui_paint.c</FilePath>
+            </File>
+            <File>
+              <FileName>font12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\fonts\font12.c</FilePath>
+            </File>
+            <File>
+              <FileName>font12CN.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\fonts\font12CN.c</FilePath>
+            </File>
+            <File>
+              <FileName>font24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\fonts\font24.c</FilePath>
+            </File>
+            <File>
+              <FileName>font24CN.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\fonts\font24CN.c</FilePath>
             </File>
           </Files>
         </Group>

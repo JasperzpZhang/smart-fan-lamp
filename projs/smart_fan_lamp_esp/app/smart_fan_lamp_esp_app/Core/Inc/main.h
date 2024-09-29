@@ -120,6 +120,8 @@ void Error_Handler(void);
 #define KEY_LED16_GPIO_Port GPIOA
 #define SPI3_FLASH_CS_Pin GPIO_PIN_15
 #define SPI3_FLASH_CS_GPIO_Port GPIOA
+#define LCD_DC_Pin GPIO_PIN_0
+#define LCD_DC_GPIO_Port GPIOD
 #define SPI3_LCD_CS_Pin GPIO_PIN_1
 #define SPI3_LCD_CS_GPIO_Port GPIOD
 #define LCD_RESET_Pin GPIO_PIN_2

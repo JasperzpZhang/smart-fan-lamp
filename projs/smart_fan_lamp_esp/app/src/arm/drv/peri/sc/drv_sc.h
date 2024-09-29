@@ -47,7 +47,7 @@ extern "C"
 #include "drv/peri/sc/drv_sc_tp.h"
 
 /* screen device driver include */
-#include "drv/peri/sc/st7789/drv_st7789.h"
+//#include "drv/peri/sc/st7789/drv_st7789.h"
 
     typedef enum
     {

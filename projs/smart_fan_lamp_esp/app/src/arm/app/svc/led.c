@@ -65,13 +65,16 @@ void led_task(void* para);
 status_t
 led_init(void) {
     /* You must initalize all parameters before you can operate a function */
+    g_led_ctrl.status._LED_STATUS = 0;
+    
     g_led_ctrl.led_brightness = th_led_brightness;
     g_led_ctrl.led_color_temperature = th_led_color_temperature;
-    g_led_ctrl.status._LED_STATUS = th_led_status;
-    g_led_ctrl.status._NIGHT_LIGHT_STATUS = 0;
-
     led_set_brightness(g_led_ctrl.led_brightness);
     led_set_color_temperature(g_led_ctrl.led_color_temperature);
+    
+    
+    g_led_ctrl.status._LED_STATUS = th_led_status;
+    g_led_ctrl.status._NIGHT_LIGHT_STATUS = 0;
 
     if (g_led_ctrl.status._LED_STATUS == 1) {
         g_panel_ctrl.sw._SW_MAIN = 1;
@@ -106,7 +109,6 @@ led_set_brightness(uint16_t led_brightness) {
     if (led_brightness > 100) {
         return status_err;
     }
-    g_led_ctrl.status._LED_STATUS = 1;
     uint16_t led_cold_brightness = 0, led_warm_brightness = 0;
     /* You can't change the color temperature when you adjust the brightness */
     led_warm_brightness = g_led_ctrl.led_color_temperature * led_brightness / LIGHT_DEEP;

@@ -1,13 +1,15 @@
 /*****************************************************************************
-* | File      	:	LCD_Test.h
+* | File      	:   DEV_Config.c
 * | Author      :   Waveshare team
-* | Function    :   LCD test Demo
+* | Function    :   Hardware underlying interface
 * | Info        :
+*                Used to shield the underlying layers of each master 
+*                and enhance portability
 *----------------
 * |	This version:   V1.0
-* | Date        :   2020-06-09
-* | Info        :   
-#
+* | Date        :   2018-11-22
+* | Info        :
+
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -27,40 +29,39 @@
 # THE SOFTWARE.
 #
 ******************************************************************************/
-#ifndef _EPD_TEST_H_
-#define _EPD_TEST_H_
-
 #include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
-#include "drv/peri/sc/lcd_1in83/drv_gui_paint.h"
-#include <stdlib.h> // malloc() free()
+#include "spi.h"
 
-void LCD_0in96_test(void);
-
-void LCD_1in14_test(void);
-
-void LCD_1in3_test(void);
-
-void LCD_1in47_test(void);
-
-void LCD_1in54_test(void);
-
-void LCD_1in69_test(void);
-
-void LCD_1in8_test(void);
-
-void LCD_1in83_test(void);
-
-void LCD_1in9_test(void);
-
-void LCD_2in_test(void);
-
-void LCD_2in4_test(void);
-
-void LCD_1in28_test(void);
-
-#endif
+/********************************************************************************
+function:	Delay function
+note:
+	Driver_Delay_ms(xms) : Delay x ms
+********************************************************************************/
+void DEV_delay_ms(uint16_t xms )
+{
+	HAL_Delay(xms);
+}
 
 
+void DEV_SPI_WRite(UBYTE _dat)
+{
+	HAL_SPI_Transmit(&hspi3, (uint8_t *)&_dat, 1, 500);
+}
 
+int DEV_Module_Init(void)
+{
+    DEV_Digital_Write(DEV_DC_PIN, 1);
+    DEV_Digital_Write(DEV_CS_PIN, 1);
+    DEV_Digital_Write(DEV_RST_PIN, 1);
+    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+		return 0;
+}
 
-
+void DEV_Module_Exit(void)
+{
+    DEV_Digital_Write(DEV_DC_PIN, 0);
+    DEV_Digital_Write(DEV_CS_PIN, 0);
+    //close 
+    DEV_Digital_Write(DEV_RST_PIN, 0);
+    HAL_TIM_PWM_Stop(&htim10,TIM_CHANNEL_1);
+}
