@@ -50,20 +50,10 @@ extern "C" {
 
 typedef struct {
     uint8_t slider_value;
-
+    uint8_t slider_en;
+    
+    
     struct {
-        uint8_t _KEY_LED1 : 1;
-        uint8_t _KEY_LED2 : 1;
-        uint8_t _KEY_LED3 : 1;
-        uint8_t _KEY_LED4 : 1;
-        uint8_t _KEY_LED5 : 1;
-        uint8_t _KEY_LED6 : 1;
-        uint8_t _KEY_LED7 : 1;
-    } key;
-
-} led_msg_t;
-
-typedef struct {
     uint16_t _TP_KEY1 : 1;
     uint16_t _TP_KEY4 : 1;
     uint16_t _TP_KEY5 : 1;
@@ -71,15 +61,11 @@ typedef struct {
     uint16_t _TP_KEY7 : 1;
     uint16_t _TP_KEY8 : 1;
     uint16_t _TP_KEY9 : 1;
-} ctrl_msg_tp_t;
+}panel;
+    
+} msg_panel_t;
 
-typedef struct {
-    uint8_t slider_value;
-    uint8_t slider_en;
-    ctrl_msg_tp_t tp;
-} ctrl_msg_t;
-
-extern QueueHandle_t g_ctrl_queue;
+extern QueueHandle_t g_queue_panel;
 
 void tp_init(void);
 

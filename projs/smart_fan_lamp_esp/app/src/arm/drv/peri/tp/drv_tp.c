@@ -63,11 +63,11 @@
 #define TP_HY16009A_ADDR 0x53
 #define TP_REG_ADDR      0x00
 
-QueueHandle_t g_tp_queue;
+QueueHandle_t g_queue_tp;
 
 status_t
 drv_tp_init(void) {
-    g_tp_queue = xQueueCreate(10, sizeof(tp_msg_t));
+    g_queue_tp = xQueueCreate(10, sizeof(msg_tp_t));
     return status_ok;
 }
 
@@ -91,10 +91,10 @@ tp_read_data(uint8_t* buf) {
 
 void
 gpio_5_exti_cb(uint16_t gpio_pin) {
-    tp_msg_t msg;
+    msg_tp_t msg;
     tp_read_data(msg.buf);
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xQueueSendFromISR(g_tp_queue, &msg, &xHigherPriorityTaskWoken);
+    xQueueSendFromISR(g_queue_tp, &msg, &xHigherPriorityTaskWoken);
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 

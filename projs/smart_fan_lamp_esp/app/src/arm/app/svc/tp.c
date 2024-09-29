@@ -55,14 +55,14 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
-QueueHandle_t g_ctrl_queue;
+QueueHandle_t g_queue_panel;
 
 static void tp_task(void* parameter);
 
 void
 tp_init(void) {
     drv_tp_init();
-    g_ctrl_queue = xQueueCreate(20, sizeof(ctrl_msg_t));
+    g_queue_panel = xQueueCreate(20, sizeof(msg_panel_t));
     xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 }
 
@@ -70,15 +70,15 @@ static void
 tp_task(void* parameter) {
 
     uint8_t buf[2] = {0};
-    tp_msg_t tp_msg;
-    ctrl_msg_t ctrl_msg;
+    msg_tp_t msg_tp;
+    msg_panel_t msg_ctrl;
     static uint8_t tp_slider_en = 0;
 
     while (1) {
         wdog_feed();
-        if (xQueueReceive(g_tp_queue, &tp_msg, portMAX_DELAY) == pdPASS) {
+        if (xQueueReceive(g_queue_tp, &msg_tp, portMAX_DELAY) == pdPASS) {
 
-            if ((tp_msg.buf[0] & 0x10) != 0) {
+            if ((msg_tp.buf[0] & 0x10) != 0) {
 
                 if (HAL_GPIO_ReadPin(KEY_INT_GPIO_Port, KEY_INT_Pin) == GPIO_PIN_RESET) {
                     /* wt == 1 */
@@ -88,11 +88,11 @@ tp_task(void* parameter) {
                         }
                         tp_read_data(buf);
                         TRACE("tp_slider on : \n");
-                        TRACE("buf[1] : %d\n",buf[1]);
+                        TRACE("buf[1] : %d\n", buf[1]);
 
-                        ctrl_msg.slider_en = 1;
-                        ctrl_msg.slider_value = buf[1];
-                        xQueueSend(g_ctrl_queue, &ctrl_msg, portMAX_DELAY);
+                        msg_ctrl.slider_en = 1;
+                        msg_ctrl.slider_value = buf[1];
+                        xQueueSend(g_queue_panel, &msg_ctrl, portMAX_DELAY);
 
                         osDelay(200);
                     } while ((buf[0] & 0x10) != 0);
@@ -104,46 +104,32 @@ tp_task(void* parameter) {
 
                     if (tp_slider_en == 1) {
                         TRACE("tp_slider off : \n");
-                        TRACE("buf[1] : %d\n",tp_msg.buf[1]);
-                        
-//                        TRACE("buf[0] : ");
-//                        for (i = 7; i > 0; i--) {
-//                            TRACE("%d ", (tp_msg.buf[0] >> i) & 0x01);
-//                        }
-//                        TRACE("\n");
-//                        TRACE("buf[1] : %d\n\n", tp_msg.buf[1]);
+                        TRACE("buf[1] : %d\n", msg_tp.buf[1]);
 
-                        ctrl_msg.slider_en = 1;
-                        ctrl_msg.slider_value = tp_msg.buf[1];
-                        xQueueSend(g_ctrl_queue, &ctrl_msg, portMAX_DELAY);
+                        msg_ctrl.slider_en = 1;
+                        msg_ctrl.slider_value = msg_tp.buf[1];
+                        xQueueReset(g_queue_panel);
+                        xQueueSend(g_queue_panel, &msg_ctrl, portMAX_DELAY);
 
                         tp_slider_en = 0;
                     } else {
 
-                        ctrl_msg.tp._TP_KEY1 = 0;
+                        msg_ctrl.panel._TP_KEY1 = 0;
                     }
                 }
 
                 if ((HAL_GPIO_ReadPin(KEY_INT_GPIO_Port, KEY_INT_Pin) == GPIO_PIN_RESET)) {
 
-//                    TRACE("tp_key on : \n");
-//                    TRACE("buf[0] : ");
-//                    for (i = 7; i > 0; i--) {
-//                        TRACE("%d ", (tp_msg.buf[0] >> i) & 0x01);
-//                    }
-//                    TRACE("\n");
-//                    TRACE("buf[1] : %d\n\n", tp_msg.buf[1]);
+                    msg_ctrl.panel._TP_KEY1 = 1;
+                    msg_ctrl.panel._TP_KEY4 = ((msg_tp.buf[0] >> 0) & 0x01);
+                    msg_ctrl.panel._TP_KEY5 = ((msg_tp.buf[0] >> 1) & 0x01);
+                    msg_ctrl.panel._TP_KEY6 = ((msg_tp.buf[0] >> 2) & 0x01);
+                    msg_ctrl.panel._TP_KEY7 = ((msg_tp.buf[0] >> 3) & 0x01);
+                    msg_ctrl.panel._TP_KEY8 = ((msg_tp.buf[0] >> 5) & 0x01);
+                    msg_ctrl.panel._TP_KEY9 = ((msg_tp.buf[0] >> 6) & 0x01);
 
-                    ctrl_msg.tp._TP_KEY1 = 1;
-                    ctrl_msg.tp._TP_KEY4 = ((tp_msg.buf[0] >> 0) & 0x01);
-                    ctrl_msg.tp._TP_KEY5 = ((tp_msg.buf[0] >> 1) & 0x01);
-                    ctrl_msg.tp._TP_KEY6 = ((tp_msg.buf[0] >> 2) & 0x01);
-                    ctrl_msg.tp._TP_KEY7 = ((tp_msg.buf[0] >> 3) & 0x01);
-                    ctrl_msg.tp._TP_KEY8 = ((tp_msg.buf[0] >> 5) & 0x01);
-                    ctrl_msg.tp._TP_KEY9 = ((tp_msg.buf[0] >> 6) & 0x01);
-
-                    ctrl_msg.slider_en = 0;
-                    xQueueSend(g_ctrl_queue, &ctrl_msg, portMAX_DELAY);
+                    msg_ctrl.slider_en = 0;
+                    xQueueSend(g_queue_panel, &msg_ctrl, portMAX_DELAY);
                 }
             }
         }

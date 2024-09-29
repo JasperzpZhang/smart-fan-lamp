@@ -51,9 +51,9 @@ extern "C" {
 
 typedef struct {
     uint8_t buf[2];
-} tp_msg_t;
+} msg_tp_t;
 
-extern QueueHandle_t g_tp_queue;
+extern QueueHandle_t g_queue_tp;
 
 status_t drv_tp_init(void);
 status_t tp_read_data(uint8_t* buf);

@@ -45,14 +45,12 @@ extern "C" {
 
 /* Defines */
 #define th_Data                     g_xData
-//#define th_pid                      g_xData.pid
+#define th_mem_en                   g_xData.mem_en
 #define th_led_status               g_xData.led_status
 #define th_led_brightness           g_xData.led_brightness
 #define th_led_color_temperature    g_xData.led_color_temperature
 #define th_fan_status               g_xData.fan_status
-#define th_fan_polarity             g_xData.fan_polarity
 #define th_fan_speed                g_xData.fan_speed
-#define th_mem_en                   g_xData.mem_en
 #define th_scence_mode              g_xData.scence_mode
 
 
@@ -63,13 +61,12 @@ extern "C" {
 #ifndef APP_DATA_INIT
 #define APP_DATA_INIT       { \
                                 .head = FLASH_DATA_HEAD, \
+                                .mem_en = 1, \
                                 .led_status = 0, \
                                 .led_brightness = 50, \
                                 .led_color_temperature = 50, \
                                 .fan_status = 0, \
-                                .fan_polarity = 1, \
                                 .fan_speed = 50, \
-                                .mem_en = 1, \
                                 .scence_mode = 0, \
                                 .crc  = 0 \
                             }
@@ -82,14 +79,13 @@ extern "C" {
 
 typedef struct {
     uint8_t  head;              /* Head mark */
-//    char     pid[20];       /* Pwr ID */ /* Use uint8_t will warnning */
+    
+    uint16_t mem_en;
     uint8_t  led_status;
     uint16_t led_brightness;
     uint16_t led_color_temperature;
     uint16_t fan_status;
-    uint16_t fan_polarity;
     uint16_t fan_speed;
-    uint16_t mem_en;
     uint8_t  scence_mode;
     uint8_t  crc;               /* Check code */
 }Data_t;

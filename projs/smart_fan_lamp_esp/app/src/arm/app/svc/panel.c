@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      ctrl.c
+ * @file      panel.c
  * @brief     Implementation File for ctrl Module
  * @version   1.0.0
  * @author    Jasper
@@ -55,88 +55,73 @@
 #define ASSERT(...)
 #endif /* CTRL_ASSERT */
 
-#define KEY_LED_ON  GPIO_PIN_RESET
-#define KEY_LED_OFF GPIO_PIN_SET
+panel_ctrl_t g_panel_ctrl;
 
-ctrl_t g_ctrl;
-
-static uint8_t slider_led_line_value;
-
-void ctrl_task(void* para);
-status_t tp_key_proc(ctrl_msg_t* msg);
+void panel_ctrl_task(void* para);
+status_t tp_key_proc(msg_panel_t* msg);
 status_t slider_set_target_value(uint8_t value);
-void ctrl_status_init(void);
+void panel_status_init(void);
 status_t slider_set_led_line(uint8_t value);
-status_t slider_set_led_line_smooth(uint8_t value);
 
 /* functions */
 status_t
-ctrl_init(void) {
+panel_init(void) {
 
-    ctrl_status_init();
-    xTaskCreate(ctrl_task, "ctrl task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
-    
-    
-    
-    /* main sw led init */
-    if(th_led_status == 1){
-        g_ctrl.sw._SW_MAIN = 1;
-        HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, KEY_LED_ON);
-    }
-    else {
-        g_ctrl.sw._SW_MAIN = 0;
-        HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, KEY_LED_OFF);
-    }
-    
-//    /* night light led init */
-//    if(th_led_status == 1){
-//        g_ctrl.sw._SW_NIGHT_LIGHT = 1;
-//        HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, KEY_LED_ON);
-//    }
-//    else {
-//        g_ctrl.sw._SW_NIGHT_LIGHT = 0;
-//        HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, KEY_LED_OFF);
-//    }
-    
-    /* fan led init */
-    if (th_fan_status == 1){
-        g_ctrl.sw._SW_FAN = 1;
-        HAL_GPIO_WritePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin, KEY_LED_ON);
-    }else {
-        g_ctrl.sw._SW_FAN = 0;
-        HAL_GPIO_WritePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin, KEY_LED_OFF);
-    }
-
-    /* three index led */
-    HAL_GPIO_WritePin(KEY_LED11_GPIO_Port, KEY_LED11_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_SET);
+    panel_status_init();
+    xTaskCreate(panel_ctrl_task, "ctrl task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
     return status_ok;
 }
 
 void
-ctrl_status_init(void) {
-    g_ctrl.slider_target = MODE_LED_BRIGHT;
-    HAL_GPIO_WritePin(KEY_LED15_GPIO_Port, KEY_LED15_Pin, KEY_LED_ON);
+panel_status_init(void) {
+    g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+
+    panel_set_led_status(mode_sw, panel_led_on);
+
+    /* main sw led init */
+    if (g_led_ctrl.status._LED_STATUS == 1) {
+        g_panel_ctrl.sw._SW_MAIN = 1;
+        panel_set_led_status(main_sw, panel_led_on);
+    } else {
+        g_panel_ctrl.sw._SW_MAIN = 0;
+        panel_set_led_status(main_sw, panel_led_off);
+    }
+
+    /* fan led init */
+    if (g_fan_ctrl.fan_status == 1) {
+        g_panel_ctrl.sw._SW_FAN = 1;
+        panel_set_led_status(fan, panel_led_on);
+    } else {
+        g_panel_ctrl.sw._SW_FAN = 0;
+        panel_set_led_status(fan, panel_led_off);
+    }
+
+    /* three index led */
+    panel_set_led_status(idx_brightness, panel_led_on);
+    panel_set_led_status(idx_color, panel_led_off);
+    panel_set_led_status(idx_fan, panel_led_off);
 }
 
 void
-ctrl_task(void* para) {
+panel_ctrl_task(void* para) {
+    /* use osDelay here; otherwise, move to panel_status_init and change delay function to Hal_Delay */
+    slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
 
-    ctrl_msg_t ctrl_msg;
+    msg_panel_t msg_panel;
     uint8_t value = 0;
     uint8_t slider_value_lock = 0;
     while (1) {
         wdog_feed();
-        if (xQueueReceive(g_ctrl_queue, &ctrl_msg, 0)) {
-            if (ctrl_msg.slider_en == 1) {
-                value = (uint8_t)(ctrl_msg.slider_value * 100 / 190);
+        if (xQueueReceive(g_queue_panel, &msg_panel, 0)) {
+            if (msg_panel.slider_en == 1) {
+                value = (uint8_t)(msg_panel.slider_value * 100 / 190);
                 slider_value_lock = 1;
-                ctrl_msg.slider_en = 0;
+                msg_panel.slider_en = 0;
+                TRACE("msg queue panel is run\n");
             } else {
                 /* process tp key */
-                tp_key_proc(&ctrl_msg);
+                tp_key_proc(&msg_panel);
             }
         }
 
@@ -144,89 +129,93 @@ ctrl_task(void* para) {
         if (slider_value_lock == 1) {
             TRACE("value : %d\n", value);
             slider_set_target_value(value);
-            // slider_set_led_line(value);
             slider_set_led_line_smooth(value);
-            if (((led_ctrl.led_brightness == value) && (g_ctrl.slider_target == MODE_LED_BRIGHT))
-                || ((led_ctrl.led_color_temperature == value) && g_ctrl.slider_target == MODE_LED_COLOR)
+            if (((g_led_ctrl.led_brightness == value) && (g_panel_ctrl.slider_target == MODE_LED_BRIGHT))
+                || ((g_led_ctrl.led_color_temperature == value) && g_panel_ctrl.slider_target == MODE_LED_COLOR)
+                || ((g_fan_ctrl.fan_speed == value) && g_panel_ctrl.slider_target == MODE_FAN)
 
             ) {
                 slider_value_lock = 0;
             }
         }
 
-        osDelay(3);
+        osDelay(5);
     }
 }
 
 status_t
-tp_key_proc(ctrl_msg_t* msg) {
+tp_key_proc(msg_panel_t* msg) {
 
     /* main sw */
-    if (msg->tp._TP_KEY4 == 1) {
-        TRACE("msg->tp._TP_KEY4 : %d\n", msg->tp._TP_KEY4);
-        g_ctrl.sw._SW_MAIN = !g_ctrl.sw._SW_MAIN;
-        if (g_ctrl.sw._SW_MAIN == 1) {
-            HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, KEY_LED_ON);
+    if (msg->panel._TP_KEY4 == 1) {
+        TRACE("msg->tp._TP_KEY4 : %d\n", msg->panel._TP_KEY4);
+        g_panel_ctrl.sw._SW_MAIN = !g_panel_ctrl.sw._SW_MAIN;
+        if (g_panel_ctrl.sw._SW_MAIN == 1) {
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_status(1);
         } else {
             HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, KEY_LED_OFF);
+            panel_set_led_status(main_sw, panel_led_off);
             led_set_status(0);
         }
     }
 
     /* night light sw */
-    if (msg->tp._TP_KEY5 == 1) {
-        TRACE("msg->tp._TP_KEY5 : %d\n", msg->tp._TP_KEY5);
-        g_ctrl.sw._SW_NIGHT_LIGHT = !g_ctrl.sw._SW_NIGHT_LIGHT;
-        if (g_ctrl.sw._SW_NIGHT_LIGHT == 1) {
-            HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, KEY_LED_ON);
+    if (msg->panel._TP_KEY5 == 1) {
+        TRACE("msg->tp._TP_KEY5 : %d\n", msg->panel._TP_KEY5);
+        g_panel_ctrl.sw._SW_NIGHT_LIGHT = !g_panel_ctrl.sw._SW_NIGHT_LIGHT;
+        if (g_panel_ctrl.sw._SW_NIGHT_LIGHT == 1) {
+            panel_set_led_status(night_light, panel_led_on);
             night_light_set_status(1);
         } else {
-            HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, KEY_LED_OFF);
+            panel_set_led_status(night_light, panel_led_off);
             night_light_set_status(0);
         }
     }
 
     /* fan sw */
-    if (msg->tp._TP_KEY6 == 1) {
-        TRACE("msg->tp._TP_KEY6 : %d\n", msg->tp._TP_KEY6);
-        g_ctrl.sw._SW_FAN = !g_ctrl.sw._SW_FAN;
-        if (g_ctrl.sw._SW_FAN == 1) {
-            HAL_GPIO_WritePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin, KEY_LED_ON);
+    if (msg->panel._TP_KEY6 == 1) {
+        TRACE("msg->tp._TP_KEY6 : %d\n", msg->panel._TP_KEY6);
+        g_panel_ctrl.sw._SW_FAN = !g_panel_ctrl.sw._SW_FAN;
+        if (g_panel_ctrl.sw._SW_FAN == 1) {
+            panel_set_led_status(fan, panel_led_on);
             fan_set_status(1);
         } else {
-            HAL_GPIO_WritePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin, KEY_LED_OFF);
+            panel_set_led_status(fan, panel_led_off);
             fan_set_status(0);
         }
     }
-    
+
     /* mode sw */
-    if (msg->tp._TP_KEY7 == 1) {
-        TRACE("msg->tp._TP_KEY7 : %d\n", msg->tp._TP_KEY7);
-        if (g_ctrl.slider_target == MODE_LED_BRIGHT) {
-            g_ctrl.slider_target = MODE_LED_COLOR;
-        } else if (g_ctrl.slider_target == MODE_LED_COLOR) {
-            g_ctrl.slider_target = MODE_FAN;
-        } else if (g_ctrl.slider_target == MODE_FAN) {
-            g_ctrl.slider_target = MODE_LED_BRIGHT;
+    if (msg->panel._TP_KEY7 == 1) {
+        TRACE("msg->tp._TP_KEY7 : %d\n", msg->panel._TP_KEY7);
+        if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+        } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+            g_panel_ctrl.slider_target = MODE_FAN;
+        } else if (g_panel_ctrl.slider_target == MODE_FAN) {
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
         }
 
-        switch ((uint8_t)g_ctrl.slider_target) {
+        switch ((uint8_t)g_panel_ctrl.slider_target) {
             case MODE_LED_BRIGHT:
-                HAL_GPIO_WritePin(KEY_LED11_GPIO_Port, KEY_LED11_Pin, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_SET);
+                panel_set_led_status(idx_brightness, panel_led_on);
+                panel_set_led_status(idx_color, panel_led_off);
+                panel_set_led_status(idx_fan, panel_led_off);
+                slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
                 break;
             case MODE_LED_COLOR:
-                HAL_GPIO_WritePin(KEY_LED11_GPIO_Port, KEY_LED11_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_SET);
+                panel_set_led_status(idx_brightness, panel_led_off);
+                panel_set_led_status(idx_color, panel_led_on);
+                panel_set_led_status(idx_fan, panel_led_off);
+                slider_blk_set_led_line_smooth(g_led_ctrl.led_color_temperature);
                 break;
 
             case MODE_FAN:
-                HAL_GPIO_WritePin(KEY_LED11_GPIO_Port, KEY_LED11_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_RESET);
+                panel_set_led_status(idx_brightness, panel_led_off);
+                panel_set_led_status(idx_color, panel_led_off);
+                panel_set_led_status(idx_fan, panel_led_on);
+                slider_blk_set_led_line_smooth(g_fan_ctrl.fan_speed);
                 break;
             default:
                 /* do nothing */
@@ -239,16 +228,16 @@ tp_key_proc(ctrl_msg_t* msg) {
 
 #if 0
 status_t
-tp_key_proc(ctrl_msg_t* msg) {
+tp_key_proc(msg_panel_t* msg) {
     /* main led sw */
     if (msg->tp._TP_KEY4 == 1) {
-        g_ctrl.status._LED_SW = !g_ctrl.status._LED_SW;
-        if (g_ctrl.status._LED_SW == 1) {
-            g_ctrl.led._LED4 = 1;
+        g_panel_ctrl.status._LED_SW = !g_panel_ctrl.status._LED_SW;
+        if (g_panel_ctrl.status._LED_SW == 1) {
+            g_panel_ctrl.led._LED4 = 1;
             HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, GPIO_PIN_RESET);
             led_set_status(1);
         } else {
-            g_ctrl.led._LED4 = 0;
+            g_panel_ctrl.led._LED4 = 0;
             HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, GPIO_PIN_SET);
             led_set_status(0);
         }
@@ -256,14 +245,14 @@ tp_key_proc(ctrl_msg_t* msg) {
 
     /* night light sw */
     if (msg->tp._TP_KEY5 == 1) {
-        g_ctrl.status._LED_CTRL = !g_ctrl.status._LED_CTRL;
-        if (g_ctrl.status._LED_CTRL == 1) {
-            g_ctrl.slider_target = LED_COLOR_CTRL;
-            g_ctrl.led._LED5 = 1;
+        g_panel_ctrl.status._g_led_ctrl = !g_panel_ctrl.status._g_led_ctrl;
+        if (g_panel_ctrl.status._g_led_ctrl == 1) {
+            g_panel_ctrl.slider_target = LED_COLOR_CTRL;
+            g_panel_ctrl.led._LED5 = 1;
             HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, GPIO_PIN_RESET);
         } else {
-            g_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_ctrl.led._LED5 = 0;
+            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
+            g_panel_ctrl.led._LED5 = 0;
             HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, GPIO_PIN_SET);
         }
         
@@ -271,28 +260,28 @@ tp_key_proc(ctrl_msg_t* msg) {
 
     /* fan sw */
     if (msg->tp._TP_KEY6 == 1) {
-        g_ctrl.led._LED6 = !g_ctrl.led._LED6;
+        g_panel_ctrl.led._LED6 = !g_panel_ctrl.led._LED6;
         HAL_GPIO_TogglePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin);
         
     }
 
     /* fan */
     if (msg->tp._TP_KEY7 == 1) {
-        g_ctrl.led._LED7 = !g_ctrl.led._LED7;
+        g_panel_ctrl.led._LED7 = !g_panel_ctrl.led._LED7;
         HAL_GPIO_TogglePin(KEY_LED15_GPIO_Port, KEY_LED15_Pin);
     }
 
     /* night light */
     if (msg->tp._TP_KEY8 == 1) {
 
-        g_ctrl.status._NIGHT_LIGHT = !g_ctrl.status._NIGHT_LIGHT;
-        if (g_ctrl.status._NIGHT_LIGHT == 1) {
-            g_ctrl.led._LED8 = 1;
+        g_panel_ctrl.status._NIGHT_LIGHT = !g_panel_ctrl.status._NIGHT_LIGHT;
+        if (g_panel_ctrl.status._NIGHT_LIGHT == 1) {
+            g_panel_ctrl.led._LED8 = 1;
             HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_SET);
         } else {
-            g_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_ctrl.led._LED8 = 0;
+            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
+            g_panel_ctrl.led._LED8 = 0;
             HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_SET);
             HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_RESET);
         }
@@ -301,14 +290,14 @@ tp_key_proc(ctrl_msg_t* msg) {
     /* usb */
     if (msg->tp._TP_KEY9 == 1) {
 
-        g_ctrl.status._USB = !g_ctrl.status._USB;
-        if (g_ctrl.status._USB == 1) {
-            g_ctrl.led._LED9 = 1;
+        g_panel_ctrl.status._USB = !g_panel_ctrl.status._USB;
+        if (g_panel_ctrl.status._USB == 1) {
+            g_panel_ctrl.led._LED9 = 1;
             HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
         } else {
-            g_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_ctrl.led._LED9 = 0;
+            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
+            g_panel_ctrl.led._LED9 = 0;
             HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_SET);
             HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_RESET);
         }
@@ -322,7 +311,7 @@ tp_key_proc(ctrl_msg_t* msg) {
 status_t
 slider_set_target_value(uint8_t value) {
 
-    switch (g_ctrl.slider_target) {
+    switch (g_panel_ctrl.slider_target) {
         case MODE_LED_BRIGHT:
             //            TRACE("bright : %d\n", value);
             led_set_brightness_smooth(value);
@@ -334,7 +323,7 @@ slider_set_target_value(uint8_t value) {
 
         case MODE_FAN:
             //            TRACE("speed : %d\n", value);
-            fan_set_speed(1, value);
+            fan_set_speed_smooth(value);
             osDelay(4);
             break;
 
@@ -345,14 +334,56 @@ slider_set_target_value(uint8_t value) {
 }
 
 status_t
+panel_set_led_status(panel_led_target_t led_target, panel_led_status_t led_status) {
+
+    switch ((uint16_t)led_target) {
+        case main_sw:
+            PANEL_SET_MAIN_SW_LED(led_status);
+            g_panel_ctrl.sw._SW_MAIN = led_status;
+            break;
+        case night_light:
+            PANEL_SET_NIGHT_LIGHT_LED(led_status);
+            g_panel_ctrl.sw._SW_NIGHT_LIGHT = led_status;
+            break;
+        case fan:
+            PANEL_SET_FAN_LED(led_status);
+            g_panel_ctrl.sw._SW_FAN = led_status;
+            break;
+        case mode_sw:
+            PANEL_SET_MODE_SW_LED(led_status);
+            g_panel_ctrl.sw._SW_MODE = led_status;
+            break;
+        case idx_brightness: PANEL_SET_IDX_BRIGHTNESS_LED(led_status); break;
+        case idx_color: PANEL_SET_IDX_COLOR_LED(led_status); break;
+        case idx_fan: PANEL_SET_IDX_FAN_LED(led_status); break;
+    }
+
+    return status_ok;
+}
+
+status_t
+slider_blk_set_led_line_smooth(uint8_t value) {
+    while (g_panel_ctrl.slider_led_line_value != value) {
+        if (g_panel_ctrl.slider_led_line_value < value) {
+            g_panel_ctrl.slider_led_line_value++;
+        } else if (g_panel_ctrl.slider_led_line_value > value) {
+            g_panel_ctrl.slider_led_line_value--;
+        }
+        slider_set_led_line(g_panel_ctrl.slider_led_line_value);
+        osDelay(8);
+    }
+    return status_ok;
+}
+
+status_t
 slider_set_led_line_smooth(uint8_t value) {
-    if (slider_led_line_value != value) {
-        if (slider_led_line_value < value) {
-            slider_led_line_value++;
-            slider_set_led_line(slider_led_line_value);
-        } else if (slider_led_line_value > value) {
-            slider_led_line_value--;
-            slider_set_led_line(slider_led_line_value);
+    if (g_panel_ctrl.slider_led_line_value != value) {
+        if (g_panel_ctrl.slider_led_line_value < value) {
+            g_panel_ctrl.slider_led_line_value++;
+            slider_set_led_line(g_panel_ctrl.slider_led_line_value);
+        } else if (g_panel_ctrl.slider_led_line_value > value) {
+            g_panel_ctrl.slider_led_line_value--;
+            slider_set_led_line(g_panel_ctrl.slider_led_line_value);
         }
     }
     return status_ok;

@@ -42,11 +42,18 @@ extern "C" {
 #include "lib/type/lib_type.h"
 #include "main.h"
 
-void fan_init(void);
-void prv_fan_set_pwm_duty(uint16_t fan_polarity, uint16_t fan_pwm_duty);
-void fan_set_speed(uint16_t fan_polarity, uint16_t fan_speed);
+typedef struct {
+    uint16_t fan_speed;
+    uint16_t fan_status;
+} fan_ctrl_t;
+
+status_t fan_init(void);
+status_t fan_set_speed(uint16_t fan_speed);
+status_t fan_set_speed_smooth(uint16_t fan_speed);
 status_t fan_set_status(uint16_t on_off);
 status_t fan_set_level(uint16_t fan_level);
+
+extern fan_ctrl_t g_fan_ctrl;
 
 #ifdef __cplusplus
 }

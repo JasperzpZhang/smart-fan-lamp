@@ -180,6 +180,7 @@ prvCliCmdMemWrite(cli_printf cliprintf, int argc, char** argv) {
 }
 CLI_CMD_EXPORT(mem_write, write to fram, prvCliCmdMemWrite)
 
+
 #if MEM_TEST
 static void
 prvCliCmdMemTest(cli_printf cliprintf, int argc, char** argv) {

@@ -1289,14 +1289,14 @@
               <FilePath>..\..\src\arm\app\svc\led.c</FilePath>
             </File>
             <File>
-              <FileName>ctrl.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\app\svc\ctrl.c</FilePath>
-            </File>
-            <File>
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\svc\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>panel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\app\svc\panel.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -43,20 +43,19 @@ extern "C" {
 #include "main.h"
 
 typedef struct {
-    uint16_t last_led_brightness;
-    uint16_t last_led_color_temperature;
+    // uint16_t last_led_brightness; // last led brightnes and last_led_color_temperature just used for settting.
+    // uint16_t last_led_color_temperature;
     uint16_t led_brightness;
     uint16_t led_color_temperature;
 
     struct {
-        uint16_t _MAIN_PWR           : 1;
         uint16_t _LED_STATUS         : 1;
         uint16_t _NIGHT_LIGHT_STATUS : 1;
 
     } status;
 } led_ctrl_t;
 
-extern led_ctrl_t led_ctrl;
+extern led_ctrl_t g_led_ctrl;
 
 status_t led_init(void);
 status_t led_set_brightness(uint16_t led_brightness);
@@ -67,6 +66,8 @@ status_t led_start_pwm(void);
 status_t led_set_status(uint16_t on_off);
 status_t led_set_brightness_smooth(uint16_t target_led_brightness);
 status_t led_set_color_temperature_smooth(uint16_t target_led_color_temperature);
+status_t led_set_brightness_smooth_blk(uint16_t target_led_brightness);
+status_t led_set_color_temperature_smooth_blk(uint16_t target_led_color_temperature);
 status_t night_light_set_status(uint16_t on_off);
 
 #ifdef __cplusplus

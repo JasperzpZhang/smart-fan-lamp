@@ -103,7 +103,7 @@ extern "C" {
 #include "app/svc/tp.h"
 #include "app/sys.h"
 #include "app/svc/led.h"
-#include "app/svc/ctrl.h"
+#include "app/svc/panel.h"
 #include "app/svc/wave.h"
 
 #if 0

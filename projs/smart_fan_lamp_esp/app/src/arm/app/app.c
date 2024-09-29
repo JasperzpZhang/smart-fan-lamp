@@ -63,7 +63,7 @@ app_init(void) {
     fan_init();
     tp_init();
     led_init();
-    ctrl_init();
+    panel_init();
     wave_init();
     sys_init();
 }

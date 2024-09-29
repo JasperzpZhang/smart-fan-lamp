@@ -194,13 +194,13 @@ static void prv_cli_cmd_cfg_show(cli_printf cliprintf, int argc, char **argv)
 {
     CHECK_CLI();
 
+    cliprintf("mem_en                :  %d\r\n", th_mem_en);
     cliprintf("led_brightness        :  %d %%\r\n", th_led_brightness);
     cliprintf("led_color_temperature :  %d %%\r\n", th_led_color_temperature);
     cliprintf("led_status            :  %d \r\n", th_led_status);
-    cliprintf("fan_polarity          :  %d \r\n", th_fan_polarity);
     cliprintf("fan_speed             :  %d %%\r\n", th_fan_speed);
     cliprintf("fan_status            :  %d\r\n", th_fan_status);
-    cliprintf("mem_en                :  %d\r\n", th_mem_en);
+    cliprintf("scence_mode           :  %d\r\n", th_scence_mode);
     cliprintf("\r\n");
 }
 CLI_CMD_EXPORT(cfg_show, show config parameters, prv_cli_cmd_cfg_show)
@@ -221,6 +221,34 @@ static void prv_cli_cmd_cfg_mem_en(cli_printf cliprintf, int argc, char **argv)
     }
 }
 CLI_CMD_EXPORT(cfg_mem_en, memory enable, prv_cli_cmd_cfg_mem_en)
+
+static void prv_cli_cmd_mem_save(cli_printf cliprintf, int argc, char **argv)
+{
+    CHECK_CLI();
+    if (2 == argc)
+    {
+        uint8_t dev = atoi(argv[1]);
+        
+        if (dev == 1){
+            led_save_status();
+        }
+        else if (dev == 2)
+        {
+        
+            
+        }
+        
+        
+        
+        
+       
+    }
+    else
+    {
+        cliprintf("parameter length error\r\n");
+    }
+}
+CLI_CMD_EXPORT(mem_save, memory enable, prv_cli_cmd_mem_save) 
 
 #if 0
 static void prv_cli_cmd_mem_init(cli_printf cliprintf, int argc, char **argv)

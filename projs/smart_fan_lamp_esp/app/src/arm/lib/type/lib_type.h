@@ -49,8 +49,6 @@ extern "C"
 	{
         status_ok,
         status_err,
-		
-        
 	} status_t;
 
 	typedef uint8_t Bool_t;
