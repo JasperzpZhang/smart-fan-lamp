@@ -66,16 +66,16 @@ lcd_1in83_test() {
 
     DEV_Module_Init();
     lcd_1in83_set_backlight(100);
-    lcd_1in83_init(HORIZONTAL); // HORIZONTAL VERTICAL
+    lcd_1in83_init(VERTICAL); // HORIZONTAL VERTICAL
     lcd_1in83_clear(BLACK);
 
-    DEV_DELAY_MS(300);
-    lcd_1in83_clear(LIGHTGREEN);
-    DEV_DELAY_MS(300);
+//    DEV_DELAY_MS(300);
+//    lcd_1in83_clear(LIGHTGREEN);
+//    DEV_DELAY_MS(300);
 
-    DEV_DELAY_MS(300);
-    lcd_1in83_clear(CYAN);
-    DEV_DELAY_MS(300);
+//    DEV_DELAY_MS(300);
+//    lcd_1in83_clear(CYAN);
+//    DEV_DELAY_MS(300);
 
     // while (1) {
 
