@@ -12,13 +12,12 @@
 #ifndef __LCD_1IN83_H
 #define __LCD_1IN83_H
 
-#include "main.h"
 #include <stdint.h>
 #include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
+#include "main.h"
 
 #include <stdio.h>
 #include <stdlib.h> //itoa()
-
 
 #define LCD_1IN83_HEIGHT 280
 #define LCD_1IN83_WIDTH  240

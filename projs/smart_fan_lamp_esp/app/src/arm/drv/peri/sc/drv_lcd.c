@@ -66,7 +66,7 @@ lcd_1in83_test() {
 
     DEV_Module_Init();
     lcd_1in83_set_backlight(100);
-    lcd_1in83_init(VERTICAL); // HORIZONTAL VERTICAL
+    lcd_1in83_init(HORIZONTAL); // HORIZONTAL VERTICAL
     lcd_1in83_clear(BLACK);
 
     DEV_DELAY_MS(300);
@@ -77,29 +77,39 @@ lcd_1in83_test() {
     lcd_1in83_clear(CYAN);
     DEV_DELAY_MS(300);
 
-    Paint_NewImage(LCD_1IN83_WIDTH, LCD_1IN83_HEIGHT, 0, WHITE);
+    // while (1) {
 
-    Paint_SetClearFuntion(lcd_1in83_clear);
-    Paint_SetDisplayFuntion(lcd_1in83_draw_point);
+    //     lcd_1in83_clear(RED);
+    //     DEV_DELAY_MS(1500);
+    //     lcd_1in83_clear(GREEN);
+    //     DEV_DELAY_MS(1500);
+    //     lcd_1in83_clear(BLUE);
+    //     DEV_DELAY_MS(1500);
+    // }
 
-    Paint_Clear(WHITE);
-    DEV_DELAY_MS(100);
+    // Paint_NewImage(LCD_1IN83_WIDTH, LCD_1IN83_HEIGHT, 0, WHITE);
 
-    Paint_DrawString_EN(30, 10, "123", &Font24, YELLOW, RED);
-    Paint_DrawString_EN(30, 34, "ABC", &Font24, BLUE, CYAN);
-    Paint_DrawFloatNum(30, 58, 987.652, 3, &Font12, WHITE, BLACK);
+    // Paint_SetClearFuntion(lcd_1in83_clear);
+    // Paint_SetDisplayFuntion(lcd_1in83_draw_point);
 
-    Paint_DrawString_CN(50, 180, "12345", &Font24CN, WHITE, RED);
-    Paint_DrawImage(gImage_1, 25, 70, 60, 60);
+    // Paint_Clear(WHITE);
+    // DEV_DELAY_MS(100);
 
-    Paint_DrawRectangle(125, 10, 225, 58, RED, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    Paint_DrawLine(125, 10, 225, 58, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-    Paint_DrawLine(225, 10, 125, 58, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-    Paint_DrawCircle(150, 100, 25, BLUE, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    Paint_DrawCircle(180, 100, 25, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    Paint_DrawCircle(210, 100, 25, RED, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    Paint_DrawCircle(165, 125, 25, YELLOW, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    Paint_DrawCircle(195, 125, 25, GREEN, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawString_EN(30, 10, "123", &Font24, YELLOW, RED);
+    // Paint_DrawString_EN(30, 34, "ABC", &Font24, BLUE, CYAN);
+    // Paint_DrawFloatNum(30, 58, 987.652, 3, &Font12, WHITE, BLACK);
+
+    // Paint_DrawString_CN(50, 180, "12345", &Font24CN, WHITE, RED);
+    // Paint_DrawImage(gImage_1, 25, 70, 60, 60);
+
+    // Paint_DrawRectangle(125, 10, 225, 58, RED, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawLine(125, 10, 225, 58, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+    // Paint_DrawLine(225, 10, 125, 58, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+    // Paint_DrawCircle(150, 100, 25, BLUE, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawCircle(180, 100, 25, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawCircle(210, 100, 25, RED, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawCircle(165, 125, 25, YELLOW, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    // Paint_DrawCircle(195, 125, 25, GREEN, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
 
     DEV_DELAY_MS(3000);
 

@@ -41,7 +41,7 @@
 #include "lib/iic/lib_iic.h"
 
 /* Debug config */
-#if IIC_DEBUG || 0
+#if IIC_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else

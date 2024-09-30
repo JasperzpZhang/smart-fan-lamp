@@ -48,7 +48,7 @@
 #pragma diag_suppress 550 /* warning: #550-D: variable was set but never used */
 
 /* Debug config */
-#if RTC_DEBUG
+#if RTC_DEBUG 
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -109,7 +109,7 @@ static osMutexId s_xMutex;
 #endif /* RTC_RTOS */
 
 /* Local defines */
-#if RTC_RTOS
+#if RTC_RTOS && 0
 #define DS1338_MUTEX_INIT()                                                                                            \
     do {                                                                                                               \
         s_xMutex = osMutexNew(NULL);                                                                                   \

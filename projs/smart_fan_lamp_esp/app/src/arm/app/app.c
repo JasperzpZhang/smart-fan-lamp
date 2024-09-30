@@ -65,7 +65,7 @@ app_init(void) {
     led_init();
     panel_init();
     wave_init();
-    lcd_1in83_test();
+//    lcd_1in83_test();
     sys_init();
 }
 

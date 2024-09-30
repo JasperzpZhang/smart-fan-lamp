@@ -34,6 +34,8 @@
 
 #include "app/include.h"
 
+#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83.h"
+
 /* Debug config */
 #if SYS_DEBUG || 1
 #undef TRACE
@@ -70,13 +72,13 @@ sys_init(void) {
     //    HAL_TIM_PWM_Start(FAN_FORWARD_TIM, FAN_FORWARD_CHANNEL);
     //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, 70);
 
-//    HAL_TIM_PWM_Start(LED_COLD_TIM, LED_COLD_TIM_CHANNEL);
-//    __HAL_TIM_SET_COMPARE(LED_COLD_TIM, LED_COLD_TIM_CHANNEL, 100);
+    //    HAL_TIM_PWM_Start(LED_COLD_TIM, LED_COLD_TIM_CHANNEL);
+    //    __HAL_TIM_SET_COMPARE(LED_COLD_TIM, LED_COLD_TIM_CHANNEL, 100);
 
-//    HAL_TIM_PWM_Start(LED_WARM_TIM, LED_WARM_TIM_CHANNEL);
-//    __HAL_TIM_SET_COMPARE(LED_WARM_TIM, LED_WARM_TIM_CHANNEL, 100);
+    //    HAL_TIM_PWM_Start(LED_WARM_TIM, LED_WARM_TIM_CHANNEL);
+    //    __HAL_TIM_SET_COMPARE(LED_WARM_TIM, LED_WARM_TIM_CHANNEL, 100);
 
-//    HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
+    //    HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
 
     xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
@@ -86,8 +88,15 @@ sys_init(void) {
 static void
 sys_task(void* parameter) {
     while (1) {
-//        TRACE("sys wdog feed\n");
-        
+        //        TRACE("sys wdog feed\n");
+
+//        lcd_1in83_clear(RED);
+//        osDelay(1500);
+//        lcd_1in83_clear(GREEN);
+//        osDelay(1500);
+//        lcd_1in83_clear(BLUE);
+//        osDelay(1500);
+
         wdog_feed();
         osDelay(500);
         osDelay(SYS_TASK_DELAY);

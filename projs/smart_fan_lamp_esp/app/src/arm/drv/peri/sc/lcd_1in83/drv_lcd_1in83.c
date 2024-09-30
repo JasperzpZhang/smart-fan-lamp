@@ -173,7 +173,7 @@ static void
 LCD_1IN83_SetAttributes(uint8_t Scan_dir) {
     // Get the screen scan direction
     LCD_1IN83.SCAN_DIR = Scan_dir;
-    uint8_t MemoryAccessReg = 0x00;
+    uint8_t MemoryAccessReg = 0X08;
 
     // Get GRAM and LCD width and height
     if (Scan_dir == HORIZONTAL) {
@@ -240,11 +240,11 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
 
     } else {
         // set the X coordinates
-        //        lcd_1in83_send_cmd(0x2A);
-        //        lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
-        //        lcd_1in83_send_data_8bit(Xstart + 20);
-        //        lcd_1in83_send_data_8bit((Xend + 20 - 1) >> 8);
-        //        lcd_1in83_send_data_8bit(Xend + 20 - 1);
+        // lcd_1in83_send_cmd(0x2A);
+        // lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Xstart + 20);
+        // lcd_1in83_send_data_8bit((Xend + 20 - 1) >> 8);
+        // lcd_1in83_send_data_8bit(Xend + 20 - 1);
 
         lcd_1in83_send_cmd(0x2A);
         lcd_1in83_send_data_8bit((Xstart) >> 8);
@@ -253,11 +253,17 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
         lcd_1in83_send_data_8bit(Xend - 1);
 
         // set the Y coordinates
+        // lcd_1in83_send_cmd(0x2B);
+        // lcd_1in83_send_data_8bit(Ystart >> 8);
+        // lcd_1in83_send_data_8bit(Ystart);
+        // lcd_1in83_send_data_8bit((Yend - 1) >> 8);
+        // lcd_1in83_send_data_8bit(Yend - 1);
+
         lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit(Ystart >> 8);
-        lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Yend - 1);
+        lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
+        lcd_1in83_send_data_8bit(Ystart + 20);
+        lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
+        lcd_1in83_send_data_8bit(Yend + 20 - 1);
     }
 
     lcd_1in83_send_cmd(0X2C);
@@ -322,8 +328,8 @@ lcd_1in83_clear(uint16_t Color) {
     lcd_1in83_set_windows(0, 0, LCD_1IN83.WIDTH, LCD_1IN83.HEIGHT);
     DEV_Digital_Write(DEV_DC_PIN, 1);
 
-    for (i = 0; i < LCD_1IN83_HEIGHT; i++) {
-        for (j = 0; j < LCD_1IN83_WIDTH; j++) {
+    for (i = 0; i < LCD_1IN83.HEIGHT; i++) {
+        for (j = 0; j < LCD_1IN83.WIDTH; j++) {
             DEV_SPI_WRITE((Color >> 8) & 0xff);
             DEV_SPI_WRITE(Color);
         }

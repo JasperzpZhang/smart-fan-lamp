@@ -112,7 +112,7 @@ extern "C" {
 #define RTC_DS1338_ENABLE        (1)
 #define RTC_STDC_TIME            (3) /* 0: No use; 1: STM32; 2: DS1302  3: DS1338*/
 #define RTC_RTOS                 (1)
-#define RTC_DEBUG                (0)
+#define RTC_DEBUG                (1)
 #define RTC_SHOW_TIME            (0)
 #define RTC_ASSERT               (0)
 #define RTC_TEST                 (0)

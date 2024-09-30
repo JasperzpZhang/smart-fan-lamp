@@ -17,6 +17,8 @@
         "drv_lcd.h": "c",
         "drv_st7789_font.h": "c",
         "drv_st7789_basic.h": "c",
-        "drv_st7789.h": "c"
+        "drv_st7789.h": "c",
+        "drv_lcd_1in83_cfg.h": "c",
+        "drv_lcd_1in83.h": "c"
     }
 }
