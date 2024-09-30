@@ -13,6 +13,10 @@
         "random": "c",
         "drv_tp.h": "c",
         "ctrl.h": "c",
-        "format": "c"
+        "format": "c",
+        "drv_lcd.h": "c",
+        "drv_st7789_font.h": "c",
+        "drv_st7789_basic.h": "c",
+        "drv_st7789.h": "c"
     }
 }

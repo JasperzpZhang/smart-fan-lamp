@@ -1249,14 +1249,14 @@
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_lcd_1in83_cfg.c</FilePath>
             </File>
             <File>
-              <FileName>drv_image.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_image.c</FilePath>
-            </File>
-            <File>
               <FileName>drv_gui_paint.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_gui_paint.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_image.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_image.c</FilePath>
             </File>
             <File>
               <FileName>font12.c</FileName>

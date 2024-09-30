@@ -77,7 +77,7 @@ static osMutexId_t MUTEX_NAME;
 #define SPI_UNLOCK()
 #endif /* SPI_RTOS */
 
-
+#define SPI_CS(x) HAL_GPIO_WritePin(SPI3_FLASH_CS_GPIO_Port, SPI3_FLASH_CS_Pin, x ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
 /**
  * @brief     spi bus write command
@@ -88,30 +88,28 @@ static osMutexId_t MUTEX_NAME;
  *            - 1 write failed
  * @note      none
  */
-uint8_t spi_write_cmd(uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_write_cmd(uint8_t* buf, uint16_t len) {
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* transmit the buffer */
         res = HAL_SPI_Transmit(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -125,42 +123,39 @@ uint8_t spi_write_cmd(uint8_t *buf, uint16_t len)
  *            - 1 write failed
  * @note      none
  */
-uint8_t spi_write(uint8_t addr, uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_write(uint8_t addr, uint8_t* buf, uint16_t len) {
     uint8_t buffer;
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* transmit the addr */
     buffer = addr;
-    res = HAL_SPI_Transmit(&hspi3, (uint8_t *)&buffer, 1, 1000);
-    if (res != HAL_OK)
-    {
+    res = HAL_SPI_Transmit(&hspi3, (uint8_t*)&buffer, 1, 1000);
+    if (res != HAL_OK) {
         /* set cs high */
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-        
+        SPI_CS(1);
+
         return 1;
     }
-    
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* transmit the buffer */
         res = HAL_SPI_Transmit(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -174,43 +169,40 @@ uint8_t spi_write(uint8_t addr, uint8_t *buf, uint16_t len)
  *            - 1 write failed
  * @note      none
  */
-uint8_t spi_write_address16(uint16_t addr, uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_write_address16(uint16_t addr, uint8_t* buf, uint16_t len) {
     uint8_t buffer[2];
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* transmit the addr  */
     buffer[0] = (addr >> 8) & 0xFF;
     buffer[1] = addr & 0xFF;
-    res = HAL_SPI_Transmit(&hspi3, (uint8_t *)buffer, 2, 1000);
-    if (res != HAL_OK)
-    {
+    res = HAL_SPI_Transmit(&hspi3, (uint8_t*)buffer, 2, 1000);
+    if (res != HAL_OK) {
         /* set cs high */
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-       
+        SPI_CS(1);
+
         return 1;
     }
-    
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* transmit the buffer */
         res = HAL_SPI_Transmit(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-           
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -223,30 +215,28 @@ uint8_t spi_write_address16(uint16_t addr, uint8_t *buf, uint16_t len)
  *             - 1 read failed
  * @note       none
  */
-uint8_t spi_read_cmd(uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_read_cmd(uint8_t* buf, uint16_t len) {
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* receive to the buffer */
         res = HAL_SPI_Receive(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -260,42 +250,39 @@ uint8_t spi_read_cmd(uint8_t *buf, uint16_t len)
  *             - 1 read failed
  * @note       none
  */
-uint8_t spi_read(uint8_t addr, uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_read(uint8_t addr, uint8_t* buf, uint16_t len) {
     uint8_t buffer;
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* transmit the addr */
     buffer = addr;
-    res = HAL_SPI_Transmit(&hspi3, (uint8_t *)&buffer, 1, 1000);
-    if (res != HAL_OK)
-    {
+    res = HAL_SPI_Transmit(&hspi3, (uint8_t*)&buffer, 1, 1000);
+    if (res != HAL_OK) {
         /* set cs high */
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-       
+        SPI_CS(1);
+
         return 1;
     }
-    
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* receive to the buffer */
         res = HAL_SPI_Receive(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-           
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -309,43 +296,40 @@ uint8_t spi_read(uint8_t addr, uint8_t *buf, uint16_t len)
  *             - 1 read failed
  * @note       none
  */
-uint8_t spi_read_address16(uint16_t addr, uint8_t *buf, uint16_t len)
-{
+uint8_t
+spi_read_address16(uint16_t addr, uint8_t* buf, uint16_t len) {
     uint8_t buffer[2];
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* transmit the addr  */
     buffer[0] = (addr >> 8) & 0xFF;
     buffer[1] = addr & 0xFF;
-    res = HAL_SPI_Transmit(&hspi3, (uint8_t *)buffer, 2, 1000);
-    if (res != HAL_OK)
-    {
+    res = HAL_SPI_Transmit(&hspi3, (uint8_t*)buffer, 2, 1000);
+    if (res != HAL_OK) {
         /* set cs high */
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-       
+        SPI_CS(1);
+
         return 1;
     }
-    
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* receive to the buffer */
         res = HAL_SPI_Receive(&hspi3, buf, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-           
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -359,30 +343,28 @@ uint8_t spi_read_address16(uint16_t addr, uint8_t *buf, uint16_t len)
  *             - 1 transmit failed
  * @note       none
  */
-uint8_t spi_transmit(uint8_t *tx, uint8_t *rx, uint16_t len)
-{
+uint8_t
+spi_transmit(uint8_t* tx, uint8_t* rx, uint16_t len) {
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* if len > 0 */
-    if (len > 0)
-    {
+    if (len > 0) {
         /* transmit */
         res = HAL_SPI_TransmitReceive(&hspi3, tx, rx, len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
 
@@ -397,44 +379,39 @@ uint8_t spi_transmit(uint8_t *tx, uint8_t *rx, uint16_t len)
  *             - 1 write read failed
  * @note       none
  */
-uint8_t spi_write_read(uint8_t *in_buf, uint32_t in_len, uint8_t *out_buf, uint32_t out_len)
-{
+uint8_t
+spi_write_read(uint8_t* in_buf, uint32_t in_len, uint8_t* out_buf, uint32_t out_len) {
     uint8_t res;
-    
+
     /* set cs low */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-    
+    SPI_CS(0);
+
     /* if in_len > 0 */
-    if (in_len > 0)
-    {
+    if (in_len > 0) {
         /* transmit the input buffer */
         res = HAL_SPI_Transmit(&hspi3, in_buf, in_len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-           
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* if out_len > 0 */
-    if (out_len > 0)
-    {
+    if (out_len > 0) {
         /* transmit to the output buffer */
         res = HAL_SPI_Receive(&hspi3, out_buf, out_len, 1000);
-        if (res != HAL_OK)
-        {
+        if (res != HAL_OK) {
             /* set cs high */
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-           
+            SPI_CS(1);
+
             return 1;
         }
     }
-    
+
     /* set cs high */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    
+    SPI_CS(1);
+
     return 0;
 }
-

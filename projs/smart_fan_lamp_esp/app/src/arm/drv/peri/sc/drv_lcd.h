@@ -1,3 +1,5 @@
+
+#if 1
 /*****************************************************************************
 * | File      	:	LCD_Test.h
 * | Author      :   Waveshare team
@@ -30,37 +32,14 @@
 #ifndef _EPD_TEST_H_
 #define _EPD_TEST_H_
 
-#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
-#include "drv/peri/sc/lcd_1in83/drv_gui_paint.h"
 #include <stdlib.h> // malloc() free()
+#include "drv/peri/sc/lcd_1in83/drv_gui_paint.h"
+#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
 
-void LCD_0in96_test(void);
 
-void LCD_1in14_test(void);
+void lcd_1in83_test(void);
 
-void LCD_1in3_test(void);
-
-void LCD_1in47_test(void);
-
-void LCD_1in54_test(void);
-
-void LCD_1in69_test(void);
-
-void LCD_1in8_test(void);
-
-void LCD_1in83_test(void);
-
-void LCD_1in9_test(void);
-
-void LCD_2in_test(void);
-
-void LCD_2in4_test(void);
-
-void LCD_1in28_test(void);
 
 #endif
 
-
-
-
-
+#endif

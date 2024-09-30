@@ -37,13 +37,13 @@ function:	Delay function
 note:
 	Driver_Delay_ms(xms) : Delay x ms
 ********************************************************************************/
-void DEV_delay_ms(uint16_t xms )
-{
-	HAL_Delay(xms);
-}
+//void DEV_DELAY_MS(uint16_t xms )
+//{
+//	HAL_Delay(xms);
+//}
 
 
-void DEV_SPI_WRite(UBYTE _dat)
+void DEV_SPI_WRite(uint8_t _dat)
 {
 	HAL_SPI_Transmit(&hspi3, (uint8_t *)&_dat, 1, 500);
 }

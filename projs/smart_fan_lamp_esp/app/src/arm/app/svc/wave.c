@@ -69,33 +69,33 @@ wave_task(void* para) {
 
     while (1) {
         
+        if (th_scence_mode == 0) {
+            HAL_ADC_Start(&hadc1);
+            HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+            adc_light_value = HAL_ADC_GetValue(&hadc1);
+            //    TRACE("adc_value : %d mv [%d]\n", adc_light_value * 3300 / 4095, adc_light_value);
+        }
 
+        if ((adc_light_value < 100) && HAL_GPIO_ReadPin(WAVE_DETC_GPIO_Port, WAVE_DETC_Pin) == GPIO_PIN_RESET) {
+            if (g_led_ctrl.status._NIGHT_LIGHT_STATUS != 1) {
+                night_light_set_status(1);
+                led_set_status(1);
+                fan_set_status(1);
+            }
+        } else {
+            if (g_led_ctrl.status._NIGHT_LIGHT_STATUS != 0) {
+                night_light_set_status(0);
+                led_set_status(0);
+                fan_set_status(0);
+            }
+        }
+        
 
         osDelay(1000);
     }
 }
 
 
-//        if (th_scence_mode == 0) {
-//            HAL_ADC_Start(&hadc1);
-//            HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-//            adc_light_value = HAL_ADC_GetValue(&hadc1);
-//            //    TRACE("adc_value : %d mv [%d]\n", adc_light_value * 3300 / 4095, adc_light_value);
-//        }
-
-//        if ((adc_light_value < 100) && HAL_GPIO_ReadPin(WAVE_DETC_GPIO_Port, WAVE_DETC_Pin) == GPIO_PIN_RESET) {
-//            if (g_led_ctrl.status._NIGHT_LIGHT_STATUS != 1) {
-//                night_light_set_status(1);
-//                led_set_status(1);
-//                fan_set_status(1);
-//            }
-//        } else {
-//            if (g_led_ctrl.status._NIGHT_LIGHT_STATUS != 0) {
-//                night_light_set_status(0);
-//                led_set_status(0);
-//                fan_set_status(0);
-//            }
-//        }
 
 
 

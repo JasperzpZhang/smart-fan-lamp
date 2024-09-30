@@ -40,9 +40,9 @@
 #include "tim.h"
 
 
-#define UBYTE                           uint8_t
-#define UWORD                           uint16_t
-#define UDOUBLE                         uint32_t
+//#define uint8_t                           uint8_t
+//#define uint16_t                           uint16_t
+//#define uint32_t                         uint32_t
 
 /**
  * GPIO config
@@ -66,16 +66,16 @@
 /**
  * delay x ms
 **/
-#define DEV_Delay_ms(__xms)             HAL_Delay(__xms)
+#define DEV_DELAY_MS(__xms)             HAL_Delay(__xms)
 
 /**
  * PWM_BL
 **/
 
-#define DEV_Set_PWM(_Value)             DEV_BL_PIN = _Value
+#define DEV_SET_PWM(_Value)             DEV_BL_PIN = _Value
 
 /*-----------------------------------------------------------------------------*/
-void DEV_SPI_WRite(UBYTE _dat);
+void DEV_SPI_WRite(uint8_t _dat);
 int DEV_Module_Init(void);
 void DEV_Module_Exit(void);
 #endif
