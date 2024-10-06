@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      tp.c
- * @brief     Implementation File for TouchPad Module
+ * @file      drv_lcd.c
+ * @brief     Implementation File for lcd Module
  * @version   1.0.0
  * @author    Jasper
  * @date      2024-09-26
@@ -33,8 +33,6 @@
    --------------------
    01a, 26Sep24, Jasper Created
  */
-
-#include "app/include.h"
 
 #include "drv/peri/sc/drv_lcd.h"
 #include "drv/peri/sc/lcd_1in83/drv_image.h"
@@ -60,7 +58,16 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
-#if 1
+void lcd_init(void)
+{
+    DEV_Module_Init();
+    lcd_1in83_set_backlight(100);
+    lcd_1in83_init(HORIZONTAL); // HORIZONTAL VERTICAL
+    lcd_1in83_clear(WHITE);
+}
+
+
+#if 0
 void
 lcd_1in83_test() {
 

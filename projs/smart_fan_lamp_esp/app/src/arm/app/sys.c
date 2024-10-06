@@ -82,7 +82,7 @@ sys_init(void) {
 
     //    HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
 
-//    xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
+    xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
 
     return status_ok;
 }
@@ -95,54 +95,54 @@ sys_task(void* parameter) {
     while (1) {
         //        TRACE("sys wdog feed\n");
 
-        lcd_1in83_clear(WHITE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(BLACK);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(BLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(BRED);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(GRED);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(GBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(RED);
-        osDelay(SYS_TASK_DELAY_TIME);
-        
-        wdog_feed();
-        lcd_1in83_clear(MAGENTA);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(GREEN);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(CYAN);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(YELLOW);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(BROWN);
-        osDelay(SYS_TASK_DELAY_TIME);
-        
-        wdog_feed();
-        lcd_1in83_clear(BRRED);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(GRAY);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(DARKBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(LIGHTBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(GRAYBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        
-        wdog_feed();
-        lcd_1in83_clear(LIGHTGREEN);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(LGRAY);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(LGRAYBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
-        lcd_1in83_clear(LBBLUE);
-        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(WHITE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(BLACK);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(BLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(BRED);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(GRED);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(GBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(RED);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        
+//        wdog_feed();
+//        lcd_1in83_clear(MAGENTA);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(GREEN);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(CYAN);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(YELLOW);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(BROWN);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        
+//        wdog_feed();
+//        lcd_1in83_clear(BRRED);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(GRAY);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(DARKBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(LIGHTBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(GRAYBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        
+//        wdog_feed();
+//        lcd_1in83_clear(LIGHTGREEN);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(LGRAY);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(LGRAYBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
+//        lcd_1in83_clear(LBBLUE);
+//        osDelay(SYS_TASK_DELAY_TIME);
         
         wdog_feed();
         osDelay(500);

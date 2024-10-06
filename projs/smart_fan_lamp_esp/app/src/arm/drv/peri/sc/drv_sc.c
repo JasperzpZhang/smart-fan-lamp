@@ -64,10 +64,9 @@ sc_init(sc_id_t sc_id) {
 
         case atk_lcd_4_3: break;
 
-        case hxc_lcd_1_8: break;
+        case hxc_lcd_1_8: lcd_init(); break;
 
         default: break;
     }
     return status_ok;
 }
-
