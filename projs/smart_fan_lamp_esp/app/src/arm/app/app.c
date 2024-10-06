@@ -65,7 +65,13 @@ app_init(void) {
     led_init();
     panel_init();
     wave_init();
+    
+    
     lcd_1in83_test();
+    
+    drv_voice_init();
+    
+    
     sys_init();
 }
 

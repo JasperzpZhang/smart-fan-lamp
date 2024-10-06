@@ -1278,6 +1278,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\fonts\font24CN.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_voice.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\voice\drv_voice.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

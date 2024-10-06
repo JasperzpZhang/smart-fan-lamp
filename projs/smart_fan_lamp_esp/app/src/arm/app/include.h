@@ -92,6 +92,7 @@ extern "C" {
 #include "drv/peri/rtc/drv_rtc.h"
 #include "drv/peri/tp/drv_tp.h"
 #include "drv/peri/sc/drv_sc.h"
+#include "drv/peri/voice/drv_voice.h"
 //#include "drv/peri/humiture/drv_aht20_basic.h"
 
 /* Application */
