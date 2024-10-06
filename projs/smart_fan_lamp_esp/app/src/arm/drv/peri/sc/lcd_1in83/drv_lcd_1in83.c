@@ -223,49 +223,30 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
         lcd_1in83_send_cmd(0x2A);
         lcd_1in83_send_data_8bit(Xstart >> 8);
         lcd_1in83_send_data_8bit(Xstart);
-        lcd_1in83_send_data_8bit((Xend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Xend - 1);
-
-        // lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit((Ystart) >> 8);
-        lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Yend - 1);
+        lcd_1in83_send_data_8bit((Xend) >> 8);
+        lcd_1in83_send_data_8bit(Xend);
 
         // set the Y coordinates
-        // lcd_1in83_send_cmd(0x2B);
-        // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Ystart + 20);
-        // lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
-        // lcd_1in83_send_data_8bit(Yend + 20 - 1);
+        lcd_1in83_send_cmd(0x2B);
+        lcd_1in83_send_data_8bit((Ystart) >> 8);
+        lcd_1in83_send_data_8bit(Ystart);
+        lcd_1in83_send_data_8bit((Yend) >> 8);
+        lcd_1in83_send_data_8bit(Yend);
 
     } else {
-
+        // set the X coordinates
         lcd_1in83_send_cmd(0x2A);
         lcd_1in83_send_data_8bit((Xstart) >> 8);
         lcd_1in83_send_data_8bit(Xstart);
-        lcd_1in83_send_data_8bit((Xend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Xend - 1);
+        lcd_1in83_send_data_8bit((Xend) >> 8);
+        lcd_1in83_send_data_8bit(Xend);
 
         // set the Y coordinates
         lcd_1in83_send_cmd(0x2B);
         lcd_1in83_send_data_8bit(Ystart >> 8);
         lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Yend - 1);
-
-        //set the X coordinates
-        // lcd_1in83_send_cmd(0x2A);
-        // lcd_1in83_send_data_8bit((Xstart + 40) >> 8);
-        // lcd_1in83_send_data_8bit(Xstart + 40);
-        // lcd_1in83_send_data_8bit((Xend + 40 - 1) >> 8);
-        // lcd_1in83_send_data_8bit(Xend + 40 - 1);
-
-        // lcd_1in83_send_cmd(0x2B);
-        // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Ystart + 20);
-        // lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
-        // lcd_1in83_send_data_8bit(Yend + 20 - 1);
+        lcd_1in83_send_data_8bit((Yend) >> 8);
+        lcd_1in83_send_data_8bit(Yend);
     }
     lcd_1in83_send_cmd(0X2C);
 }
@@ -287,12 +268,6 @@ lcd_1in83_set_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uin
         lcd_1in83_send_data_8bit((Yend) >> 8);
         lcd_1in83_send_data_8bit(Yend);
 
-        // lcd_1in83_send_cmd(0x2B);
-        // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Ystart + 20);
-        // lcd_1in83_send_data_8bit((Yend + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Yend + 20);
-
     } else {
         // set the X coordinates
         lcd_1in83_send_cmd(0x2A);
@@ -308,11 +283,6 @@ lcd_1in83_set_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uin
         lcd_1in83_send_data_8bit(Ystart);
         lcd_1in83_send_data_8bit((Yend) >> 8);
         lcd_1in83_send_data_8bit(Yend);
-
-        // lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Xstart + 20);
-        // lcd_1in83_send_data_8bit((Xend + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Xend + 20);
     }
 
     lcd_1in83_send_cmd(0X2C);
@@ -360,6 +330,19 @@ lcd_1in83_display(uint16_t* Image) {
 void
 lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* Image) {
     // display
+    uint16_t i, j;
+    lcd_1in83_set_windows(Xstart, Ystart, Xend, Yend);
+    LCD_1IN83_DC_1;
+
+    for (i = Ystart; i <= Yend; i++) {
+        for (j = Xstart; j <= Xend; j++) {
+            DEV_SPI_WRITE((*(Image) >> 8) & 0xff);
+            DEV_SPI_WRITE(*(Image));
+            Image++;
+        }
+    }
+
+#if 0
     uint32_t Addr = 0;
     uint16_t i, j;
 
@@ -372,8 +355,48 @@ lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint1
             DEV_SPI_WRITE((*(Image + Addr + j) >> 8) & 0xff);
             DEV_SPI_WRITE(*(Image + Addr + j));
         }
-    }
+//    }
+#endif
 }
+
+//void
+//lcd_1in83_display_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* color) {
+//    // display
+//    uint16_t height, width;
+//   uint16_t i, j;
+//    width = Xend - Xstart + 1;
+//    height = Yend - Ystart + 1;
+//
+//    lcd_1in83_set_windows(Xstart, Ystart, Xend, Yend);
+//
+//    DEV_Digital_Write(DEV_DC_PIN, 1);
+
+//    for (i = 0; i < height; i++) {
+//        for (j = 0; j < width; j++) {
+//            DEV_SPI_WRITE((*color >> 8) & 0xff);
+//            DEV_SPI_WRITE(*color);
+//        }
+//    }
+//}
+
+//void lcd_color_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t *color)
+//{
+//    uint16_t height, width;
+//    uint16_t i, j;
+//    width = ex - sx + 1;            /* 得到填充的宽度 */
+//    height = ey - sy + 1;           /* 高度 */
+
+//    for (i = 0; i < height; i++)
+//    {
+//        lcd_set_cursor(sx, sy + i); /* 设置光标位置 */
+//        lcd_write_ram_prepare();    /* 开始写入GRAM */
+
+//        for (j = 0; j < width; j++)
+//        {
+//            LCD->LCD_RAM = color[i * width + j]; /* 写入数据 */
+//        }
+//    }
+//}
 
 void
 lcd_1in83_draw_point(uint16_t X, uint16_t Y, uint16_t Color) {

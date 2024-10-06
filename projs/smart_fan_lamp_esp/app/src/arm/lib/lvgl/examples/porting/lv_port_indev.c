@@ -88,7 +88,7 @@ void lv_port_indev_init(void)
 static void touchpad_init(void)
 {
     /*Your code comes here*/
-    tp_dev.init();
+//    tp_dev.init();
 }
 
 /*Will be called by the library to read the touchpad*/
@@ -116,11 +116,11 @@ static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
     
-    tp_dev.scan(0);
-    if (tp_dev.sta & TP_PRES_DOWN)
-    {
-        return true; 
-    }
+//    tp_dev.scan(0);
+//    if (tp_dev.sta & TP_PRES_DOWN)
+//    {
+//        return true; 
+//    }
 
     return false;
 }
@@ -130,8 +130,8 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {
     /*Your code comes here*/
 
-    (*x) = tp_dev.x[0]; 
-    (*y) = tp_dev.y[0];
+//    (*x) = tp_dev.x[0]; 
+//    (*y) = tp_dev.y[0];
 }
 
 

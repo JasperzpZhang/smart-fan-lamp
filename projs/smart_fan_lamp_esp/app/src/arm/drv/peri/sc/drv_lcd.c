@@ -35,9 +35,6 @@
  */
 
 #include "drv/peri/sc/drv_lcd.h"
-#include "drv/peri/sc/lcd_1in83/drv_image.h"
-#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83.h"
-#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
 
 /* Debug config */
 #if TP_DEBUG
@@ -58,18 +55,17 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
-void lcd_init(void)
-{
+void
+lcd_init(void) {
     DEV_Module_Init();
     lcd_1in83_set_backlight(100);
     lcd_1in83_init(HORIZONTAL); // HORIZONTAL VERTICAL
-    lcd_1in83_clear(WHITE);
+    // lcd_1in83_clear(WHITE);
 }
-
 
 #if 0
 void
-lcd_1in83_test() {
+lcd_1in83_test() { 
 
     DEV_Module_Init();
     lcd_1in83_set_backlight(100);

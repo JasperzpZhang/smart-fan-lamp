@@ -48,6 +48,8 @@ extern "C" {
 #include "lib/type/lib_type.h"
 #include "main.h"
 #include "queue.h"
+#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83.h"
+#include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
 
 void lcd_init(void);
 

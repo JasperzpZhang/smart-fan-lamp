@@ -68,8 +68,8 @@ static void sys_task(void* parameter);
 status_t
 sys_init(void) {
 
-    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
-    __HAL_TIM_SET_COMPARE(&htim10, TIM_CHANNEL_1, 100);
+//    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+//    __HAL_TIM_SET_COMPARE(&htim10, TIM_CHANNEL_1, 100);
 
     //    HAL_TIM_PWM_Start(FAN_FORWARD_TIM, FAN_FORWARD_CHANNEL);
     //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, 70);
@@ -89,9 +89,7 @@ sys_init(void) {
 
 static void
 sys_task(void* parameter) {
-    
-    
-    
+
     while (1) {
         //        TRACE("sys wdog feed\n");
 

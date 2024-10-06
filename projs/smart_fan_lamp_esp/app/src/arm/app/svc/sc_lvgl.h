@@ -21,44 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      drv_tp.c
- * @brief     Implementation File for TouchPad Module
+ * @file      sc_lvgl.c
+ * @brief     Implementation File for lvgl Module
  * @version   1.0.0
  * @author    Jasper
- * @date      2024-09-26
+ * @date      2024-09-28
  */
 
 /**
    modification history
    --------------------
-   01a, 26Sep24, Jasper Created
+   01a, 28Sep24, Jasper Created
  */
 
-#ifndef __DRV_VOICE_H__
-#define __DRV_VOICE_H__
+#ifndef __LVGL_H__
+#define __LVGL_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
+
 /* Includes */
-#include "FreeRTOS.h"
-#include "cmsis_os.h"
-#include "lib/type/lib_type.h"
-#include "main.h"
-#include "queue.h"
+    #include "lib/type/lib_type.h"
 
-typedef struct {
-    uint8_t buf[10];
-    uint16_t size;
-} msg_voice_t;
 
-extern QueueHandle_t g_queue_voice;
+status_t lvgl_init(void);
 
-status_t drv_voice_init(void);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __DRV_VOICE_H__ */
+#endif /* __LVGL_H__ */

@@ -71,6 +71,7 @@ void lcd_1in83_init(uint8_t Scan_dir);
 void lcd_1in83_clear(uint16_t Color);
 void lcd_1in83_display(uint16_t* Image);
 void lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* Image);
+//void lcd_1in83_display_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* color);
 void lcd_1in83_draw_point(uint16_t X, uint16_t Y, uint16_t Color);
 void lcd_1in83_set_backlight(uint16_t Value);
 #endif

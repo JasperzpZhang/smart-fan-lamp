@@ -87,6 +87,7 @@ extern "C" {
 #include "lib/wdog/lib_wdog.h"
 
 
+
 /* Driver moudle */
 #include "drv/peri/mem/drv_mem.h"
 #include "drv/peri/rtc/drv_rtc.h"
@@ -107,6 +108,8 @@ extern "C" {
 #include "app/svc/led.h"
 #include "app/svc/panel.h"
 #include "app/svc/wave.h"
+#include "app/svc/sc_lvgl.h"
+#include "app/svc/voice.h"
 
 
 #if 0

@@ -61,43 +61,47 @@
 #endif /* TP_ASSERT */
 
 QueueHandle_t g_queue_voice;
-void test_task(void* para);
-uint8_t buf[32] = {0};
+
+static msg_voice_t g_msg_voice;
+
+//void test_task(void* para);
 
 status_t
 drv_voice_init(void) {
 
-    g_queue_voice = xQueueCreate(10, sizeof(buf));
+    g_queue_voice = xQueueCreate(3, sizeof(g_msg_voice));
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, buf, 32);
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
 
-    xTaskCreate(test_task, "test_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
-
-    TRACE("uart3 receive ok;\n");
-
+    //    xTaskCreate(test_task, "test_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
     return status_ok;
 }
 
 void
 uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
 
-    xQueueSendFromISR(g_queue_voice, &buf, NULL);
+    g_msg_voice.size = size;
+    xQueueSendFromISR(g_queue_voice, &g_msg_voice, NULL);
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, buf, 32);
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
 }
 
-void
-test_task(void* para) {
-    uint8_t msg_buf[32] = {0};
+//void
+//test_task(void* para) {
+//
+//    msg_voice_t task_msg;
 
-    TRACE("test task run\n");
+//    TRACE("test task run\n");
 
-    while (1) {
-        if (xQueueReceive(g_queue_voice, &msg_buf, portMAX_DELAY) == pdPASS) {
-
-            TRACE("msg_buf : %s\n", msg_buf);
-        }
-
-        osDelay(100);
-    }
-}
+//    while (1) {
+//        if (xQueueReceive(g_queue_voice, &task_msg, portMAX_DELAY) == pdPASS) {
+//            uint8_t i;
+//            TRACE("msg_buf : ");
+//            for (i = 0; i < task_msg.size; i++){
+//                TRACE("%x ", task_msg.buf[i]);
+//            }
+//            TRACE("\n");
+//        }
+//        osDelay(100);
+//    }
+//}
