@@ -91,8 +91,9 @@ lcd_1in83_initReg(void) {
     lcd_1in83_send_cmd(0x35);
     lcd_1in83_send_data_8bit(0x00);
 
-    lcd_1in83_send_cmd(0x36);
-    lcd_1in83_send_data_8bit(0x00);
+    /* do this in  LCD_1IN83_SetAttributes function */
+    // lcd_1in83_send_cmd(0x36);
+    // lcd_1in83_send_data_8bit(0x00);
 
     lcd_1in83_send_cmd(0x3A);
     lcd_1in83_send_data_8bit(0x05);
@@ -179,7 +180,7 @@ LCD_1IN83_SetAttributes(uint8_t Scan_dir) {
     if (Scan_dir == HORIZONTAL) {
         LCD_1IN83.HEIGHT = LCD_1IN83_WIDTH;
         LCD_1IN83.WIDTH = LCD_1IN83_HEIGHT;
-        MemoryAccessReg = 0X78;
+        MemoryAccessReg = 0x78;
     } else {
         LCD_1IN83.HEIGHT = LCD_1IN83_HEIGHT;
         LCD_1IN83.WIDTH = LCD_1IN83_WIDTH;
@@ -225,6 +226,12 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
         lcd_1in83_send_data_8bit((Xend - 1) >> 8);
         lcd_1in83_send_data_8bit(Xend - 1);
 
+        // lcd_1in83_send_cmd(0x2B);
+        lcd_1in83_send_data_8bit((Ystart) >> 8);
+        lcd_1in83_send_data_8bit(Ystart);
+        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
+        lcd_1in83_send_data_8bit(Yend - 1);
+
         // set the Y coordinates
         // lcd_1in83_send_cmd(0x2B);
         // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
@@ -232,19 +239,7 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
         // lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
         // lcd_1in83_send_data_8bit(Yend + 20 - 1);
 
-        // lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit((Ystart) >> 8);
-        lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
-        lcd_1in83_send_data_8bit(Yend - 1);
-
     } else {
-        // set the X coordinates
-        // lcd_1in83_send_cmd(0x2A);
-        // lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
-        // lcd_1in83_send_data_8bit(Xstart + 20);
-        // lcd_1in83_send_data_8bit((Xend + 20 - 1) >> 8);
-        // lcd_1in83_send_data_8bit(Xend + 20 - 1);
 
         lcd_1in83_send_cmd(0x2A);
         lcd_1in83_send_data_8bit((Xstart) >> 8);
@@ -253,19 +248,25 @@ lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t 
         lcd_1in83_send_data_8bit(Xend - 1);
 
         // set the Y coordinates
-        // lcd_1in83_send_cmd(0x2B);
-        // lcd_1in83_send_data_8bit(Ystart >> 8);
-        // lcd_1in83_send_data_8bit(Ystart);
-        // lcd_1in83_send_data_8bit((Yend - 1) >> 8);
-        // lcd_1in83_send_data_8bit(Yend - 1);
-
         lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
-        lcd_1in83_send_data_8bit(Ystart + 20);
-        lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
-        lcd_1in83_send_data_8bit(Yend + 20 - 1);
-    }
+        lcd_1in83_send_data_8bit(Ystart >> 8);
+        lcd_1in83_send_data_8bit(Ystart);
+        lcd_1in83_send_data_8bit((Yend - 1) >> 8);
+        lcd_1in83_send_data_8bit(Yend - 1);
 
+        //set the X coordinates
+        // lcd_1in83_send_cmd(0x2A);
+        // lcd_1in83_send_data_8bit((Xstart + 40) >> 8);
+        // lcd_1in83_send_data_8bit(Xstart + 40);
+        // lcd_1in83_send_data_8bit((Xend + 40 - 1) >> 8);
+        // lcd_1in83_send_data_8bit(Xend + 40 - 1);
+
+        // lcd_1in83_send_cmd(0x2B);
+        // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Ystart + 20);
+        // lcd_1in83_send_data_8bit((Yend + 20 - 1) >> 8);
+        // lcd_1in83_send_data_8bit(Yend + 20 - 1);
+    }
     lcd_1in83_send_cmd(0X2C);
 }
 
@@ -286,19 +287,15 @@ lcd_1in83_set_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uin
         lcd_1in83_send_data_8bit((Yend) >> 8);
         lcd_1in83_send_data_8bit(Yend);
 
-        //        lcd_1in83_send_cmd(0x2B);
-        //        lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
-        //        lcd_1in83_send_data_8bit(Ystart + 20);
-        //        lcd_1in83_send_data_8bit((Yend + 20) >> 8);
-        //        lcd_1in83_send_data_8bit(Yend + 20);
+        // lcd_1in83_send_cmd(0x2B);
+        // lcd_1in83_send_data_8bit((Ystart + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Ystart + 20);
+        // lcd_1in83_send_data_8bit((Yend + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Yend + 20);
 
     } else {
         // set the X coordinates
         lcd_1in83_send_cmd(0x2A);
-        //        lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
-        //        lcd_1in83_send_data_8bit(Xstart + 20);
-        //        lcd_1in83_send_data_8bit((Xend + 20) >> 8);
-        //        lcd_1in83_send_data_8bit(Xend + 20);
 
         lcd_1in83_send_data_8bit((Xstart) >> 8);
         lcd_1in83_send_data_8bit(Xstart);
@@ -311,6 +308,11 @@ lcd_1in83_set_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uin
         lcd_1in83_send_data_8bit(Ystart);
         lcd_1in83_send_data_8bit((Yend) >> 8);
         lcd_1in83_send_data_8bit(Yend);
+
+        // lcd_1in83_send_data_8bit((Xstart + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Xstart + 20);
+        // lcd_1in83_send_data_8bit((Xend + 20) >> 8);
+        // lcd_1in83_send_data_8bit(Xend + 20);
     }
 
     lcd_1in83_send_cmd(0X2C);

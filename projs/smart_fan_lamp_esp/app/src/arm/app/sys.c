@@ -133,7 +133,7 @@ sys_task(void* parameter) {
         osDelay(SYS_TASK_DELAY_TIME);
         lcd_1in83_clear(GRAYBLUE);
         osDelay(SYS_TASK_DELAY_TIME);
-
+        
         wdog_feed();
         lcd_1in83_clear(LIGHTGREEN);
         osDelay(SYS_TASK_DELAY_TIME);

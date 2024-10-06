@@ -39,7 +39,6 @@
 #include "spi.h"
 #include "tim.h"
 
-
 //#define uint8_t                           uint8_t
 //#define uint16_t                           uint16_t
 //#define uint32_t                         uint32_t
