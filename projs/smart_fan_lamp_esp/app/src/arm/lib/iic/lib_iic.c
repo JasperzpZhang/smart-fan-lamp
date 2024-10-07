@@ -48,7 +48,7 @@
 #undef TRACE
 #define TRACE(...)
 #endif /* IIC_DEBUG */
-#if IIC_ASSERT
+#if IIC_ASSERT || 1
 #undef ASSERT
 #define ASSERT(a)                                                                                                      \
     while (!(a)) {                                                                                                     \

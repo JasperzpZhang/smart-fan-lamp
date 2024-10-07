@@ -101,13 +101,12 @@ panel_status_init(void) {
     panel_set_led_status(idx_brightness, panel_led_on);
     panel_set_led_status(idx_color, panel_led_off);
     panel_set_led_status(idx_fan, panel_led_off);
+
+    slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
 }
 
 void
 panel_ctrl_task(void* para) {
-    /* use osDelay here; otherwise, move to panel_status_init and change delay function to Hal_Delay */
-    slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
-
     msg_panel_t msg_panel;
     uint8_t value = 0;
     uint8_t slider_value_lock = 0;

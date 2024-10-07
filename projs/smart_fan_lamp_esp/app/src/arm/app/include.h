@@ -51,7 +51,6 @@ extern "C" {
 #include <string.h>
 #include <time.h>
 
-
 /* RTOS */
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
@@ -61,7 +60,6 @@ extern "C" {
 #include "task.h"
 #include "timers.h"
 
-
 /* HAL */
 #include "main.h"
 
@@ -70,11 +68,11 @@ extern "C" {
 #include "app/define.h"
 
 /* Bsp */
+#include "adc.h"
 #include "gpio.h"
 #include "iwdg.h"
 #include "tim.h"
 #include "usart.h"
-#include "adc.h"
 
 /* Library */
 #include "lib/cli/lib_cli.h"
@@ -86,75 +84,28 @@ extern "C" {
 #include "lib/uart/lib_uart.h"
 #include "lib/wdog/lib_wdog.h"
 
-
-
 /* Driver moudle */
 #include "drv/peri/mem/drv_mem.h"
 #include "drv/peri/rtc/drv_rtc.h"
-#include "drv/peri/tp/drv_tp.h"
 #include "drv/peri/sc/drv_sc.h"
-#include "drv/peri/voice/drv_voice.h"
-//#include "drv/peri/humiture/drv_aht20_basic.h"
+#include "drv/peri/sc/lcd_1in83/drv_cst816t_if.h"
+#include "drv/peri/tp/drv_tp.h"
+
 
 /* Application */
 #include "app/app.h"
 #include "app/svc/cli.h"
 #include "app/svc/data.h"
 #include "app/svc/fan.h"
+#include "app/svc/led.h"
 #include "app/svc/mem.h"
+#include "app/svc/panel.h"
+#include "app/svc/sc_lvgl.h"
 #include "app/svc/time.h"
 #include "app/svc/tp.h"
-#include "app/sys.h"
-#include "app/svc/led.h"
-#include "app/svc/panel.h"
-#include "app/svc/wave.h"
-#include "app/svc/sc_lvgl.h"
 #include "app/svc/voice.h"
-
-
-#if 0
-#include "Gpio/Gpio.h"
-#include "Mem/Mem.h"
-#include "Mem/MemFram.h"
-#include "Mqtt/Mqtt.h"
-#include "Net/Net.h"
-#include "Prot/Prot.h"
-#include "Rbuf/Rbuf.h"
-#include "Rtc/Rtc.h"
-#include "Uart/Uart.h"
-#include "Wdog/Wdog.h"
-#include "debug/debug.h"
-
-
-/* Bsp library */
-#include "BspGpio.h"
-#include "BspI2C.h"
-#include "BspSpi.h"
-#include "BspTim.h"
-#include "BspUart.h"
-
-
-/* User application */
-#include "User/Cli.h"
-#include "User/Com.h"
-#include "User/Data.h"
-#include "User/Drv/Adc.h"
-#include "User/Drv/Can.h"
-#include "User/Drv/Dac.h"
-#include "User/Drv/Gpio.h"
-#include "User/Drv/Mem.h"
-#include "User/Drv/Net.h"
-#include "User/Drv/Pwr.h"
-#include "User/Drv/Pwr/Pwr1Prot.h"
-#include "User/Drv/Pwr/Pwr2Prot.h"
-#include "User/Drv/Stc.h"
-#include "User/Drv/Time.h"
-#include "User/Sys.h"
-#include "User/_Config.h"
-#include "User/_Include.h"
-#include "User/_Type.h"
-
-#endif
+#include "app/svc/wave.h"
+#include "app/sys.h"
 
 #ifdef __cplusplus
 }

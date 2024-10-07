@@ -1249,14 +1249,14 @@
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_lcd_1in83_cfg.c</FilePath>
             </File>
             <File>
-              <FileName>drv_voice.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\drv\peri\voice\drv_voice.c</FilePath>
-            </File>
-            <File>
               <FileName>drv_cst816t.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_cst816t.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_cst816t_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_cst816t_if.c</FilePath>
             </File>
           </Files>
         </Group>

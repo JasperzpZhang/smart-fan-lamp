@@ -36,27 +36,24 @@
 #define __LIB_TYPE_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
 /* Includes */
-#include <time.h>
 #include <stdint.h>
+#include <time.h>
 
-	/* Types */
-	typedef enum
-	{
-        status_ok,
-        status_err,
-	} status_t;
+/* Types */
+typedef enum {
+    status_ok = 0,
+    status_err,
+} status_t;
 
-	typedef uint8_t Bool_t;
+typedef uint8_t Bool_t;
 
-	typedef struct tm Time_t;
-    
+typedef struct tm Time_t;
 
-	typedef int SOCKET;
+typedef int SOCKET;
 
 /* Defines */
 #ifndef TRUE

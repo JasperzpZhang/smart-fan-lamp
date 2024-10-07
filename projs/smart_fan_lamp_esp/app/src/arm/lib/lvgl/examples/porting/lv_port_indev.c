@@ -26,15 +26,14 @@
  **********************/
 
 static void touchpad_init(void);
-static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+static void touchpad_read(lv_indev_drv_t* indev_drv, lv_indev_data_t* data);
 static bool touchpad_is_pressed(void);
-static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y);
-
+static void touchpad_get_xy(lv_coord_t* x, lv_coord_t* y);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
-lv_indev_t * indev_touchpad;
+lv_indev_t* indev_touchpad;
 
 /**********************
  *      MACROS
@@ -44,8 +43,8 @@ lv_indev_t * indev_touchpad;
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_port_indev_init(void)
-{
+void
+lv_port_indev_init(void) {
     /**
      * Here you will find example implementation of input devices supported by LittelvGL:
      *  - Touchpad
@@ -72,8 +71,6 @@ void lv_port_indev_init(void)
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read_cb = touchpad_read;
     indev_touchpad = lv_indev_drv_register(&indev_drv);
-
-   
 }
 
 /**********************
@@ -85,24 +82,25 @@ void lv_port_indev_init(void)
  * -----------------*/
 
 /*Initialize your touchpad*/
-static void touchpad_init(void)
-{
+static void
+touchpad_init(void) {
     /*Your code comes here*/
-//    tp_dev.init();
+    //    tp_dev.init();
+
+    sc_tp_init();
 }
 
 /*Will be called by the library to read the touchpad*/
-static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
-{
+static void
+touchpad_read(lv_indev_drv_t* indev_drv, lv_indev_data_t* data) {
     static lv_coord_t last_x = 0;
     static lv_coord_t last_y = 0;
 
     /*Save the pressed coordinates and the state*/
-    if(touchpad_is_pressed()) {
+    if (touchpad_is_pressed()) {
         touchpad_get_xy(&last_x, &last_y);
         data->state = LV_INDEV_STATE_PR;
-    }
-    else {
+    } else {
         data->state = LV_INDEV_STATE_REL;
     }
 
@@ -112,29 +110,31 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 }
 
 /*Return true is the touchpad is pressed*/
-static bool touchpad_is_pressed(void)
-{
+static bool
+touchpad_is_pressed(void) {
     /*Your code comes here*/
-    
-//    tp_dev.scan(0);
-//    if (tp_dev.sta & TP_PRES_DOWN)
-//    {
-//        return true; 
-//    }
 
-    return false;
+    //    tp_dev.scan(0);
+    //    if (tp_dev.sta & TP_PRES_DOWN)
+    //    {
+    //        return true;
+    //    }
+    return cst816t_read();
+
+    //    return false;
 }
 
 /*Get the x and y coordinates if the touchpad is pressed*/
-static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
-{
+static void
+touchpad_get_xy(lv_coord_t* x, lv_coord_t* y) {
     /*Your code comes here*/
 
-//    (*x) = tp_dev.x[0]; 
-//    (*y) = tp_dev.y[0];
+    //    (*x) = tp_dev.x[0];
+    //    (*y) = tp_dev.y[0];
+
+    (*x) = cst816t_hdl._ctrl.x;
+    (*y) = cst816t_hdl._ctrl.y;
 }
-
-
 
 #else /*Enable this file at the top*/
 

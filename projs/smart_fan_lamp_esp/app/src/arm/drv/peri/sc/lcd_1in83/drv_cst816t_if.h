@@ -21,38 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      sc_lvgl.c
- * @brief     Implementation File for lvgl Module
+ * @file      drv_tp.c
+ * @brief     Implementation File for TouchPad Module
  * @version   1.0.0
  * @author    Jasper
- * @date      2024-09-28
+ * @date      2024-09-26
  */
 
 /**
    modification history
    --------------------
-   01a, 28Sep24, Jasper Created
+   01a, 26Sep24, Jasper Created
  */
 
-#ifndef __VOICE_H__
-#define __VOICE_H__
+#ifndef __DRV_CST816T_IF_H_
+#define __DRV_CST816T_IF_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-typedef struct {
-    uint8_t buf[20];
-    uint16_t size;
-} msg_voice_t;
-
 /* Includes */
+#include <stdbool.h>
+#include "FreeRTOS.h"
+#include "drv/peri/sc/lcd_1in83/drv_cst816t.h"
 #include "lib/type/lib_type.h"
+#include "main.h"
+#include "semphr.h"
 
-status_t voice_init(void);
+extern cst816t_hdl_t cst816t_hdl;
+
+status_t cst816t_init(void);
+bool cst816t_read(void);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __VOICE_H__ */
+#endif /* __DRV_CST816T_IF_H_ */

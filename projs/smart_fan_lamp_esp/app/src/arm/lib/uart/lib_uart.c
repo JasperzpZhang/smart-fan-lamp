@@ -22,7 +22,7 @@
 /* Pragmas */
 
 /* Debug config */
-#if UART_DEBUG
+#if UART_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -383,6 +383,7 @@ uart8_rx_cplt_callback(UART_HandleTypeDef* huart) {
   */
 void
 HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+
     switch ((uint32_t)huart->Instance) {
 #ifdef USART1
         case (uint32_t)USART1: uart1_rx_cplt_callback(huart); break;
@@ -414,6 +415,182 @@ HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
 
 #ifdef UART8
         case (uint32_t)UART8: uart8_rx_cplt_callback(huart); break;
+#endif
+
+        default:
+            /* Do nothing. */
+            break;
+    }
+}
+
+/**
+  * @brief  UART1 Error Callback. 
+  *         This function is called when an error occurs on UART1.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart1_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart1_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART2 Error Callback. 
+  *         This function is called when an error occurs on UART2.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart2_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart2_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART3 Error Callback. 
+  *         This function is called when an error occurs on UART3.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart3_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart3_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART4 Error Callback. 
+  *         This function is called when an error occurs on UART4.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart4_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart4_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART5 Error Callback. 
+  *         This function is called when an error occurs on UART5.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart5_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart5_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART6 Error Callback. 
+  *         This function is called when an error occurs on UART6.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart6_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart6_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART7 Error Callback. 
+  *         This function is called when an error occurs on UART7.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart7_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart7_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART8 Error Callback. 
+  *         This function is called when an error occurs on UART8.
+  * @param  huart UART handle
+  * @retval None
+  */
+__weak void
+uart8_error_callback(UART_HandleTypeDef* huart) {
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(huart);
+
+    /* NOTE : This function should not be modified. When the callback is needed,
+              uart8_error_callback can be implemented in the user file.
+     */
+}
+
+/**
+  * @brief  UART Error Callback. 
+  *         This function is called by the HAL when an error occurs on any UART instance.
+  *         It determines the UART instance and calls the corresponding user-defined callback function.
+  * @param  huart UART handle
+  * @retval None
+  */
+void
+HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
+    switch ((uint32_t)huart->Instance) {
+#ifdef USART1
+        case (uint32_t)USART1: uart1_error_callback(huart); break;
+#endif
+
+#ifdef USART2
+        case (uint32_t)USART2: uart2_error_callback(huart); break;
+#endif
+
+#ifdef USART3
+        case (uint32_t)USART3: uart3_error_callback(huart); break;
+#endif
+
+#ifdef UART4
+        case (uint32_t)UART4: uart4_error_callback(huart); break;
+#endif
+
+#ifdef UART5
+        case (uint32_t)UART5: uart5_error_callback(huart); break;
+#endif
+
+#ifdef USART6
+        case (uint32_t)USART6: uart6_error_callback(huart); break;
+#endif
+
+#ifdef UART7
+        case (uint32_t)UART7: uart7_error_callback(huart); break;
+#endif
+
+#ifdef UART8
+        case (uint32_t)UART8: uart8_error_callback(huart); break;
 #endif
 
         default:

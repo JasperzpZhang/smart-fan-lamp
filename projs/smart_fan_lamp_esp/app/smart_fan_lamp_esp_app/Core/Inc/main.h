@@ -126,6 +126,8 @@ void Error_Handler(void);
 #define SPI3_LCD_CS_GPIO_Port GPIOD
 #define LCD_RESET_Pin GPIO_PIN_2
 #define LCD_RESET_GPIO_Port GPIOD
+#define LCD_TP_RST_Pin GPIO_PIN_3
+#define LCD_TP_RST_GPIO_Port GPIOD
 #define LCD_TP_INT_Pin GPIO_PIN_4
 #define LCD_TP_INT_GPIO_Port GPIOD
 #define LCD_TP_INT_EXTI_IRQn EXTI4_IRQn

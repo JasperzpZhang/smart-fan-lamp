@@ -37,6 +37,7 @@
 #include "app/include.h"
 #include "lib/lvgl/lvgl.h"
 #include "lv_port_disp.h"
+#include "lv_port_indev.h"
 
 /* Debug config */
 #if WAVE_DEBUG || 1
@@ -86,10 +87,13 @@ lvgl_init(void) {
 
     lv_init();
     lv_port_disp_init();
+    lv_port_indev_init();
 
     lv_obj_t* sw = lv_switch_create(lv_scr_act()); // 在当前屏幕创建开关按钮
     // 设置开关按钮的位置为屏幕中间（大致位置）
-    lv_obj_set_pos(sw, 120, 100);
+    lv_obj_set_pos(sw, 100, 100);
+    // 设置开关按钮的大小，例如宽度为60，高度为30
+    lv_obj_set_size(sw, 60, 30);
 
     xTaskCreate(lvgl_task, "lvgl task", 1024, NULL, tskIDLE_PRIORITY + 2, NULL);
     return status_ok;

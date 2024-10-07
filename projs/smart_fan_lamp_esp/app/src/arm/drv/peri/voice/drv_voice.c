@@ -39,6 +39,7 @@
 #include "lib/debug/lib_debug.h"
 #include "lib/iic/lib_iic.h"
 #include "lib/uart/lib_uart.h"
+#include "string.h"
 #include "usart.h"
 
 /* Debug config */
@@ -60,31 +61,33 @@
 #define ASSERT(...)
 #endif /* TP_ASSERT */
 
-QueueHandle_t g_queue_voice;
-
-static msg_voice_t g_msg_voice;
-
 //void test_task(void* para);
 
-status_t
-drv_voice_init(void) {
+// status_t
+// drv_voice_init(void) {
 
-    g_queue_voice = xQueueCreate(3, sizeof(g_msg_voice));
+//     g_queue_voice = xQueueCreate(3, sizeof(g_msg_voice));
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
+//     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
 
-    //    xTaskCreate(test_task, "test_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
-    return status_ok;
-}
+//     //    xTaskCreate(test_task, "test_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
+//     return status_ok;
+// }
 
-void
-uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
+// void
+// uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
 
-    g_msg_voice.size = size;
-    xQueueSendFromISR(g_queue_voice, &g_msg_voice, NULL);
+//     g_msg_voice.size = size;
+//     xQueueSendFromISR(g_queue_voice, &g_msg_voice, NULL);
+//     memset(g_msg_voice.buf, 0, 10);
+//     g_msg_voice.size = 0;
+// }
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
-}
+// void
+// uart3_rx_cplt_callback(UART_HandleTypeDef* huart) {
+//     TRACE("uart3_rx_cplt_callback \n");
+//     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
+// }
 
 //void
 //test_task(void* para) {

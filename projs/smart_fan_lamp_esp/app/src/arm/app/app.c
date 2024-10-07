@@ -50,7 +50,7 @@
 /* Functions */
 void
 app_init(void) {
-    wdog_start(20000);
+    wdog_start(10000);
     debug_init();
     debug_uart_cfg(&huart1);
     debug_channel_set(DEBUG_CHAN_UART);

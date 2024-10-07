@@ -48,11 +48,6 @@ extern "C" {
 #include "main.h"
 #include "queue.h"
 
-typedef struct {
-    uint8_t buf[10];
-    uint16_t size;
-} msg_voice_t;
-
 extern QueueHandle_t g_queue_voice;
 
 status_t drv_voice_init(void);

@@ -12,15 +12,21 @@
  * Version:         v0.0.1
  */
 
+
 #ifndef __LIB_DELAY_H__
 #define __LIB_DELAY_H__
 
+
+
 #include "main.h"
+#include "app/config.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
+
+#if DELAY_ENABLE
 
 /**
  * @defgroup delay delay function
@@ -43,13 +49,23 @@ uint8_t delay_init(void);
  */
 void delay_us(uint32_t us);
 
-void os_delay_ms(uint32_t ms);
-void hal_delay_ms(uint32_t ms);
-void os_delay_s(uint32_t s);
-void hal_delay_s(uint32_t s);
+/**
+  * @brief  Robust delay function delay_ms.
+  *         Automatically selects between FreeRTOS's vTaskDelay or HAL_Delay 
+  *         depending on the presence of FreeRTOS and scheduler state.
+  * @param  ms: Delay duration in milliseconds
+  * @retval None
+  */
+void delay_ms(uint32_t ms);
+
+#endif
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
+
+
 #endif /* __LIB_DELAY_H__ */
+
+

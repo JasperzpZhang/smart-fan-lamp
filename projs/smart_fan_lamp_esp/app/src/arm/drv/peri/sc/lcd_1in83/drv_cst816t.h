@@ -33,7 +33,7 @@
    --------------------
    01a, 26Sep24, Jasper Created
  */
- 
+
 #ifndef __DRV_CST816T_H_
 #define __DRV_CST816T_H_
 
@@ -42,27 +42,44 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Includes */
+#include <stdbool.h>
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 #include "lib/type/lib_type.h"
 #include "main.h"
 #include "queue.h"
-#include <stdbool.h>
+#include "semphr.h"
 
-// 结构体定义
 typedef struct {
-    uint8_t chip_id;
-    uint8_t firmware_version;
-    uint8_t gesture_id;
-    uint8_t finger_num;
-    uint16_t x;
-    uint16_t y;
-    uint8_t rst_pin;
-    uint8_t irq_pin;
-    bool tp_event;
-} cst816t_ctrl_t;
+    struct {
+        uint8_t chip_id;
+        uint8_t firmware_version;
+        uint8_t gesture_id;
+        uint8_t finger_num;
+        uint16_t x;
+        uint16_t y;
+        GPIO_TypeDef* rst_port;
+        uint16_t rst_pin;
+        GPIO_TypeDef* irq_port;
+        uint16_t irq_pin;
+        bool tp_event;
 
+    } _ctrl;
 
+    status_t (*iic_read)(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
+    status_t (*iic_write)(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len);
+
+} cst816t_hdl_t;
+
+typedef enum {
+    EN_TOUCH = 0,
+    EN_CHANGE,
+    EN_MOTION,
+    EN_MOTION_LONGPRESS,
+} tp_mode_t;
+
+status_t drv_cst816t_init(cst816t_hdl_t* cst816t_hdl, uint8_t tp_mode);
+bool cst816t_available(cst816t_hdl_t* cst816t_hdl);
 
 #ifdef __cplusplus
 }

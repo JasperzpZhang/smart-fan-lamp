@@ -31,8 +31,8 @@
  * Author:          Jasper <JasperZhangSE@gmail.com>
  * Version:         v1.0.0-dev
  */
-#ifndef __APP_CONFIG_H__
-#define __APP_CONFIG_H__
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -134,6 +134,22 @@ extern "C" {
 #define WDOG_ASSERT              (0)
 #define WDOG_TEST                (0)
 
+/* Mqtt module */
+#define MQTT_ENABLE              (0)
+#define MQTT_RTOS                (1)
+#define MQTT_DEBUG               (0)
+#define MQTT_ASSERT              (0)
+#define MQTT_TEST                (0)
+
+/* Net module */
+#define NET_ENABLE               (0)
+#define NET_ENABLE_LWIP          (1)
+#define NET_ENABLE_SUITE         (0)
+#define NET_RTOS                 (1)
+#define NET_DEBUG                (0)
+#define NET_TEST                 (0)
+#define NET_ASSERT               (0)
+
 /* I2c moudle */
 #define SORTWARE_I2C_ENABLE      (1)
 #define I2C_RTOS                 (1)
@@ -148,7 +164,11 @@ extern "C" {
 /* Wifi moudle */
 #define WIFI_DEBUG               (0)
 
-
+/* debug moudle */
+#define DELAY_ENABLE             (1)
+#define DELAY_RTOS               (1)
+#define DELAY_DEBUG              (0)
+#define DELAY_ASSERT             (0)
 
 #if 0
 /* Cli module */
@@ -283,4 +303,4 @@ extern "C" {
 }
 #endif /*__cplusplus */
 
-#endif /* __APP_CONFIG_H__ */
+#endif /* __CONFIG_H__ */

@@ -21,6 +21,10 @@
         "drv_lcd_1in83_cfg.h": "c",
         "drv_lcd_1in83.h": "c",
         "lvgl.h": "c",
-        "drv_sc.h": "c"
+        "drv_sc.h": "c",
+        "config.h": "c",
+        "drv_cst816t.h": "c",
+        "drv_cst816t_if.h": "c",
+        "lv_port_indev.h": "c"
     }
 }

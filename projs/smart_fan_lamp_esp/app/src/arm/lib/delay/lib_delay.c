@@ -13,9 +13,14 @@
  */
 
 #include "lib/delay/lib_delay.h"
-#include "FreeRTOS.h"
 #include "lib/debug/lib_debug.h"
+#ifdef DELAY_RTOS 
+#include "FreeRTOS.h"
 #include "task.h"
+#include "portmacro.h"  // Include xPortIsInsideInterrupt definition
+#endif
+
+#if DELAY_ENABLE
 
 /* Debug config */
 #if DELAY_DEBUG
@@ -97,22 +102,44 @@ void delay_us(uint32_t us)
     }
 }
 
-void
-os_delay_ms(uint32_t ms) {
-    vTaskDelay(pdMS_TO_TICKS(ms));
-}
+/**
+  * @brief  Robust delay function delay_ms.
+  *         Automatically selects between FreeRTOS's vTaskDelay or HAL_Delay 
+  *         depending on the presence of FreeRTOS and scheduler state.
+  * @param  ms: Delay duration in milliseconds
+  * @retval None
+  */
+void delay_ms(uint32_t ms) {
+    /* Check for invalid input: if ms is 0, do nothing */
+    if (ms == 0) {
+        return;
+    }
 
-void
-hal_delay_ms(uint32_t ms) {
+#ifdef DELAY_RTOS
+    /* Detect if we are inside an interrupt context */
+    if (xPortIsInsideInterrupt()) {
+        /* vTaskDelay cannot be used in interrupt context, use busy-wait instead */
+        volatile uint32_t counter = ms * 1000;  // Simple busy-wait loop
+        while (counter--) {
+            __NOP();  // Prevent compiler optimization
+        }
+    } else {
+        /* Get the current state of the scheduler */
+        BaseType_t schedulerState = xTaskGetSchedulerState();
+        
+        if (schedulerState == taskSCHEDULER_RUNNING) {
+            /* If the scheduler is running, use vTaskDelay for task-aware delay */
+            vTaskDelay(pdMS_TO_TICKS(ms));  // Convert milliseconds to system ticks
+        } else {
+            /* If the scheduler is not started or suspended, use HAL_Delay */
+            HAL_Delay(ms);
+        }
+    }
+#else
+    /* If FreeRTOS is not available, always use HAL_Delay */
     HAL_Delay(ms);
+#endif
 }
 
-void
-os_delay_s(uint32_t s) {
-    os_delay_ms(s * 1000);
-}
+#endif /* DELAY_ENABLE */
 
-void
-hal_delay_s(uint32_t s) {
-    hal_delay_ms(s * 1000);
-}

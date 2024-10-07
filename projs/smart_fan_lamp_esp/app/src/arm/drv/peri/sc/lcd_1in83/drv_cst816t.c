@@ -36,7 +36,26 @@
 
 #include "drv/peri/sc/lcd_1in83/drv_cst816t.h"
 #include <stdint.h>
-#include "lib/iic/lib_iic.h"
+
+/* Debug config */
+#if CST816T_DEBUG
+#undef TRACE
+#define TRACE(...) debug_printf(__VA_ARGS__)
+#else
+#undef TRACE
+#define TRACE(...)
+#endif /* CST816T_DEBUG */
+
+#if CST816T_ASSERT
+#undef ASSERT
+#define ASSERT(a)                                                                                                      \
+    while (1) {                                                                                                        \
+        debug_printf("ASSERT failed: %s %d\n", __FILE__, __LINE__);                                                    \
+    }
+#else
+#undef ASSERT
+#define ASSERT(...)
+#endif /* CST816T_ASSERT */
 
 #define CST816T_ADDRESS          0x15
 
@@ -51,16 +70,86 @@
 #define REG_PROJ_ID              0xA8
 #define REG_FW_VERSION_ID        0xA9
 #define REG_FACTORY_ID           0xAA
-#define REG_IRQ_CTL              0xFA
 #define REG_MOTION_MASK          0xEC
+#define REG_IRQ_CTRL             0xFA
+#define REG_AUTO_RST             0xFB
+#define REG_LONG_PRESS_TIME      0xFC
 #define REG_DIS_AUTOSLEEP        0xFE
 
 // 中断和动作掩码定义
-#define MOTION_MASK_DOUBLE_CLICK 0b001
+#define MOTION_MASK_DOUBLE_CLICK 0x07
 #define IRQ_EN_TOUCH             0x40
 #define IRQ_EN_CHANGE            0x20
 #define IRQ_EN_MOTION            0x10
 #define IRQ_EN_LONGPRESS         0x01
+
+// 触摸屏初始化
+status_t
+drv_cst816t_init(cst816t_hdl_t* cst816t_hdl, uint8_t tp_mode) {
+
+    ASSERT(cst816t_hdl);
+    ASSERT(cst816t_hdl->iic_read);
+    ASSERT(cst816t_hdl->iic_write);
+
+    uint8_t data[4] = {0};
+    if (HAL_GPIO_ReadPin(cst816t_hdl->_ctrl.rst_port, cst816t_hdl->_ctrl.rst_pin) == 1) {
+        HAL_GPIO_WritePin(cst816t_hdl->_ctrl.rst_port, cst816t_hdl->_ctrl.rst_pin, GPIO_PIN_RESET);
+        osDelay(100);
+        HAL_GPIO_WritePin(cst816t_hdl->_ctrl.rst_port, cst816t_hdl->_ctrl.rst_pin, GPIO_PIN_SET);
+        osDelay(500);
+    }
+
+    // 读取芯片ID和固件版本
+    if (cst816t_hdl->iic_read(CST816T_ADDRESS, REG_CHIP_ID, data, 4) == 0) {
+        cst816t_hdl->_ctrl.chip_id = data[0];
+        cst816t_hdl->_ctrl.firmware_version = data[3];
+    }
+
+    // 配置中断控制和运动掩码
+    uint8_t irq_en = 0, motion_mask = 0;
+    switch (tp_mode) {
+        case 0: irq_en = IRQ_EN_TOUCH; break;
+        case 1: irq_en = IRQ_EN_CHANGE; break;
+        case 2: irq_en = IRQ_EN_MOTION; break;
+        case 3:
+            irq_en = IRQ_EN_MOTION | IRQ_EN_LONGPRESS;
+            motion_mask = MOTION_MASK_DOUBLE_CLICK;
+            break;
+    }
+
+    cst816t_hdl->iic_write(CST816T_ADDRESS, REG_IRQ_CTRL, &irq_en, 1);
+    cst816t_hdl->iic_write(CST816T_ADDRESS, REG_MOTION_MASK, &motion_mask, 1);
+
+    // cst816t_hdl->iic_write(CST816T_ADDRESS, REG_AUTO_RST, &auto_rst, 1);
+
+    /* 禁用自动休眠 */
+    uint8_t dis_auto_sleep = 0xFF;
+    cst816t_hdl->iic_write(CST816T_ADDRESS, REG_DIS_AUTOSLEEP, &dis_auto_sleep, 1);
+
+    return status_ok;
+}
+
+// 检查触摸是否可用
+bool
+cst816t_available(cst816t_hdl_t* cst816t_hdl) {
+    uint8_t data[6] = {0};
+    if ((cst816t_hdl->iic_read(CST816T_ADDRESS, REG_GESTURE_ID, data, 6) == status_ok)) {
+        cst816t_hdl->_ctrl.gesture_id = data[0];
+        cst816t_hdl->_ctrl.finger_num = data[1];
+        cst816t_hdl->_ctrl.x = ((data[2] & 0x0F) << 8) | data[3];
+        cst816t_hdl->_ctrl.y = ((data[4] & 0x0F) << 8) | data[5];
+        return true;
+    }
+
+    // if (cst816t_hdl->_ctrl.tp_event && (cst816t_hdl->iic_read(CST816T_ADDRESS, REG_GESTURE_ID, data, 6) == status_ok)) {
+    //     cst816t_hdl->_ctrl.gesture_id = data[0];
+    //     cst816t_hdl->_ctrl.finger_num = data[1];
+    //     cst816t_hdl->_ctrl.x = ((data[2] & 0x0F) << 8) | data[3];
+    //     cst816t_hdl->_ctrl.y = ((data[4] & 0x0F) << 8) | data[5];
+    //     return true;
+    // }
+    return false;
+}
 
 #if 0
 

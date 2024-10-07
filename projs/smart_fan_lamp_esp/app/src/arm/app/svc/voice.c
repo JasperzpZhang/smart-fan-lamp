@@ -55,13 +55,19 @@
 #define ASSERT(...)
 #endif /* WAVE_ASSERT */
 
-void voice_task(void* para);
+/* global defines */
+QueueHandle_t g_queue_voice;
+static msg_voice_t g_msg_voice;
 
+/* forward functions */
+void voice_task(void* para);
 status_t voice_proc(msg_voice_t msg);
 
+/* functions */
 status_t
 voice_init(void) {
-    drv_voice_init();
+    g_queue_voice = xQueueCreate(3, sizeof(g_msg_voice));
+    HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_msg_voice.buf, 10);
     xTaskCreate(voice_task, "voice task", 1024, NULL, tskIDLE_PRIORITY + 2, NULL);
     return status_ok;
 }
@@ -72,6 +78,7 @@ voice_task(void* para) {
     while (1) {
         if (xQueueReceive(g_queue_voice, &msg_voice, portMAX_DELAY) == pdPASS) {
             uint8_t i;
+            TRACE("size    : %d\n", msg_voice.size);
             TRACE("msg_buf : ");
             for (i = 0; i < msg_voice.size; i++) {
                 TRACE("%x ", msg_voice.buf[i]);
@@ -79,6 +86,11 @@ voice_task(void* para) {
             TRACE("\n");
         }
         voice_proc(msg_voice);
+        if (HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_msg_voice.buf, 10) == HAL_ERROR) {
+            TRACE("HAL_ERROR\n");
+        } else {
+            TRACE("HAL_OK\n");
+        }
         osDelay(5);
     }
 }
@@ -245,10 +257,15 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x1D:
             /* Turn on summer mode */
+            led_set_color_temperature_smooth_blk(100);
             break;
 
         case (uint8_t)0x1E:
             /* Turn on sunlight mode */
+            led_set_status(1);
+            fan_set_status(1);
+            led_set_brightness_smooth_blk(100);
+            led_set_color_temperature_smooth_blk(50);
             break;
 
         case (uint8_t)0x1F:
@@ -265,6 +282,8 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x22:
             /* Turn on sleep mode */
+            led_set_status(0);
+            fan_set_status(0);
             break;
 
         case (uint8_t)0x23:
@@ -342,4 +361,24 @@ voice_proc(msg_voice_t msg) {
     }
 
     return status_ok;
+}
+
+void
+uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
+    g_msg_voice.size = size;
+    xQueueSendFromISR(g_queue_voice, &g_msg_voice, NULL);
+    memset(g_msg_voice.buf, 0, size);
+    g_msg_voice.size = 0;
+}
+
+void
+uart3_rx_cplt_callback(UART_HandleTypeDef* huart) {
+    TRACE("uart3_rx_cplt_callback \n");
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
+}
+
+void
+uart3_error_callback(UART_HandleTypeDef* huart) {
+    TRACE("uart3_error_callback \n");
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
 }
