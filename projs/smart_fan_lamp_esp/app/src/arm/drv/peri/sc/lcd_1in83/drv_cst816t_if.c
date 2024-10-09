@@ -41,7 +41,7 @@
 #include "lib/iic/lib_iic.h"
 
 /* debug config */
-#if CST816T_DEBUG
+#if CST816T_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -62,6 +62,7 @@
 /* global variables */
 cst816t_hdl_t cst816t_hdl;
 SemaphoreHandle_t g_binary_semaphore_tp_event;
+static uint8_t cst816t_init_ok = 0;
 
 /* functions */
 status_t
@@ -76,6 +77,8 @@ cst816t_init(void) {
     cst816t_hdl._ctrl.irq_port = LCD_TP_INT_GPIO_Port;
     cst816t_hdl._ctrl.irq_pin = LCD_TP_INT_Pin;
     drv_cst816t_init(&cst816t_hdl, EN_CHANGE);
+    
+    cst816t_init_ok = 1;
     return status_ok;
 }
 
@@ -83,30 +86,49 @@ bool
 cst816t_read(void) {
     if (xSemaphoreTake(g_binary_semaphore_tp_event, 0) == pdTRUE) {
         cst816t_hdl._ctrl.tp_event = !cst816t_hdl._ctrl.tp_event;
+        if (cst816t_hdl._ctrl.tp_event == true)
+        {
+            TRACE("Touch down\n");
+        }
+        else
+        {
+            TRACE("Touch up\n");
+        }
+            
     }
 
     if (cst816t_hdl._ctrl.tp_event == true) {
-        TRACE("tp_event true\n");
+        // TRACE("tp_event true\n");
         cst816t_available(&cst816t_hdl);
+        
+        if (cst816t_hdl._ctrl.finger_num == 0){
+            cst816t_hdl._ctrl.tp_event = false;
+            TRACE("Touch up\n");
+            return false;
+        }
 
         /* -90 */
         uint16_t tmp = cst816t_hdl._ctrl.x;
         cst816t_hdl._ctrl.x = cst816t_hdl._ctrl.y;
         cst816t_hdl._ctrl.y = 240 - tmp;
 
+        TRACE("зјБъ: %d , %d\n", cst816t_hdl._ctrl.x, cst816t_hdl._ctrl.y);
+
         return true;
     } else {
-        TRACE("tp_event false\n");
+        // TRACE("tp_event false\n");
         return false;
     }
 }
 
 void
 gpio_4_exti_cb(uint16_t gpio_pin) {
-    BaseType_t higher_priority_task_woken = pdFALSE;
-    TRACE("lcd int run\n");
-    xSemaphoreGiveFromISR(g_binary_semaphore_tp_event, &higher_priority_task_woken);
-    portYIELD_FROM_ISR(higher_priority_task_woken);
+    TRACE("gpio_4_exti_cb \n");
+    if (cst816t_init_ok == 1) {
+        BaseType_t higher_priority_task_woken = pdFALSE;
+        xSemaphoreGiveFromISR(g_binary_semaphore_tp_event, &higher_priority_task_woken);
+        portYIELD_FROM_ISR(higher_priority_task_woken);
+    }
 }
 
 static void

@@ -64,16 +64,21 @@
 #define TP_REG_ADDR      0x00
 
 QueueHandle_t g_queue_tp;
+static uint8_t tp_init_ok = 0;
 
 status_t
 drv_tp_init(void) {
     g_queue_tp = xQueueCreate(10, sizeof(msg_tp_t));
+    
+    tp_init_ok = 1;
     return status_ok;
 }
 
 status_t
 tp_read_data(uint8_t* buf) {
     //    iic_read_addr8(TP_HY16009A_ADDR, TP_REG_ADDR, buf, 2);
+    
+    
     iic_read_data(TP_HY16009A_ADDR, buf, 2, 1);
     
     
@@ -85,17 +90,23 @@ tp_read_data(uint8_t* buf) {
     }
     buf[1] = 190 - buf[1];
     
+    
+    
 //    TRACE("buf[1] : %d\n", buf[1]);
     return status_ok;
 }
 
 void
 gpio_5_exti_cb(uint16_t gpio_pin) {
-    msg_tp_t msg;
-    tp_read_data(msg.buf);
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xQueueSendFromISR(g_queue_tp, &msg, &xHigherPriorityTaskWoken);
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    TRACE("gpio_5_exti_cb run\n");
+    if (tp_init_ok == 1)
+    {
+        msg_tp_t msg;
+        tp_read_data(msg.buf);
+        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        xQueueSendFromISR(g_queue_tp, &msg, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
 }
 
 static void

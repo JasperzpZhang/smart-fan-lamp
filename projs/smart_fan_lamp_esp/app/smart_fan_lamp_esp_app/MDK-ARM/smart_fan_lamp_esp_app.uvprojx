@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;../../src/arm/drv/peri/sc/lcd_1in83/fonts</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;../../../ui/guider/smart_fan_lamp_1in83/custom;../../../ui/guider/smart_fan_lamp_1in83/generated</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1331,6 +1331,91 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>ui</GroupName>
+          <Files>
+            <File>
+              <FileName>custom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\custom\custom.c</FilePath>
+            </File>
+            <File>
+              <FileName>events_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\events_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_guider.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\gui_guider.c</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_sc_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\setup_scr_sc_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_sc_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\setup_scr_sc_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>widgets_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\widgets_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_sc_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\setup_scr_sc_ctrl.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>img</GroupName>
+          <Files>
+            <File>
+              <FileName>_cloudy_alpha_100x100.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\images\_cloudy_alpha_100x100.c</FilePath>
+            </File>
+            <File>
+              <FileName>_cloudy_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\images\_cloudy_alpha_50x50.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>font</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_font_montserratMedium_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\guider_fonts\lv_font_montserratMedium_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserratMedium_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\guider_fonts\lv_font_montserratMedium_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_Alatsi_Regular_14.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\guider_fonts\lv_font_Alatsi_Regular_14.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_Alatsi_Regular_61.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\guider_fonts\lv_font_Alatsi_Regular_61.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserratMedium_25.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp_1in83\generated\guider_fonts\lv_font_montserratMedium_25.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl</GroupName>
           <Files>
             <File>
@@ -2292,6 +2377,16 @@
               <FileName>lv_textarea.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\lib\lvgl\src\widgets\lv_textarea.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_dclock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\lvgl\src\extra\widgets\dclock\lv_dclock.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_analogclock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\lib\lvgl\src\extra\widgets\analogclock\lv_analogclock.c</FilePath>
             </File>
           </Files>
         </Group>

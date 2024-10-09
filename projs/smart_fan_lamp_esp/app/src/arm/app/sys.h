@@ -44,7 +44,7 @@ extern "C"
     #include "lib/type/lib_type.h"
 
     /* Defines */
-    #define SYS_TASK_DELAY 100		 /* ms */
+    #define SYS_TASK_DELAY 10		 /* ms */
 
     /* Functions */
     status_t sys_init(void);

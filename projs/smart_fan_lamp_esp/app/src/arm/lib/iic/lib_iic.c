@@ -41,7 +41,7 @@
 #include "lib/iic/lib_iic.h"
 
 /* Debug config */
-#if IIC_DEBUG || 0
+#if IIC_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -116,6 +116,7 @@ iic_deinit(void) {
 static void
 prv_iic_delay(void) {
     delay_us(45);
+    //    osDelay(1);
 }
 
 /**
@@ -251,7 +252,7 @@ prv_iic_send_byte(uint8_t txd) {
     return status_ok;
 }
 
-/**
+/** 
  * @brief     iic read one byte 
  * @param[in] ack is the sent ack
  * @return    status code
@@ -331,6 +332,9 @@ iic_write_cmd(uint8_t addr, uint8_t* buf, uint16_t len) {
     /* send a stop */
     prv_iic_stop();
 
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
+
     IIC_UNLOCK();
 
     return status_ok;
@@ -384,6 +388,9 @@ iic_write_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
     }
 
     prv_iic_stop();
+
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
 
     IIC_UNLOCK();
 
@@ -443,9 +450,11 @@ iic_write_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len) {
             return status_err;
         }
     }
-
     /* send a stop */
     prv_iic_stop();
+
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
 
     IIC_UNLOCK();
     return status_ok;
@@ -492,6 +501,9 @@ iic_read_cmd(uint8_t addr, uint8_t* buf, uint16_t len) {
     /* send a stop */
     prv_iic_stop();
 
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
+
     IIC_UNLOCK();
 
     return status_ok;
@@ -519,28 +531,36 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
     }
 
     if (prv_iic_start() != status_ok) {
+        TRACE("iic read addr8 start error\n");
         IIC_UNLOCK();
         return status_err;
     }
 
     if (prv_iic_send_byte((addr << 1) & 0xFE) != status_ok) {
+        TRACE("iic read addr8 send addr error\n");
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
 
     if (prv_iic_send_byte(reg) != status_ok) {
+        TRACE("iic read addr8 send reg error\n");
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
 
+    prv_iic_delay();
+
     if (prv_iic_start() != status_ok) {
+        TRACE("iic read addr8 re-start error\n");
+        prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
 
     if (prv_iic_send_byte((addr << 1) | 0x01) != status_ok) {
+        TRACE("iic read addr8 re-send addr error\n");
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
@@ -548,7 +568,6 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
 
     for (uint8_t i = 0; i < len; i++) {
         if (i == len - 1) {
-
             if (prv_iic_read_byte(&buf[i], 0) != status_ok) {
                 prv_iic_stop();
                 IIC_UNLOCK();
@@ -562,12 +581,13 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
                 return status_err;
             }
         }
+        prv_iic_delay();
     }
-
     prv_iic_stop();
 
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
     IIC_UNLOCK();
-
     return status_ok;
 }
 
@@ -637,9 +657,11 @@ iic_read_addr16(uint8_t addr, uint16_t reg, uint8_t* buf, uint16_t len) {
         len--;
         buf++;
     }
-
     /* send a stop */
     prv_iic_stop();
+
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
 
     IIC_UNLOCK();
 
@@ -680,6 +702,8 @@ iic_write_data(uint8_t device_address, uint8_t* data, uint16_t length) {
     }
     TRACE("\r\n");
 
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
     /* 发送停止信号 */
     prv_iic_stop();
     IIC_UNLOCK();
@@ -720,9 +744,13 @@ iic_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ac
             IIC_UNLOCK();
             return status_err;
         }
+        prv_iic_delay();
         TRACE("data[%d] = %d\r\n", i, data[i]);
     }
     TRACE("\r\n");
+
+    /* 这个时间短了会出现 start error */
+    delay_us(100);
 
     /* 发送停止信号 */
     prv_iic_stop();

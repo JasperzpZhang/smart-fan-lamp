@@ -37,7 +37,7 @@
 #include "app/include.h"
 
 /* Debug config */
-#if WAVE_DEBUG || 1
+#if WAVE_DEBUG || 0
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -374,11 +374,11 @@ uart3_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
 void
 uart3_rx_cplt_callback(UART_HandleTypeDef* huart) {
     TRACE("uart3_rx_cplt_callback \n");
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
+    HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_msg_voice.buf, 10);
 }
 
 void
 uart3_error_callback(UART_HandleTypeDef* huart) {
     TRACE("uart3_error_callback \n");
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, g_msg_voice.buf, 10);
+    HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_msg_voice.buf, 10);
 }

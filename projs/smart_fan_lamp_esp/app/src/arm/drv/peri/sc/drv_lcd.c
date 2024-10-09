@@ -58,9 +58,9 @@
 void
 lcd_init(void) {
     DEV_Module_Init();
-    lcd_1in83_set_backlight(100);
     lcd_1in83_init(HORIZONTAL); // HORIZONTAL VERTICAL
-    // lcd_1in83_clear(WHITE);
+//    lcd_1in83_clear(WHITE);
+    
 }
 
 #if 0
