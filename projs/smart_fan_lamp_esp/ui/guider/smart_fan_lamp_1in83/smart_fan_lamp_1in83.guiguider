@@ -724,8 +724,7 @@
 					"bg_img_recolor": "#ffffff",
 					"bg_img_recolor_opa": 0
 				}
-			],
-			"layerName": "sc_home"
+			]
 		},
 		{
 			"name": "sc_clock",
@@ -900,8 +899,7 @@
 					"bg_img_recolor": "#ffffff",
 					"bg_img_recolor_opa": 0
 				}
-			],
-			"layerName": "sc_clock"
+			]
 		},
 		{
 			"name": "sc_ctrl",
