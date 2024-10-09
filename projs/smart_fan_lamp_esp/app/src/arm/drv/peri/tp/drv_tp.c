@@ -83,7 +83,7 @@ tp_read_data(uint8_t* buf) {
     
     
 
-    if (buf[1] >= 190 && buf[1] <= 223) {
+    if (buf[1] >= 180 && buf[1] <= 223) {
         buf[1] = 190;
     } else if ((buf[1] >= 224 && buf[1] <= 255) || (buf[1] <= 15)) {
         buf[1] = 0;

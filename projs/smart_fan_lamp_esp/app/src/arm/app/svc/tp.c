@@ -37,7 +37,7 @@
 #include "app/include.h"
 
 /* Debug config */
-#if TP_DEBUG || 0
+#if TP_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -64,7 +64,7 @@ tp_init(void) {
     drv_tp_init();
     osDelay(100);
     g_queue_panel = xQueueCreate(20, sizeof(msg_panel_t));
-    xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
+    xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 3, NULL);
 }
 
 static void
@@ -98,7 +98,6 @@ tp_task(void* parameter) {
                         osDelay(200);
                     } while ((buf[0] & 0x10) != 0);
                 }
-
             } else {
                 /* wt == 0 */
                 if ((HAL_GPIO_ReadPin(KEY_INT_GPIO_Port, KEY_INT_Pin) == GPIO_PIN_SET)) {

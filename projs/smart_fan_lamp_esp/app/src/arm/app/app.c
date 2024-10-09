@@ -66,14 +66,8 @@ app_init(void) {
     panel_init();
     wave_init();
     voice_init();
-
-//    lcd_init();
-//    sc_tp_init();
-
     lvgl_init();
-
     sys_init();
-
 }
 
 /* Bootloader */

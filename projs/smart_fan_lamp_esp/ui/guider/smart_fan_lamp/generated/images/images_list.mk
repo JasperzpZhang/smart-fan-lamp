@@ -1,0 +1,1 @@
+GEN_CSRCS += scr_home_animimg_1cloudy.c scr_home_animimg_1sunny.c scr_home_animimg_1weather_13.c scr_home_animimg_1weather_12.c scr_home_animimg_1weather_18.c scr_home_animimg_1weather_2.c scr_home_animimg_1weather_22.c scr_home_animimg_1weather_24.c scr_home_animimg_1weather_3.c scr_home_animimg_1weather_4.c scr_home_animimg_1weather_7.c

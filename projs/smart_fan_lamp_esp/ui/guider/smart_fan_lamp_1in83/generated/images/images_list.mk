@@ -1,1 +1,0 @@
-GEN_CSRCS += _cloudy_alpha_50x50.c

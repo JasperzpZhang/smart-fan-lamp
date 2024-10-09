@@ -44,7 +44,11 @@ extern "C" {
 
 /* Includes */
     #include "lib/type/lib_type.h"
+    #include "FreeRTOS.h"
+    #include "task.h"
 
+
+extern TaskHandle_t g_lvgl_task_hdl;
 
 status_t lvgl_init(void);
 

@@ -37,7 +37,7 @@
 #include "app/include.h"
 
 /* Debug config */
-#if WAVE_DEBUG || 0
+#if WAVE_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -288,12 +288,12 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x23:
             /* Turn on charging interface */
-            HAL_GPIO_WritePin(USB_SW_GPIO_PORT, USB_SW_GPIO_PIN, GPIO_PIN_SET);
+            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
             break;
 
         case (uint8_t)0x24:
             /* Turn off charging interface */
-            HAL_GPIO_WritePin(USB_SW_GPIO_PORT, USB_SW_GPIO_PIN, GPIO_PIN_RESET);
+            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_RESET);
             break;
 
         case (uint8_t)0x25:

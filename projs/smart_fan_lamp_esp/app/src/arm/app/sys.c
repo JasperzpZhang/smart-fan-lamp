@@ -36,6 +36,10 @@
 
 #include "drv/peri/sc/lcd_1in83/drv_lcd_1in83.h"
 
+#include "lvgl/lvgl.h"
+
+#include "task.h"
+
 /* Debug config */
 #if SYS_DEBUG || 1
 #undef TRACE
@@ -59,14 +63,20 @@
 
 /* global variable */
 
+//lv_mem_monitor_t mem_mon;
+
 /* Forward functions */
 static void sys_task(void* parameter);
+
+void print_heap_info(void);
+
+
 
 /* Functions */
 status_t
 sys_init(void) {
 
-    xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
+    xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     return status_ok;
 }
@@ -75,10 +85,24 @@ static void
 sys_task(void* parameter) {
 
     while (1) {
-
-//        cst816t_read();
-
+        
+//        BaseType_t stack_high_watermark = uxTaskGetStackHighWaterMark(g_lvgl_task_hdl);
+//        TRACE("My Task Remaining Stack Size: %lu bytes\n", stack_high_watermark * sizeof(UBaseType_t));
+        
+        osDelay(500);
         wdog_feed();
         osDelay(SYS_TASK_DELAY);
     }
 }
+
+void print_heap_info(void) {
+    size_t free_heap_size = xPortGetFreeHeapSize();
+    size_t min_free_heap_size = xPortGetMinimumEverFreeHeapSize();
+
+    TRACE("Free Heap Size: %u bytes\n", free_heap_size);
+    TRACE("Minimum Ever Free Heap Size: %u bytes\n", min_free_heap_size);
+}
+
+
+
+

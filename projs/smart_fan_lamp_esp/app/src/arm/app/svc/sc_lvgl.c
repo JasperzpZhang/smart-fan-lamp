@@ -35,10 +35,10 @@
  */
 
 #include "app/include.h"
+#include "custom.h"
 #include "lib/lvgl/lvgl.h"
 #include "lv_port_disp.h"
 #include "lv_port_indev.h"
-#include "custom.h"
 
 /* Debug config */
 #if WAVE_DEBUG || 1
@@ -60,7 +60,7 @@
 #endif /* WAVE_ASSERT */
 
 /* Local defines */
-#if LVGL_RTOS || 0
+#if LVGL_RTOS || 1
 #undef MUTEX_NAME
 #define MUTEX_NAME lvgl_mutex
 static osMutexId_t MUTEX_NAME;
@@ -77,36 +77,26 @@ static osMutexId_t MUTEX_NAME;
 #define LVGL_UNLOCK()
 #endif /* MEM_RTOS */
 
+TaskHandle_t g_lvgl_task_hdl = NULL;
+    
+    
+    
 void lvgl_task(void* para);
 
-lv_ui guider_ui;
 
+
+lv_ui guider_ui;
 
 status_t
 lvgl_init(void) {
 
     LVGL_MUTEX_INIT();
-
-    // sc_init(hxc_lcd_1_8);
-
     lv_init();
     lv_port_disp_init();
     lv_port_indev_init();
-    
-//    custom_init(&guider_ui);
-    
-    
-
-//    lv_obj_t* sw = lv_switch_create(lv_scr_act()); // 在当前屏幕创建开关按钮
-//    // 设置开关按钮的位置为屏幕中间（大致位置）
-//    lv_obj_set_pos(sw, 100, 100);
-//    // 设置开关按钮的大小，例如宽度为60，高度为30
-//    lv_obj_set_size(sw, 60, 30);
-//    
-    
+    custom_init(&guider_ui);
     lcd_1in83_set_backlight(100);
-
-    xTaskCreate(lvgl_task, "lvgl task", 1024, NULL, tskIDLE_PRIORITY + 2, NULL);
+    xTaskCreate(lvgl_task, "lvgl task", 4 * 256, NULL, tskIDLE_PRIORITY + 2, &g_lvgl_task_hdl);
     return status_ok;
 }
 
@@ -120,3 +110,5 @@ lvgl_task(void* para) {
         osDelay(5);
     }
 }
+
+
