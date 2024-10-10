@@ -36,18 +36,19 @@
 #define __SYS_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
-    /* Includes */
-    #include "lib/type/lib_type.h"
+/* Includes */
+#include "lib/type/lib_type.h"
 
-    /* Defines */
-    #define SYS_TASK_DELAY 10		 /* ms */
+/* Defines */
+#define SYS_TASK_DELAY 10 /* ms */
 
-    /* Functions */
-    status_t sys_init(void);
+/* Functions */
+status_t sys_init(void);
+void charge_set_sattus(uint8_t charge_status);
+void charge_save_sattus(void);
 
 #ifdef __cplusplus
 }

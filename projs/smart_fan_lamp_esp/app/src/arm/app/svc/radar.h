@@ -34,8 +34,8 @@
    01a, 28Sep24, Jasper Created
  */
 
-#ifndef __WAVE_H__
-#define __WAVE_H__
+#ifndef __RADAR_H__
+#define __RADAR_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,11 +46,11 @@ extern "C" {
     #include "lib/type/lib_type.h"
 
 
-status_t wave_init(void);
+status_t radar_init(void);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __WAVE_H__ */
+#endif /* __RADAR_H__ */

@@ -586,7 +586,7 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
     prv_iic_stop();
 
     /* 这个时间短了会出现 start error */
-    delay_us(100);
+    // delay_us(100);
     IIC_UNLOCK();
     return status_ok;
 }

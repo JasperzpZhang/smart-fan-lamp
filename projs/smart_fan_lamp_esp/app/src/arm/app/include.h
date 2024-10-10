@@ -104,7 +104,7 @@ extern "C" {
 #include "app/svc/time.h"
 #include "app/svc/tp.h"
 #include "app/svc/voice.h"
-#include "app/svc/wave.h"
+#include "app/svc/radar.h"
 #include "app/sys.h"
 
 #ifdef __cplusplus

@@ -131,7 +131,7 @@ typedef struct {
 
 status_t panel_init(void);
 status_t slider_set_led_line_smooth(uint8_t value);
-status_t slider_blk_set_led_line_smooth(uint8_t value);
+status_t slider_set_led_line_smooth_blk(uint8_t value);
 status_t panel_set_led_status(panel_led_target_t led_target, panel_led_status_t led_status);
 
 extern panel_ctrl_t g_panel_ctrl;

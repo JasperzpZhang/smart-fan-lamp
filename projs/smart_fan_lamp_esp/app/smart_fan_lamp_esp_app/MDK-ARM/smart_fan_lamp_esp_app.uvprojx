@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -83,7 +83,7 @@
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>1</RunUserProg2>
             <UserProg1Name>D:\Program Files\MDK\Keil5\ARM\ARM_Complier_5.06\bin\fromelf.exe --bin -o ..\..\src\script\app.bin smart_fan_lamp_esp_app\smart_fan_lamp_esp_app.axf</UserProg1Name>
-            <UserProg2Name>..\..\src\script\auto_copy.bat</UserProg2Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;..\..\..\ui\guider\smart_fan_lamp\custom;..\..\..\ui\guider\smart_fan_lamp\generated</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;../../../ui/guider/smart_fan_lamp/custom;../../../ui/guider/smart_fan_lamp/generated</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1309,11 +1309,6 @@
               <FilePath>..\..\src\arm\app\svc\led.c</FilePath>
             </File>
             <File>
-              <FileName>wave.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\app\svc\wave.c</FilePath>
-            </File>
-            <File>
               <FileName>panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\svc\panel.c</FilePath>
@@ -1327,6 +1322,11 @@
               <FileName>voice.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\svc\voice.c</FilePath>
+            </File>
+            <File>
+              <FileName>radar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\app\svc\radar.c</FilePath>
             </File>
           </Files>
         </Group>
