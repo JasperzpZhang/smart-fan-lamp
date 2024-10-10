@@ -22,7 +22,7 @@
 /* Pragmas */
 
 /* Debug config */
-#if UART_DEBUG || 1
+#if UART_DEBUG || 0
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -207,17 +207,24 @@ uart8_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
   */
 void
 HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
+    TRACE("HAL_UARTEx_RxEventCallback is run \n");
     switch ((uint32_t)huart->Instance) {
 #ifdef USART1
         case (uint32_t)USART1: uart1_rx_event_callback(huart, Size); break;
 #endif
 
 #ifdef USART2
-        case (uint32_t)USART2: uart2_rx_event_callback(huart, Size); break;
+        case (uint32_t)USART2:
+            uart2_rx_event_callback(huart, Size);
+            TRACE("uart2 rx event callback is run\n");
+            break;
 #endif
 
 #ifdef USART3
-        case (uint32_t)USART3: uart3_rx_event_callback(huart, Size); break;
+        case (uint32_t)USART3:
+            uart3_rx_event_callback(huart, Size);
+            TRACE("uart3 rx event callback is run\n");
+            break;
 #endif
 
 #ifdef UART4

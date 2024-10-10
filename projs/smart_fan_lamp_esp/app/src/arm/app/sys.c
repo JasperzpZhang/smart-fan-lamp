@@ -70,11 +70,15 @@ static void sys_task(void* parameter);
 
 void print_heap_info(void);
 
-
-
 /* Functions */
 status_t
 sys_init(void) {
+    /* charge init */
+    if (th_charge_en == 1) {
+        charge_set_sattus(1);
+    } else {
+        charge_set_sattus(0);
+    }
 
     xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 1, NULL);
 
@@ -85,17 +89,21 @@ static void
 sys_task(void* parameter) {
 
     while (1) {
-        
-//        BaseType_t stack_high_watermark = uxTaskGetStackHighWaterMark(g_lvgl_task_hdl);
-//        TRACE("My Task Remaining Stack Size: %lu bytes\n", stack_high_watermark * sizeof(UBaseType_t));
-        
+
+        //        BaseType_t stack_high_watermark = uxTaskGetStackHighWaterMark(g_lvgl_task_hdl);
+        //        TRACE("My Task Remaining Stack Size: %lu bytes\n", stack_high_watermark * sizeof(UBaseType_t));
+
+        // uint8_t stat = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_6);
+        // TRACE("STAT : %d\n", stat);
+
         osDelay(500);
         wdog_feed();
         osDelay(SYS_TASK_DELAY);
     }
 }
 
-void print_heap_info(void) {
+void
+print_heap_info(void) {
     size_t free_heap_size = xPortGetFreeHeapSize();
     size_t min_free_heap_size = xPortGetMinimumEverFreeHeapSize();
 
@@ -103,6 +111,29 @@ void print_heap_info(void) {
     TRACE("Minimum Ever Free Heap Size: %u bytes\n", min_free_heap_size);
 }
 
+void
+charge_set_sattus(uint8_t charge_status) {
+    if (charge_status != 0) {
+        th_charge_en = 1;
+        HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
+    } else {
+        th_charge_en = 0;
+        HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_RESET);
+    }
+}
 
+void
+charge_save_sattus(void) {
+    data_save_direct();
+}
 
-
+static void
+cli_cmd_charge_save_status(cli_printf cliprintf, int argc, char** argv) {
+    if (1 == argc) {
+        charge_save_sattus();
+        cliprintf("led_save_status ok\r\n");
+    } else {
+        cliprintf("parameter length error\r\n");
+    }
+}
+CLI_CMD_EXPORT(charge_save, charge save status, cli_cmd_charge_save_status)

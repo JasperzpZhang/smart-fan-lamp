@@ -77,7 +77,7 @@ cst816t_init(void) {
     cst816t_hdl._ctrl.irq_port = LCD_TP_INT_GPIO_Port;
     cst816t_hdl._ctrl.irq_pin = LCD_TP_INT_Pin;
     drv_cst816t_init(&cst816t_hdl, EN_CHANGE);
-    
+
     cst816t_init_ok = 1;
     return status_ok;
 }
@@ -86,22 +86,18 @@ bool
 cst816t_read(void) {
     if (xSemaphoreTake(g_binary_semaphore_tp_event, 0) == pdTRUE) {
         cst816t_hdl._ctrl.tp_event = !cst816t_hdl._ctrl.tp_event;
-        if (cst816t_hdl._ctrl.tp_event == true)
-        {
+        if (cst816t_hdl._ctrl.tp_event == true) {
             TRACE("Touch down\n");
-        }
-        else
-        {
+        } else {
             TRACE("Touch up\n");
         }
-            
     }
 
     if (cst816t_hdl._ctrl.tp_event == true) {
         // TRACE("tp_event true\n");
         cst816t_available(&cst816t_hdl);
-        
-        if (cst816t_hdl._ctrl.finger_num == 0){
+
+        if (cst816t_hdl._ctrl.finger_num == 0) {
             cst816t_hdl._ctrl.tp_event = false;
             TRACE("Touch up\n");
             return false;

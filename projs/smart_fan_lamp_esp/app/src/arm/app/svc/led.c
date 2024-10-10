@@ -33,6 +33,7 @@
  */
 
 #include "app/include.h"
+#include "app/svc/panel.h"
 
 /* Debug config */
 #if LED_DEBUG || 1
@@ -64,21 +65,22 @@ void led_task(void* para);
 /* functions */
 status_t
 led_init(void) {
-    /* You must initalize all parameters before you can operate a function */
-    g_led_ctrl.status._LED_STATUS = 0;
-    
-    g_led_ctrl.led_brightness = th_led_brightness;
+
+    g_led_ctrl.last_led_brightness = th_led_brightness;
+    g_led_ctrl.last_led_color_temperature = th_led_color_temperature;
+
+    g_led_ctrl.led_brightness = 0;
     g_led_ctrl.led_color_temperature = th_led_color_temperature;
-    led_set_brightness(g_led_ctrl.led_brightness);
-    led_set_color_temperature(g_led_ctrl.led_color_temperature);
-    
-    
+
     g_led_ctrl.status._LED_STATUS = th_led_status;
     g_led_ctrl.status._NIGHT_LIGHT_STATUS = 0;
 
+    led_start_pwm();
+
     if (g_led_ctrl.status._LED_STATUS == 1) {
         g_panel_ctrl.sw._SW_MAIN = 1;
-        led_set_status(1);
+        // led_set_color_temperature(g_led_ctrl.last_led_color_temperature);
+        led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
     }
 
     xTaskCreate(led_task, "led task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
@@ -124,7 +126,6 @@ led_set_color_temperature(uint16_t led_color_temperature) {
     if (led_color_temperature > 100) {
         return status_err;
     }
-
     uint16_t led_cold_brightness = 0, led_warm_brightness = 0;
     /* You can't change the brightness when you adjust the color temperature */
     led_warm_brightness = led_color_temperature * g_led_ctrl.led_brightness / LIGHT_DEEP;
@@ -159,13 +160,18 @@ led_start_pwm(void) {
 status_t
 led_set_status(uint16_t on_off) {
     if (on_off != 0) {
-        led_start_pwm();
+        led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
         g_led_ctrl.status._LED_STATUS = 1;
         panel_set_led_status(main_sw, panel_led_on);
+        slider_set_led_line_smooth_blk(g_led_ctrl.last_led_brightness);
+        // led_start_pwm();
     } else {
-        led_stop_pwm();
+        g_led_ctrl.last_led_brightness = g_led_ctrl.led_brightness;
+        led_set_brightness_smooth_blk(0);
         g_led_ctrl.status._LED_STATUS = 0;
         panel_set_led_status(main_sw, panel_led_off);
+        slider_set_led_line_smooth_blk(0);
+        // led_stop_pwm();
     }
     return status_ok;
 }

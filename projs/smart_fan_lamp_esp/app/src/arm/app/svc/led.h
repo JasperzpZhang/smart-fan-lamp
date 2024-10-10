@@ -43,8 +43,8 @@ extern "C" {
 #include "main.h"
 
 typedef struct {
-    // uint16_t last_led_brightness; // last led brightnes and last_led_color_temperature just used for settting.
-    // uint16_t last_led_color_temperature;
+    uint16_t last_led_brightness; // last led brightnes and last_led_color_temperature just used for settting.
+    uint16_t last_led_color_temperature;
     uint16_t led_brightness;
     uint16_t led_color_temperature;
 

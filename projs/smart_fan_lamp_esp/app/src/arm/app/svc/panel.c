@@ -102,7 +102,7 @@ panel_status_init(void) {
     panel_set_led_status(idx_color, panel_led_off);
     panel_set_led_status(idx_fan, panel_led_off);
 
-    slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
+    slider_set_led_line_smooth_blk(g_led_ctrl.led_brightness);
 }
 
 void
@@ -201,20 +201,20 @@ tp_key_proc(msg_panel_t* msg) {
                 panel_set_led_status(idx_brightness, panel_led_on);
                 panel_set_led_status(idx_color, panel_led_off);
                 panel_set_led_status(idx_fan, panel_led_off);
-                slider_blk_set_led_line_smooth(g_led_ctrl.led_brightness);
+                slider_set_led_line_smooth_blk(g_led_ctrl.led_brightness);
                 break;
             case MODE_LED_COLOR:
                 panel_set_led_status(idx_brightness, panel_led_off);
                 panel_set_led_status(idx_color, panel_led_on);
                 panel_set_led_status(idx_fan, panel_led_off);
-                slider_blk_set_led_line_smooth(g_led_ctrl.led_color_temperature);
+                slider_set_led_line_smooth_blk(g_led_ctrl.led_color_temperature);
                 break;
 
             case MODE_FAN:
                 panel_set_led_status(idx_brightness, panel_led_off);
                 panel_set_led_status(idx_color, panel_led_off);
                 panel_set_led_status(idx_fan, panel_led_on);
-                slider_blk_set_led_line_smooth(g_fan_ctrl.fan_speed);
+                slider_set_led_line_smooth_blk(g_fan_ctrl.fan_speed);
                 break;
             default:
                 /* do nothing */
@@ -361,7 +361,7 @@ panel_set_led_status(panel_led_target_t led_target, panel_led_status_t led_statu
 }
 
 status_t
-slider_blk_set_led_line_smooth(uint8_t value) {
+slider_set_led_line_smooth_blk(uint8_t value) {
     while (g_panel_ctrl.slider_led_line_value != value) {
         if (g_panel_ctrl.slider_led_line_value < value) {
             g_panel_ctrl.slider_led_line_value++;

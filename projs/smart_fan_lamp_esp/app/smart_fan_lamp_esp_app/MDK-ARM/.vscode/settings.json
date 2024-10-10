@@ -26,6 +26,7 @@
         "drv_cst816t.h": "c",
         "drv_cst816t_if.h": "c",
         "lv_port_indev.h": "c",
-        "custom.h": "c"
+        "custom.h": "c",
+        "panel.h": "c"
     }
 }

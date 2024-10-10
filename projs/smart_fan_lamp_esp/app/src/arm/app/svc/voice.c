@@ -142,127 +142,263 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x06:
             /* Set brightness to 10% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(10);
+            slider_set_led_line_smooth_blk(10);
             break;
 
         case (uint8_t)0x07:
             /* Set brightness to 20% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(20);
+
+            slider_set_led_line_smooth_blk(20);
+
             break;
 
         case (uint8_t)0x08:
             /* Set brightness to 30% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(30);
+
+            slider_set_led_line_smooth_blk(30);
+
             break;
 
         case (uint8_t)0x09:
             /* Set brightness to 40% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(40);
+
+            slider_set_led_line_smooth_blk(40);
+
             break;
 
         case (uint8_t)0x0A:
             /* Set brightness to 50% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(50);
+
+            slider_set_led_line_smooth_blk(50);
+
             break;
 
         case (uint8_t)0x0B:
             /* Set brightness to 60% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(60);
+
+            slider_set_led_line_smooth_blk(60);
+
             break;
 
         case (uint8_t)0x0C:
             /* Set brightness to 70% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(70);
+
+            slider_set_led_line_smooth_blk(70);
+
             break;
 
         case (uint8_t)0x0D:
             /* Set brightness to 80% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(80);
+
+            slider_set_led_line_smooth_blk(80);
+
             break;
 
         case (uint8_t)0x0E:
             /* Set brightness to 90% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(90);
+
+            slider_set_led_line_smooth_blk(90);
+
             break;
 
         case (uint8_t)0x0F:
             /* Set brightness to 100% */
+            g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+            panel_set_led_status(idx_brightness, panel_led_on);
+            panel_set_led_status(idx_color, panel_led_off);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_brightness_smooth_blk(100);
+
+            slider_set_led_line_smooth_blk(100);
+
             break;
 
         case (uint8_t)0x10:
             /* Set color temperature to 10% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(10);
+
+            slider_set_led_line_smooth_blk(10);
+
             break;
 
         case (uint8_t)0x11:
             /* Set color temperature to 20% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(20);
+
+            slider_set_led_line_smooth_blk(20);
+
             break;
 
         case (uint8_t)0x12:
             /* Set color temperature to 30% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(30);
+
+            slider_set_led_line_smooth_blk(30);
+
             break;
 
         case (uint8_t)0x13:
             /* Set color temperature to 40% */
+
             led_set_color_temperature_smooth_blk(40);
+
+            slider_set_led_line_smooth_blk(40);
+
             break;
 
         case (uint8_t)0x14:
             /* Set color temperature to 50% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(50);
+
+            slider_set_led_line_smooth_blk(50);
+
             break;
 
         case (uint8_t)0x15:
             /* Set color temperature to 60% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(60);
+
+            slider_set_led_line_smooth_blk(60);
+
             break;
 
         case (uint8_t)0x16:
             /* Set color temperature to 70% */
+
             led_set_color_temperature_smooth_blk(70);
+
+            slider_set_led_line_smooth_blk(70);
+
             break;
 
         case (uint8_t)0x17:
             /* Set color temperature to 80% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(80);
+
+            slider_set_led_line_smooth_blk(80);
+
             break;
 
         case (uint8_t)0x18:
             /* Set color temperature to 90% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(90);
+
+            slider_set_led_line_smooth_blk(90);
+
             break;
 
         case (uint8_t)0x19:
             /* Set color temperature to 100% */
+            g_panel_ctrl.slider_target = MODE_LED_COLOR;
+            panel_set_led_status(idx_brightness, panel_led_off);
+            panel_set_led_status(idx_color, panel_led_on);
+            panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(100);
+
+            slider_set_led_line_smooth_blk(100);
+
             break;
 
         case (uint8_t)0x1A:
             /* Turn on warm light mode */
+
             led_set_color_temperature_smooth_blk(0);
             break;
 
         case (uint8_t)0x1B:
             /* Turn on winter mode */
+
             led_set_color_temperature_smooth_blk(0);
             break;
 
         case (uint8_t)0x1C:
             /* Turn on cool light mode */
+
             led_set_color_temperature_smooth_blk(100);
             break;
 
         case (uint8_t)0x1D:
             /* Turn on summer mode */
+
             led_set_color_temperature_smooth_blk(100);
             break;
 
         case (uint8_t)0x1E:
             /* Turn on sunlight mode */
-            led_set_status(1);
+
             fan_set_status(1);
             led_set_brightness_smooth_blk(100);
             led_set_color_temperature_smooth_blk(50);
@@ -274,6 +410,10 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x20:
             /* Turn on reading mode */
+
+            fan_set_status(1);
+            led_set_brightness_smooth_blk(100);
+            led_set_color_temperature_smooth_blk(50);
             break;
 
         case (uint8_t)0x21:
@@ -288,12 +428,12 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x23:
             /* Turn on charging interface */
-            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
+            charge_set_sattus(1);
             break;
 
         case (uint8_t)0x24:
             /* Turn off charging interface */
-            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_RESET);
+            charge_set_sattus(0);
             break;
 
         case (uint8_t)0x25:
@@ -308,16 +448,19 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x27:
             /* Set fan speed to level 1 */
+            fan_set_status(1);
             fan_set_level(1);
             break;
 
         case (uint8_t)0x28:
             /* Set fan speed to level 2 */
+            fan_set_status(1);
             fan_set_level(2);
             break;
 
         case (uint8_t)0x29:
             /* Set fan speed to level 3 */
+            fan_set_status(1);
             fan_set_level(3);
             break;
 

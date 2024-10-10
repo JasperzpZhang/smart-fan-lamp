@@ -64,7 +64,7 @@ app_init(void) {
     led_init();
     tp_init();
     panel_init();
-    wave_init();
+    radar_init();
     voice_init();
     lvgl_init();
     sys_init();

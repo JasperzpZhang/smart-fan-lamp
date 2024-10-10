@@ -79,11 +79,7 @@ static osMutexId_t MUTEX_NAME;
 
 TaskHandle_t g_lvgl_task_hdl = NULL;
     
-    
-    
 void lvgl_task(void* para);
-
-
 
 lv_ui guider_ui;
 
