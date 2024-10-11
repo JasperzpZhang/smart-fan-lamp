@@ -219,19 +219,19 @@ tim_period_elapsed_cb(TIM_HandleTypeDef* htim) {
 #endif
 
 #ifdef TIM6
-        case (uint32_t)TIM6: tim5_period_elapsed_cb(htim); break;
+        case (uint32_t)TIM6: tim6_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM7
-        case (uint32_t)TIM7: tim5_period_elapsed_cb(htim); break;
+        case (uint32_t)TIM7: tim7_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM8
-        case (uint32_t)TIM8: tim5_period_elapsed_cb(htim); break;
+        case (uint32_t)TIM8: tim8_period_elapsed_cb(htim); break;
 #endif
 
 #ifdef TIM9
-        case (uint32_t)TIM9: tim5_period_elapsed_cb(htim); break;
+        case (uint32_t)TIM9: tim9_period_elapsed_cb(htim); break;
 #endif
     }
 }

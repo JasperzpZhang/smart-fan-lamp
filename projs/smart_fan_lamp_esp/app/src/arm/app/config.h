@@ -117,6 +117,7 @@ extern "C" {
 #define RTC_ASSERT               (0)
 #define RTC_TEST                 (0)
 #define RTC_ENABLE_MSP           (0)
+#define TIMER_TIME_ENABLE        (1)
 
 /* Prot module */
 #define PROT_ENABLE              (1)

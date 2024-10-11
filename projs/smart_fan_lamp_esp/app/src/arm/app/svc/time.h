@@ -41,10 +41,21 @@ extern "C" {
 
 #include "lib/type/lib_type.h"
 
-    /* Functions */
-    status_t time_init(void);
-    status_t DrvTimeTerm(void);
-    status_t rtc_get_time(void);
+typedef struct {
+    uint32_t tick_count;
+    uint8_t year;
+    uint8_t month;
+    uint8_t week;
+    uint8_t day;
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t second;
+} time_ctrl_t;
+
+/* Functions */
+status_t time_init(void);
+status_t DrvTimeTerm(void);
+status_t rtc_get_time(void);
 
 #ifdef __cplusplus
 }

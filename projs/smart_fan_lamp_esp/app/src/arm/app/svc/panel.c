@@ -138,7 +138,7 @@ panel_ctrl_task(void* para) {
             }
         }
 
-        osDelay(8);
+        osDelay(7);
     }
 }
 
@@ -152,10 +152,16 @@ tp_key_proc(msg_panel_t* msg) {
         if (g_panel_ctrl.sw._SW_MAIN == 1) {
             panel_set_led_status(main_sw, panel_led_on);
             led_set_status(1);
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                slider_set_led_line_smooth_blk(g_led_ctrl.led_brightness);
+            }
+
         } else {
-            HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, KEY_LED_OFF);
             panel_set_led_status(main_sw, panel_led_off);
             led_set_status(0);
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                slider_set_led_line_smooth_blk(0);
+            }
         }
     }
 
@@ -179,9 +185,15 @@ tp_key_proc(msg_panel_t* msg) {
         if (g_panel_ctrl.sw._SW_FAN == 1) {
             panel_set_led_status(fan, panel_led_on);
             fan_set_status(1);
+            if (g_panel_ctrl.slider_target == MODE_FAN) {
+                slider_set_led_line_smooth_blk(g_fan_ctrl.last_fan_speed);
+            }
         } else {
             panel_set_led_status(fan, panel_led_off);
             fan_set_status(0);
+            if (g_panel_ctrl.slider_target == MODE_FAN) {
+                slider_set_led_line_smooth_blk(0);
+            }
         }
     }
 
@@ -225,105 +237,50 @@ tp_key_proc(msg_panel_t* msg) {
     return status_ok;
 }
 
-#if 0
-status_t
-tp_key_proc(msg_panel_t* msg) {
-    /* main led sw */
-    if (msg->tp._TP_KEY4 == 1) {
-        g_panel_ctrl.status._LED_SW = !g_panel_ctrl.status._LED_SW;
-        if (g_panel_ctrl.status._LED_SW == 1) {
-            g_panel_ctrl.led._LED4 = 1;
-            HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, GPIO_PIN_RESET);
-            led_set_status(1);
-        } else {
-            g_panel_ctrl.led._LED4 = 0;
-            HAL_GPIO_WritePin(KEY_LED12_GPIO_Port, KEY_LED12_Pin, GPIO_PIN_SET);
-            led_set_status(0);
-        }
-    }
-
-    /* night light sw */
-    if (msg->tp._TP_KEY5 == 1) {
-        g_panel_ctrl.status._g_led_ctrl = !g_panel_ctrl.status._g_led_ctrl;
-        if (g_panel_ctrl.status._g_led_ctrl == 1) {
-            g_panel_ctrl.slider_target = LED_COLOR_CTRL;
-            g_panel_ctrl.led._LED5 = 1;
-            HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, GPIO_PIN_RESET);
-        } else {
-            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_panel_ctrl.led._LED5 = 0;
-            HAL_GPIO_WritePin(KEY_LED13_GPIO_Port, KEY_LED13_Pin, GPIO_PIN_SET);
-        }
-        
-    }
-
-    /* fan sw */
-    if (msg->tp._TP_KEY6 == 1) {
-        g_panel_ctrl.led._LED6 = !g_panel_ctrl.led._LED6;
-        HAL_GPIO_TogglePin(KEY_LED14_GPIO_Port, KEY_LED14_Pin);
-        
-    }
-
-    /* fan */
-    if (msg->tp._TP_KEY7 == 1) {
-        g_panel_ctrl.led._LED7 = !g_panel_ctrl.led._LED7;
-        HAL_GPIO_TogglePin(KEY_LED15_GPIO_Port, KEY_LED15_Pin);
-    }
-
-    /* night light */
-    if (msg->tp._TP_KEY8 == 1) {
-
-        g_panel_ctrl.status._NIGHT_LIGHT = !g_panel_ctrl.status._NIGHT_LIGHT;
-        if (g_panel_ctrl.status._NIGHT_LIGHT == 1) {
-            g_panel_ctrl.led._LED8 = 1;
-            HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_SET);
-        } else {
-            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_panel_ctrl.led._LED8 = 0;
-            HAL_GPIO_WritePin(KEY_LED16_GPIO_Port, KEY_LED16_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_RESET);
-        }
-    }
-
-    /* usb */
-    if (msg->tp._TP_KEY9 == 1) {
-
-        g_panel_ctrl.status._USB = !g_panel_ctrl.status._USB;
-        if (g_panel_ctrl.status._USB == 1) {
-            g_panel_ctrl.led._LED9 = 1;
-            HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_SET);
-        } else {
-            g_panel_ctrl.slider_target = LED_BRIGHT_CTRL;
-            g_panel_ctrl.led._LED9 = 0;
-            HAL_GPIO_WritePin(KEY_LED17_GPIO_Port, KEY_LED17_Pin, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(USB_POWER_EN_GPIO_Port, USB_POWER_EN_Pin, GPIO_PIN_RESET);
-        }
-    }
-
-    return status_ok;
-}
-
-#endif
-
 status_t
 slider_set_target_value(uint8_t value) {
+    static uint8_t fan_start_stop_lock = 0;
+    static uint8_t led_start_stop_lock = 0;
 
     switch (g_panel_ctrl.slider_target) {
         case MODE_LED_BRIGHT:
             //            TRACE("bright : %d\n", value);
             led_set_brightness_smooth(value);
+            g_led_ctrl.last_led_brightness = g_led_ctrl.led_brightness;
+            if (value != 0) {
+                if (led_start_stop_lock == 0) {
+                    panel_set_led_status(main_sw, panel_led_on);
+                    led_start_stop_lock = 1;
+                }
+            } else {
+                if (led_start_stop_lock == 1) {
+                    panel_set_led_status(main_sw, panel_led_off);
+                    led_start_stop_lock = 0;
+                }
+            }
             break;
         case MODE_LED_COLOR:
             //            TRACE("color : %d\n", value);
             led_set_color_temperature_smooth(value);
+            g_led_ctrl.last_led_color_temperature = g_led_ctrl.led_color_temperature;
             break;
 
         case MODE_FAN:
             //            TRACE("speed : %d\n", value);
+            if (value != 0) {
+                if (fan_start_stop_lock == 0) {
+                    panel_set_led_status(fan, panel_led_on);
+                    fan_start_stop_lock = 1;
+                }
+            } else {
+                if (fan_start_stop_lock == 1) {
+                    panel_set_led_status(fan, panel_led_off);
+                    fan_start_stop_lock = 0;
+                }
+            }
+
             fan_set_speed_smooth(value);
-            osDelay(4);
+            osDelay(1);
             break;
 
         default: break;

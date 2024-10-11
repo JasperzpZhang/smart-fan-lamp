@@ -25,10 +25,10 @@ fan_ctrl_t g_fan_ctrl;
 status_t
 fan_init(void) {
     /* You must initalize all parameters before you can operate a function */
-    g_fan_ctrl.fan_speed = th_fan_speed;
+    g_fan_ctrl.last_fan_speed = th_fan_speed;
     g_fan_ctrl.fan_status = th_fan_status;
 
-    fan_set_speed(g_fan_ctrl.fan_speed);
+    fan_start();
 
     if (g_fan_ctrl.fan_status == 1) {
         fan_set_status(1);
@@ -41,6 +41,21 @@ fan_init(void) {
 status_t
 prv_fan_set_pwm_duty(uint16_t fan_pwm_duty) {
     __HAL_TIM_SET_COMPARE(FAN_FORWARD_TIM, FAN_FORWARD_CHANNEL, fan_pwm_duty);
+    return status_ok;
+}
+
+/* set fan speed smooth*/
+status_t
+fan_set_speed_smooth_blk(uint16_t fan_speed) {
+    while(g_fan_ctrl.fan_speed != fan_speed){
+
+    if (g_fan_ctrl.fan_speed < fan_speed) {
+        g_fan_ctrl.fan_speed++;
+    } else if (g_fan_ctrl.fan_speed > fan_speed) {
+        g_fan_ctrl.fan_speed--;
+    }
+    fan_set_speed(g_fan_ctrl.fan_speed);
+}
     return status_ok;
 }
 
@@ -82,13 +97,16 @@ fan_stop(void) {
 status_t
 fan_set_status(uint16_t on_off) {
     if (on_off != 0) {
-        fan_start();
+//        fan_start();
         g_fan_ctrl.fan_status = 1;
         panel_set_led_status(fan, panel_led_on);
+        fan_set_speed(g_fan_ctrl.last_fan_speed);
     } else {
-        fan_stop();
+//        fan_stop();
+        g_fan_ctrl.last_fan_speed = g_fan_ctrl.fan_speed;
         g_fan_ctrl.fan_status = 0;
         panel_set_led_status(fan, panel_led_off);
+        fan_set_speed(0);
     }
     return status_ok;
 }

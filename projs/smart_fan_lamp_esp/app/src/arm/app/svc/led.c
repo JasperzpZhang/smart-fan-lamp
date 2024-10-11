@@ -163,14 +163,15 @@ led_set_status(uint16_t on_off) {
         led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
         g_led_ctrl.status._LED_STATUS = 1;
         panel_set_led_status(main_sw, panel_led_on);
-        slider_set_led_line_smooth_blk(g_led_ctrl.last_led_brightness);
+        // slider_set_led_line_smooth_blk(g_led_ctrl.last_led_brightness);
         // led_start_pwm();
     } else {
         g_led_ctrl.last_led_brightness = g_led_ctrl.led_brightness;
+        g_led_ctrl.last_led_color_temperature = g_led_ctrl.led_color_temperature;
         led_set_brightness_smooth_blk(0);
         g_led_ctrl.status._LED_STATUS = 0;
         panel_set_led_status(main_sw, panel_led_off);
-        slider_set_led_line_smooth_blk(0);
+        // slider_set_led_line_smooth_blk(0);
         // led_stop_pwm();
     }
     return status_ok;

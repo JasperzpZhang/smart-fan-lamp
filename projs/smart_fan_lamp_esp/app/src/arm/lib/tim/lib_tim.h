@@ -44,16 +44,15 @@ extern "C" {
 void tim_period_elapsed_cb(TIM_HandleTypeDef* htim);
 void tim_init(void);
 
-void tim1_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim2_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim3_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim4_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim5_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim6_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim7_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim8_period_elapsed_cb(TIM_HandleTypeDef* htim);
-void tim9_period_elapsed_cb(TIM_HandleTypeDef* htim);
-
+// void tim1_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim2_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim3_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim4_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim5_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim6_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim7_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim8_period_elapsed_cb(TIM_HandleTypeDef* htim);
+// void tim9_period_elapsed_cb(TIM_HandleTypeDef* htim);
 
 #ifdef __cplusplus
 }

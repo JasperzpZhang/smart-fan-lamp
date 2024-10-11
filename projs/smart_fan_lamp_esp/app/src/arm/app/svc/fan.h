@@ -44,10 +44,15 @@ extern "C" {
 
 typedef struct {
     uint16_t fan_speed;
+    uint16_t last_fan_speed;
     uint16_t fan_status;
 } fan_ctrl_t;
 
 status_t fan_init(void);
+status_t
+fan_start(void);
+status_t
+fan_stop(void);
 status_t fan_set_speed(uint16_t fan_speed);
 status_t fan_set_speed_smooth(uint16_t fan_speed);
 status_t fan_set_status(uint16_t on_off);
