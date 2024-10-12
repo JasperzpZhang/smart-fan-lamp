@@ -87,6 +87,6 @@ user:
     company : D:\Program Files\MDK\Keil5\ARM\ARM_Complier_5.06\bin\fromelf.exe --bin -o ..\..\src\script\app.bin smart_fan_lamp_esp_app\smart_fan_lamp_esp_app.axf
 
     jasper : D:\ProgramData\Mdk\ARM\ARM_Compiler_506\bin\fromelf.exe --bin -o ..\..\src\script\app.bin smart_fan_lamp_esp_app\smart_fan_lamp_esp_app.axf
-    
+     
     ..\..\src\script\auto_copy.bat
 */

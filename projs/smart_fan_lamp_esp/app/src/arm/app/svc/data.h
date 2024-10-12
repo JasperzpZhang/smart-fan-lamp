@@ -53,6 +53,8 @@ extern "C" {
 #define th_fan_speed             g_xData.fan_speed
 #define th_scence_mode           g_xData.scence_mode
 #define th_charge_en             g_xData.charge_en
+#define th_radar_delay           g_xData.radar_delay
+#define th_radar_strategy_en     g_xData.radar_strategy_en
 
 #define FLASH_DATA_HEAD          (0xA5)
 #define FLASH_SAVE_PAGE1         (1024 * 64)
@@ -69,6 +71,10 @@ extern "C" {
      .fan_speed = 50,                                                                                                  \
      .scence_mode = 0,                                                                                                 \
      .charge_en = 1,                                                                                                   \
+     .radar_delay.hour = 0,                                                                                            \
+     .radar_delay.min = 15,                                                                                            \
+     .radar_delay.hour = 0,                                                                                            \
+     .radar_strategy_en = 0,                                                                                           \
      .crc = 0}
 #endif /* APP_DATA_INIT */
 
@@ -86,6 +92,14 @@ typedef struct {
     uint16_t fan_speed;
     uint8_t scence_mode;
     uint8_t charge_en;
+
+    struct {
+        uint8_t hour;
+        uint8_t min;
+        uint8_t sec;
+    } radar_delay;
+
+    uint8_t radar_strategy_en;
     uint8_t crc; /* Check code */
 } Data_t;
 

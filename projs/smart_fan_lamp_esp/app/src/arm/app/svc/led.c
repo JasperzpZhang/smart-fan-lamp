@@ -80,7 +80,7 @@ led_init(void) {
     if (g_led_ctrl.status._LED_STATUS == 1) {
         g_panel_ctrl.sw._SW_MAIN = 1;
         // led_set_color_temperature(g_led_ctrl.last_led_color_temperature);
-        led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
+        // led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
     }
 
     xTaskCreate(led_task, "led task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);

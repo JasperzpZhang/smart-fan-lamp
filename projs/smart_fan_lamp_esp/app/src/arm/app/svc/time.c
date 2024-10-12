@@ -73,14 +73,65 @@ static osMutexId time_mutex;
 #define TIME_UNLOCK()
 #endif /* RTC_RTOS */
 
+typedef struct {
+    uint32_t tick_count;
+    uint8_t year;
+    uint8_t mon;
+    uint8_t week;
+    uint8_t day;
+    uint8_t hour;
+    uint8_t min;
+    uint8_t sec;
+} time_ctrl_t;
+
 static uint32_t tick_count = 0;
 
 QueueHandle_t g_queue_time;
-time_ctrl_t g_time_ctrl;
+time_ctrl_t g_time_ctrl = TIME_CTRL_INIT;
 
 void time_task(void* para);
-time_ctrl_t calculate_time_from_seconds(uint32_t total_seconds);
-uint32_t calculate_time_to_timestamp(time_ctrl_t* time_ctrl);
+time_ctrl_t sec_to_time(uint32_t sec);
+uint32_t time_to_sec(uint8_t hour, uint8_t min, uint8_t sec);
+status_t get_current_tick_time(time_ctrl_t* time_ctrl);
+
+/*
+    time_hdl_t g_time_radar;
+    timing_start(&g_time_radar, 0, 15, 0);
+    while(1){
+        if(is_timing_ramaining(&g_time_radar) == 0){
+            led_off();
+        }
+        if (radar_on == 1){
+            timing_start(&g_time_radar, 0, 15, 0);
+        }
+        osDelay(500);
+    }
+ */
+
+/* 
+    time_hdl_t g_time_tomato;
+    timing_start(&g_time_tomato, 0, 45, 0);
+
+    while(1){
+         if(is_timing_ramaining(&g_time_radar) == 0){
+            TRACE("time : %d : %d : %d\n", g_time_tomato.rm_hour, g_time_tomato.rm_min, g_time_tomato.rm_sec)
+        }
+        osDelay(50);
+    }
+ */
+
+/* 
+    // 暂不开发
+
+    time_hdl_t g_time_clock;
+    clock_create(&g_time_clock);
+
+    while(1){
+
+        TRACE("%d月%d日 %d : %d : %d\n", g_time_clock.tm_mon, g_time_clock.tm_day, g_time_clock.tm_hour, g_time_clock.tm_min, g_time_clock.tm_sec)
+        osDelay(50);
+    }
+ */
 
 /* Functions */
 status_t
@@ -136,7 +187,7 @@ rtc_get_timestamp(void) {
 }
 
 uint32_t
-time_get_current_timestamp(time_ctrl_t* time_ctrl) {
+get_current_timestamp(time_ctrl_t* time_ctrl) {
     uint32_t timestamp = rtc_get_timestamp();
 
     return timestamp;
@@ -148,34 +199,102 @@ time_task(void* para) {
     static uint32_t msg_tick_count = 0;
 
     while (1) {
-        if (xQueueReceive(g_queue_time, &msg_tick_count, portMAX_DELAY) == pdPASS) {}
-
-        TRACE("time_count : %d s\n", msg_tick_count);
-
-        // 调用函数计算并更新时间
-        g_time_ctrl = calculate_time_from_seconds(msg_tick_count);
-
-        // 打印时间信息
-        TRACE("Time: %02d days, %02d:%02d:%02d\n", g_time_ctrl.day, g_time_ctrl.hour, g_time_ctrl.minute,
-              g_time_ctrl.second);
-
-        TRACE("\n\n");
+        if (xQueueReceive(g_queue_time, &msg_tick_count, portMAX_DELAY) == pdPASS) {
+            TIME_LOCK();
+            g_time_ctrl = sec_to_time(msg_tick_count);
+            TIME_UNLOCK();
+        }
+        // TRACE("time_count : %d s\n", g_time_ctrl.tick_count);
+        // TRACE("Time: %02d days, %02d:%02d:%02d\n", g_time_ctrl.day, g_time_ctrl.hour, g_time_ctrl.min, g_time_ctrl.sec);
+        // TRACE("\n");
     }
 }
 
+status_t
+timing_start(time_hdl_t* time_hdl, uint8_t hour, uint8_t min, uint8_t sec) {
+    time_ctrl_t time_ctrl;
+    get_current_tick_time(&time_ctrl);
+    time_hdl->start_time = time_ctrl.tick_count;
+    time_hdl->duration = time_to_sec(hour, min, sec);
+    // timing_update(time_hdl);
+    return status_ok;
+}
+
+status_t
+timing_update(time_hdl_t* time_hdl) {
+    time_ctrl_t _time_ctrl;
+    time_ctrl_t timing_time_ctrl;
+    get_current_tick_time(&_time_ctrl);
+    if ((time_hdl->start_time + time_hdl->duration) > _time_ctrl.tick_count) {
+        time_hdl->remaining_time = (time_hdl->start_time + time_hdl->duration) - _time_ctrl.tick_count;
+        // TRACE("time_hdl->start_time : %d\n", (int)time_hdl->start_time);
+        // TRACE("time_hdl->duration   : %d\n", (int)time_hdl->duration);
+        // TRACE("time_ctrl.tick_count : %d\n", (int)_time_ctrl.tick_count);
+
+    } else {
+        time_hdl->remaining_time = 0;
+    }
+    timing_time_ctrl = sec_to_time(time_hdl->remaining_time);
+    time_hdl->rm_hour = timing_time_ctrl.hour;
+    time_hdl->rm_min = timing_time_ctrl.min;
+    time_hdl->rm_sec = timing_time_ctrl.sec;
+    return status_ok;
+}
+
+uint8_t
+is_timing_remaining(time_hdl_t* time_hdl) {
+    timing_update(time_hdl);
+    if (time_hdl->remaining_time > 0) {
+        return 1;
+    }
+    return 0;
+}
+
+status_t
+get_current_tick_time(time_ctrl_t* time_ctrl) {
+    TIME_LOCK();
+    time_ctrl->year = g_time_ctrl.year;
+    time_ctrl->mon = g_time_ctrl.mon;
+    time_ctrl->week = g_time_ctrl.week;
+    time_ctrl->day = g_time_ctrl.day;
+    time_ctrl->hour = g_time_ctrl.hour;
+    time_ctrl->min = g_time_ctrl.min;
+    time_ctrl->sec = g_time_ctrl.sec;
+    time_ctrl->tick_count = g_time_ctrl.tick_count;
+    TIME_UNLOCK();
+    return status_ok;
+}
+
+uint32_t
+time_to_sec(uint8_t hour, uint8_t min, uint8_t sec) {
+    uint32_t total_sec;
+    total_sec = (hour * 3600) + (min * 60) + sec;
+    return total_sec;
+}
+
+time_ctrl_t
+sec_to_time(uint32_t sec) {
+    time_ctrl_t time_ctrl;
+    time_ctrl.tick_count = sec;
+    time_ctrl.day = sec / (24 * 3600); // 每天有 24 * 3600 秒
+    sec = sec % (24 * 3600);           // 计算剩余秒数
+    time_ctrl.hour = sec / 3600;       // 每小时有 3600 秒
+    sec = sec % 3600;                  // 计算剩余秒数
+    time_ctrl.min = sec / 60;          // 每分钟有 60 秒
+    time_ctrl.sec = sec % 60;          // 剩余的就是秒数
+    return time_ctrl;
+}
+
+#if 0
+
 time_ctrl_t
 calculate_time_from_seconds(uint32_t total_seconds) {
-
     time_ctrl_t time_ctrl;
-
     const uint32_t seconds_per_minute = 60;
     const uint32_t seconds_per_hour = 60 * seconds_per_minute;
     const uint32_t seconds_per_day = 24 * seconds_per_hour;
-
     TIME_LOCK();
-
     time_ctrl.tick_count = total_seconds;
-
     // 计算秒、分钟、小时、天
     time_ctrl.second = total_seconds % seconds_per_minute;
     uint32_t total_minutes = total_seconds / seconds_per_minute;
@@ -183,9 +302,7 @@ calculate_time_from_seconds(uint32_t total_seconds) {
     uint32_t total_hours = total_minutes / 60;
     time_ctrl.hour = total_hours % 24;
     time_ctrl.day = total_hours / 24; // 计算经过了多少天
-
     TIME_UNLOCK();
-
     return time_ctrl;
 }
 
@@ -230,16 +347,11 @@ calculate_time_to_timestamp(time_ctrl_t* time_ctrl) {
     return timestamp;
 }
 
-/**
-  * @brief  TIM9 Period Elapsed Callback (Timer event notification).
-  *         This function is called when TIM9 reaches the end of the period.
-  * @param  htim TIM handle
-  * @retval None
-  */
+#endif
+
 void
 tim5_period_elapsed_cb(TIM_HandleTypeDef* htim) {
     tick_count++;
-    // TRACE("time_count : %d s\n", time_count);
     xQueueSendFromISR(g_queue_time, &tick_count, NULL);
 }
 

@@ -30,6 +30,8 @@
         "panel.h": "c",
         "tim.h": "c",
         "cstdlib": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "compare": "c",
+        "cstdint": "c"
     }
 }

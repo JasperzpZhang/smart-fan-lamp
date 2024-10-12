@@ -78,7 +78,7 @@ static osMutexId_t MUTEX_NAME;
 #endif /* MEM_RTOS */
 
 TaskHandle_t g_lvgl_task_hdl = NULL;
-    
+
 void lvgl_task(void* para);
 
 lv_ui guider_ui;
@@ -92,13 +92,12 @@ lvgl_init(void) {
     lv_port_indev_init();
     custom_init(&guider_ui);
     lcd_1in83_set_backlight(100);
-    xTaskCreate(lvgl_task, "lvgl task", 4 * 256, NULL, tskIDLE_PRIORITY + 2, &g_lvgl_task_hdl);
+    xTaskCreate(lvgl_task, "lvgl task", 6 * 256, NULL, tskIDLE_PRIORITY + 2, &g_lvgl_task_hdl);
     return status_ok;
 }
 
 void
 lvgl_task(void* para) {
-
     while (1) {
         LVGL_LOCK();
         lv_timer_handler();
@@ -106,5 +105,3 @@ lvgl_task(void* para) {
         osDelay(5);
     }
 }
-
-

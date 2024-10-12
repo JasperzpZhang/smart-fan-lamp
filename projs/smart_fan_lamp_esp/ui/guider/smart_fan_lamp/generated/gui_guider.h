@@ -23,6 +23,13 @@ typedef struct
 	lv_obj_t *scr_home_digital_clock_1;
 	lv_obj_t *scr_home_datetext_1;
 	lv_obj_t *scr_home_animimg_1;
+	lv_obj_t *scr_home_cont_1;
+	lv_obj_t *scr_home_sw_1;
+	lv_obj_t *scr_home_sw_2;
+	lv_obj_t *scr_home_sw_3;
+	lv_obj_t *scr_home_label_2;
+	lv_obj_t *scr_home_label_3;
+	lv_obj_t *scr_home_label_4;
 	lv_obj_t *scr_ctrl;
 	bool scr_ctrl_del;
 	lv_obj_t *scr_ctrl_slider_1;

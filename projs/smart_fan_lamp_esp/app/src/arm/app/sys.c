@@ -93,9 +93,6 @@ sys_task(void* parameter) {
         //        BaseType_t stack_high_watermark = uxTaskGetStackHighWaterMark(g_lvgl_task_hdl);
         //        TRACE("My Task Remaining Stack Size: %lu bytes\n", stack_high_watermark * sizeof(UBaseType_t));
 
-        // uint8_t stat = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_6);
-        // TRACE("STAT : %d\n", stat);
-
         osDelay(500);
         wdog_feed();
         osDelay(SYS_TASK_DELAY);

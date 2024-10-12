@@ -42,20 +42,26 @@ extern "C" {
 #include "lib/type/lib_type.h"
 
 typedef struct {
-    uint32_t tick_count;
-    uint8_t year;
-    uint8_t month;
-    uint8_t week;
-    uint8_t day;
-    uint8_t hour;
-    uint8_t minute;
-    uint8_t second;
-} time_ctrl_t;
+    uint32_t start_time;
+    uint32_t duration;
+    uint32_t remaining_time;
+    uint8_t rm_hour;
+    uint8_t rm_min;
+    uint8_t rm_sec;
+} time_hdl_t;
+
+#define TIME_CTRL_INIT {.tick_count = 0, .year = 0, .mon = 0, .week = 0, .day = 0, .hour = 0, .min = 0, .sec = 0}
+
+#define TIME_HDL_INIT  {.start_time = 0, .duration = 0, .remaining_time = 0, .rm_hour = 0, .rm_min = 0, .rm_sec = 0}
 
 /* Functions */
 status_t time_init(void);
 status_t DrvTimeTerm(void);
 status_t rtc_get_time(void);
+
+status_t timing_start(time_hdl_t* time_hdl, uint8_t hour, uint8_t min, uint8_t sec);
+status_t timing_update(time_hdl_t* time_hdl);
+uint8_t is_timing_remaining(time_hdl_t* time_hdl);
 
 #ifdef __cplusplus
 }

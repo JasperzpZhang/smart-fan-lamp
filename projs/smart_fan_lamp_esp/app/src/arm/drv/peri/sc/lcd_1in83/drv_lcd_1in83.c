@@ -14,9 +14,22 @@
 #include "cmsis_os.h"
 #include "drv/peri/sc/lcd_1in83/drv_lcd_1in83_cfg.h"
 
-
 #include <stdio.h>
 #include <stdlib.h> //itoa()
+
+#include "lib/debug/lib_debug.h"
+
+/* Debug config */
+#if LCD_1IN83_DEBUG || 1
+#undef TRACE
+#define TRACE(...) debug_printf(__VA_ARGS__)
+#else
+#undef TRACE
+#define TRACE(...)
+#endif /* LCD_1IN83_DEBUG */
+
+#define SPI_BUFFER_HEIGHT 30
+static uint8_t spi_buffer[280 * SPI_BUFFER_HEIGHT * 2] = {0};
 
 LCD_1IN83_ATTRIBUTES LCD_1IN83;
 
@@ -337,13 +350,57 @@ lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint1
     lcd_1in83_set_windows(Xstart, Ystart, Xend, Yend);
     LCD_1IN83_DC_1;
 
-    for (i = Ystart; i <= Yend; i++) {
-        for (j = Xstart; j <= Xend; j++) {
-            DEV_SPI_WRITE((*(Image) >> 8) & 0xff);
-            DEV_SPI_WRITE(*(Image));
-            Image++;
+    // for (i = Ystart; i <= Yend; i++) {
+    //     for (j = Xstart; j <= Xend; j++) {
+    //         DEV_SPI_WRITE((*(Image) >> 8) & 0xff);
+    //         DEV_SPI_WRITE(*(Image));
+    //         Image++;
+    //     }
+    // }
+
+    uint16_t width = Xend - Xstart + 1;
+    uint16_t height = Yend - Ystart + 1;
+
+    uint16_t index = 0;
+    for (uint16_t row = 0; row < height; row += SPI_BUFFER_HEIGHT) {
+        uint16_t rows_to_process = (row + SPI_BUFFER_HEIGHT > height) ? (height - row) : SPI_BUFFER_HEIGHT;
+
+        index = 0;
+        for (uint16_t i = 0; i < rows_to_process; i++) {
+            for (uint16_t j = 0; j < width; j++) {
+                spi_buffer[index++] = (*(Image) >> 8) & 0xFF; // 高字节
+                spi_buffer[index++] = *(Image) & 0xFF;        // 低字节
+                Image++;
+            }
         }
+
+        // HAL_SPI_Transmit_DMA(&hspi3, spi_buffer, width * rows_to_process * 2);
+        HAL_SPI_Transmit(&hspi3, spi_buffer, width * rows_to_process * 2, HAL_MAX_DELAY);
     }
+
+    // uint16_t index = 0;
+    // for (i = 0; i < height; i++) {
+    //     for (j = 0; j < width; j++) {
+    //         spi_buffer[index++] = (*(Image) >> 8) & 0xFF; // 高字节
+    //         spi_buffer[index++] = *(Image) & 0xFF;        // 低字节
+    //         // spi_buffer[0] = ((*(Image) >> 8) & 0xFF);
+    //         // HAL_SPI_Transmit(&hspi3, &spi_buffer[0], 1, 500);
+    //         // spi_buffer[0] = (*(Image) & 0xFF);
+    //         // HAL_SPI_Transmit(&hspi3, &spi_buffer[0], 1, 500);
+    //         Image++;
+    //     }
+    // }
+
+    // for (uint16_t i = 0; i < sizeof(spi_buffer); i++) {
+    //     // 逐个字节发送
+    //     uint8_t d = spi_buffer[i];
+    //     HAL_SPI_Transmit(&hspi3, &d, 1, 500);
+    // }
+
+    // HAL_SPI_Transmit(&hspi3, spi_buffer, sizeof(spi_buffer), HAL_MAX_DELAY);
+
+    // // 使用 DMA 传输缓冲区数据
+    // HAL_SPI_Transmit_DMA(&hspi3, spi_buffer, width * height * 2);
 
 #if 0
     uint32_t Addr = 0;
@@ -361,6 +418,13 @@ lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint1
 //    }
 #endif
 }
+
+// void
+// HAL_SPI_TxCpltCallback(SPI_HandleTypeDef* hspi) {
+//     if (hspi == &hspi3) {
+//         TRACE("HAL_SPI_TxCpltCallback run\n");
+//     }
+// }
 
 //void
 //lcd_1in83_display_windows_point(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* color) {

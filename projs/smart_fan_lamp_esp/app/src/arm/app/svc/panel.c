@@ -80,7 +80,7 @@ panel_status_init(void) {
     panel_set_led_status(mode_sw, panel_led_on);
 
     /* main sw led init */
-    if (g_led_ctrl.status._LED_STATUS == 1) {
+    if (g_led_ctrl.status._LED_STATUS == 1 && g_led_ctrl.led_brightness != 0) {
         g_panel_ctrl.sw._SW_MAIN = 1;
         panel_set_led_status(main_sw, panel_led_on);
     } else {
@@ -89,7 +89,7 @@ panel_status_init(void) {
     }
 
     /* fan led init */
-    if (g_fan_ctrl.fan_status == 1) {
+    if (g_fan_ctrl.fan_status == 1 && g_fan_ctrl.fan_speed != 0) {
         g_panel_ctrl.sw._SW_FAN = 1;
         panel_set_led_status(fan, panel_led_on);
     } else {

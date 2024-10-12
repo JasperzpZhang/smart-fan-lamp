@@ -166,6 +166,7 @@ voice_proc(msg_voice_t msg) {
             /* Restore normal lighting */
             led_set_brightness_smooth_blk(100);
             led_set_color_temperature_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 panel_set_led_status(idx_brightness, panel_led_on);
                 panel_set_led_status(idx_color, panel_led_off);
@@ -187,6 +188,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(10);
             slider_set_led_line_smooth_blk(10);
             break;
@@ -197,6 +199,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(20);
 
             slider_set_led_line_smooth_blk(20);
@@ -209,6 +212,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(30);
 
             slider_set_led_line_smooth_blk(30);
@@ -221,6 +225,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(40);
 
             slider_set_led_line_smooth_blk(40);
@@ -233,6 +238,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(50);
 
             slider_set_led_line_smooth_blk(50);
@@ -245,6 +251,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(60);
 
             slider_set_led_line_smooth_blk(60);
@@ -257,6 +264,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(70);
 
             slider_set_led_line_smooth_blk(70);
@@ -269,6 +277,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(80);
 
             slider_set_led_line_smooth_blk(80);
@@ -281,6 +290,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(90);
 
             slider_set_led_line_smooth_blk(90);
@@ -293,6 +303,7 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_brightness, panel_led_on);
             panel_set_led_status(idx_color, panel_led_off);
             panel_set_led_status(idx_fan, panel_led_off);
+            panel_set_led_status(main_sw, panel_led_on);
             led_set_brightness_smooth_blk(100);
 
             slider_set_led_line_smooth_blk(100);
@@ -318,7 +329,6 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_color, panel_led_on);
             panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(20);
-
             slider_set_led_line_smooth_blk(20);
 
             break;
@@ -388,7 +398,6 @@ voice_proc(msg_voice_t msg) {
             panel_set_led_status(idx_color, panel_led_on);
             panel_set_led_status(idx_fan, panel_led_off);
             led_set_color_temperature_smooth_blk(80);
-
             slider_set_led_line_smooth_blk(80);
 
             break;
@@ -419,104 +428,192 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x1A:
             /* Turn on warm light mode */
+            /* led */
             led_set_color_temperature_smooth_blk(0);
-            if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
-                slider_set_led_line_smooth_blk(0);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            // fan_set_status(0);
+            // panel_set_led_status(fan, panel_led_off);
+
+            /* slider */
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
+                // slider_set_led_line_smooth_blk(0);
             }
             break;
 
         case (uint8_t)0x1B:
             /* Turn on winter mode */
-            fan_set_status(0);
+
+            /* led */
             led_set_color_temperature_smooth_blk(0);
-            if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
-                slider_set_led_line_smooth_blk(0);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_status(0);
+            panel_set_led_status(fan, panel_led_off);
+
+            /* slider */
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+                slider_set_led_line_smooth_blk(100);
             } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(0);
             }
+
             break;
 
         case (uint8_t)0x1C:
             /* Turn on cool light mode */
+            /* led */
             led_set_color_temperature_smooth_blk(100);
-            if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            // fan_set_status(0);
+            // panel_set_led_status(fan, panel_led_off);
+
+            /* slider */
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
+                // slider_set_led_line_smooth_blk(0);
             }
             break;
 
         case (uint8_t)0x1D:
             /* Turn on summer mode */
+            /* led */
             led_set_color_temperature_smooth_blk(100);
-            if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_level(3);
+            panel_set_led_status(fan, panel_led_on);
+
+            /* slider */
+            if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+                slider_set_led_line_smooth_blk(100);
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(100);
             }
             break;
 
         case (uint8_t)0x1E:
             /* Turn on sunlight mode */
-            fan_set_level(3);
-            fan_set_status(1);
-            led_set_brightness_smooth_blk(100);
+            /* led */
             led_set_color_temperature_smooth_blk(50);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_level(3);
+            panel_set_led_status(fan, panel_led_on);
+
+            /* slider */
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(100);
             } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
                 slider_set_led_line_smooth_blk(50);
-            } else {
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(100);
             }
             break;
 
         case (uint8_t)0x1F:
             /* Turn on tomato light mode */
-            led_set_brightness_smooth_blk(100);
+            /* led */
             led_set_color_temperature_smooth_blk(50);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_level(1);
+            panel_set_led_status(fan, panel_led_on);
+
+            /* slider */
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(100);
             } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
                 slider_set_led_line_smooth_blk(50);
-            } else {
-                /* do nothing */
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
+                slider_set_led_line_smooth_blk(50);
             }
 
             break;
 
         case (uint8_t)0x20:
             /* Turn on reading mode */
-            fan_set_level(1);
-            fan_set_status(1);
-            led_set_brightness_smooth_blk(100);
+            /* led */
             led_set_color_temperature_smooth_blk(50);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_level(1);
+            panel_set_led_status(fan, panel_led_on);
+
+            /* slider */
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(100);
             } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
                 slider_set_led_line_smooth_blk(50);
-            } else {
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(50);
             }
+
             break;
 
         case (uint8_t)0x21:
             /* Turn on holiday mode */
-            fan_set_level(3);
-            fan_set_status(1);
-            led_set_brightness_smooth_blk(100);
+            /* led */
             led_set_color_temperature_smooth_blk(100);
+            led_set_brightness_smooth_blk(100);
+            panel_set_led_status(main_sw, panel_led_on);
+
+            /* fan */
+            fan_set_level(3);
+            panel_set_led_status(fan, panel_led_on);
+
+            /* slider */
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(100);
             } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
                 slider_set_led_line_smooth_blk(100);
-            } else {
+            } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(100);
             }
             break;
 
         case (uint8_t)0x22:
             /* Turn on sleep mode */
-            led_set_status(0);
-            fan_set_status(0);
+            /* led */
+            // led_set_color_temperature_smooth_blk(50);
+            led_set_brightness_smooth_blk(0);
+            panel_set_led_status(main_sw, panel_led_off);
+
+            /* fan */
+            fan_set_level(0);
+            panel_set_led_status(fan, panel_led_off);
+
+            /* slider */
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(0);
+            } else if (g_panel_ctrl.slider_target == MODE_LED_COLOR) {
+                // slider_set_led_line_smooth_blk(50);
             } else if (g_panel_ctrl.slider_target == MODE_FAN) {
                 slider_set_led_line_smooth_blk(0);
             }
@@ -557,7 +654,8 @@ voice_proc(msg_voice_t msg) {
         case (uint8_t)0x27:
             /* Set fan speed to level 1 */
             fan_set_level(1);
-            fan_set_status(1);
+            panel_set_led_status(fan, panel_led_on);
+            // fan_set_status(1);
             g_panel_ctrl.slider_target = MODE_FAN;
             panel_set_led_status(idx_brightness, panel_led_off);
             panel_set_led_status(idx_color, panel_led_off);
@@ -568,7 +666,8 @@ voice_proc(msg_voice_t msg) {
         case (uint8_t)0x28:
             /* Set fan speed to level 2 */
             fan_set_level(2);
-            fan_set_status(1);
+            panel_set_led_status(fan, panel_led_on);
+            // fan_set_status(1);
             g_panel_ctrl.slider_target = MODE_FAN;
             panel_set_led_status(idx_brightness, panel_led_off);
             panel_set_led_status(idx_color, panel_led_off);
@@ -579,7 +678,8 @@ voice_proc(msg_voice_t msg) {
         case (uint8_t)0x29:
             /* Set fan speed to level 3 */
             fan_set_level(3);
-            fan_set_status(1);
+            panel_set_led_status(fan, panel_led_on);
+            // fan_set_status(1);
             g_panel_ctrl.slider_target = MODE_FAN;
             panel_set_led_status(idx_brightness, panel_led_off);
             panel_set_led_status(idx_color, panel_led_off);
@@ -589,11 +689,16 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x2A:
             /* Turn on seat occupancy sensor */
-
+            g_radar_ctrl.radar_strategy_en = 1;
+            th_radar_strategy_en = 1;
+            data_save_direct();
             break;
 
         case (uint8_t)0x2B:
             /* Turn off seat occupancy sensor */
+            g_radar_ctrl.radar_strategy_en = 0;
+            th_radar_strategy_en = 1;
+            data_save_direct();
             break;
 
         case (uint8_t)0x2C:

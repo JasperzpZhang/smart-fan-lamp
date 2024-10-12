@@ -41,13 +41,35 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
 /* Includes */
-    #include "lib/type/lib_type.h"
+#include "FreeRTOS.h"
+#include "lib/type/lib_type.h"
+#include "queue.h"
 
+#define RADAR_RX_BUF_SIZE 128
+#define RADAR_MODE_INFO   0
+
+typedef struct {
+    uint8_t buf[RADAR_RX_BUF_SIZE];
+    uint16_t size;
+} radar_msg_t;
+
+typedef struct {
+    QueueHandle_t queue;
+    radar_msg_t msg;
+    uint8_t radar_strategy_en;
+
+    struct {
+        uint8_t hour;
+        uint8_t min;
+        uint8_t sec;
+    } radar_delay;
+
+} radar_ctrl_t;
 
 status_t radar_init(void);
 
+extern radar_ctrl_t g_radar_ctrl;
 
 #ifdef __cplusplus
 }

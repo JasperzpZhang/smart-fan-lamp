@@ -192,7 +192,10 @@ prv_cli_cmd_cfg_show(cli_printf cliprintf, int argc, char** argv) {
     cliprintf("fan_status            :  %d\n", th_fan_status);
     cliprintf("scence_mode           :  %d\n", th_scence_mode);
     cliprintf("charge_en             :  %d\n", th_charge_en);
-    cliprintf("\r\n");
+    cliprintf("radar_delay.hour      :  %d\n", th_radar_delay.hour);
+    cliprintf("radar_delay.min       :  %d\n", th_radar_delay.min);
+    cliprintf("radar_delay.sec       :  %d\n", th_radar_delay.sec);
+    cliprintf("radar_strategy_en     :  %d\n", th_radar_strategy_en);
 }
 CLI_CMD_EXPORT(cfg_show, show config parameters, prv_cli_cmd_cfg_show)
 
