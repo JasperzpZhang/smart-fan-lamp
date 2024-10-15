@@ -15,8 +15,23 @@
 #include "freemaster_client.h"
 #endif
 
+#include "app/include.h"
+/* Debug config */
+#if LVGL_DEBUG || 1
+#undef TRACE
+#define TRACE(...) debug_printf(__VA_ARGS__)
+#else
+#undef TRACE
+#define TRACE(...)
+#endif /* LVGL_DEBUG */
 
-static void scr_home_event_handler (lv_event_t *e)
+
+
+
+
+
+
+static void home_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
@@ -24,16 +39,22 @@ static void scr_home_event_handler (lv_event_t *e)
     {
         lv_dir_t dir = lv_indev_get_gesture_dir(lv_indev_get_act());
         switch(dir) {
-        case LV_DIR_LEFT:
+        case LV_DIR_BOTTOM:
         {
             lv_indev_wait_release(lv_indev_get_act());
-			ui_load_scr_animation(&guider_ui, &guider_ui.scr_clock, guider_ui.scr_clock_del, &guider_ui.scr_home_del, setup_scr_scr_clock, LV_SCR_LOAD_ANIM_NONE, 200, 200, false, true);
+			ui_load_scr_animation(&guider_ui, &guider_ui.control, guider_ui.control_del, &guider_ui.home_del, setup_scr_control, LV_SCR_LOAD_ANIM_OVER_BOTTOM, 200, 0, false, true);
+            break;
+        }
+        case LV_DIR_TOP:
+        {
+            lv_indev_wait_release(lv_indev_get_act());
+			ui_load_scr_animation(&guider_ui, &guider_ui.config, guider_ui.config_del, &guider_ui.home_del, setup_scr_config, LV_SCR_LOAD_ANIM_OVER_TOP, 200, 0, false, true);
             break;
         }
         case LV_DIR_RIGHT:
         {
             lv_indev_wait_release(lv_indev_get_act());
-			ui_load_scr_animation(&guider_ui, &guider_ui.scr_ctrl, guider_ui.scr_ctrl_del, &guider_ui.scr_home_del, setup_scr_scr_ctrl, LV_SCR_LOAD_ANIM_NONE, 200, 200, false, true);
+			ui_load_scr_animation(&guider_ui, &guider_ui.clock, guider_ui.clock_del, &guider_ui.home_del, setup_scr_clock, LV_SCR_LOAD_ANIM_OVER_RIGHT, 200, 0, false, true);
             break;
         }
         default:
@@ -46,7 +67,7 @@ static void scr_home_event_handler (lv_event_t *e)
     }
 }
 
-static void scr_home_digital_clock_1_event_handler (lv_event_t *e)
+static void home_digital_clock_1_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
@@ -59,19 +80,13 @@ static void scr_home_digital_clock_1_event_handler (lv_event_t *e)
     }
 }
 
-void events_init_scr_home (lv_ui *ui)
-{
-	lv_obj_add_event_cb(ui->scr_home, scr_home_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->scr_home_digital_clock_1, scr_home_digital_clock_1_event_handler, LV_EVENT_ALL, ui);
-}
-
-static void scr_ctrl_btn_2_event_handler (lv_event_t *e)
+static void home_win_bright_0_item0_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
 	case LV_EVENT_CLICKED:
 	{
-		ui_load_scr_animation(&guider_ui, &guider_ui.scr_home, guider_ui.scr_home_del, &guider_ui.scr_ctrl_del, setup_scr_scr_home, LV_SCR_LOAD_ANIM_NONE, 200, 200, false, true);
+		lv_obj_add_flag(guider_ui.home_win_bright_0, LV_OBJ_FLAG_HIDDEN);
 		break;
 	}
     default:
@@ -79,18 +94,45 @@ static void scr_ctrl_btn_2_event_handler (lv_event_t *e)
     }
 }
 
-void events_init_scr_ctrl (lv_ui *ui)
+void events_init_home (lv_ui *ui)
 {
-	lv_obj_add_event_cb(ui->scr_ctrl_btn_2, scr_ctrl_btn_2_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->home, home_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->home_digital_clock_1, home_digital_clock_1_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->home_win_bright_0_item0, home_win_bright_0_item0_event_handler, LV_EVENT_ALL, ui);
 }
 
-static void scr_clock_analog_clock_1_event_handler (lv_event_t *e)
+static void control_slider_2_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
-	case LV_EVENT_CLICKED:
+	case LV_EVENT_VALUE_CHANGED:
 	{
-		ui_load_scr_animation(&guider_ui, &guider_ui.scr_home, guider_ui.scr_home_del, &guider_ui.scr_clock_del, setup_scr_scr_home, LV_SCR_LOAD_ANIM_NONE, 200, 200, false, true);
+		msg_panel_t msg_lvgl_panel;
+		// 从事件中获取触发对象（滑块）
+		lv_obj_t * slider = lv_event_get_target(e);
+		msg_lvgl_panel.slider_value = lv_slider_get_value(slider);
+		msg_lvgl_panel.slider_en = 1;
+		
+		g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
+		if (msg_lvgl_panel.slider_value != 0){
+		     /* Set brightness */
+		    panel_set_led_status(idx_brightness, panel_led_on);
+		    panel_set_led_status(idx_color, panel_led_off);
+		    panel_set_led_status(idx_fan, panel_led_off);
+		    panel_set_led_status(main_sw, panel_led_on);
+		}
+		else {
+		     /* Set brightness */
+		    panel_set_led_status(idx_brightness, panel_led_on);
+		    panel_set_led_status(idx_color, panel_led_off);
+		    panel_set_led_status(idx_fan, panel_led_off);
+		    panel_set_led_status(main_sw, panel_led_off);
+		}
+		xQueueSend(g_queue_panel, &msg_lvgl_panel, portMAX_DELAY);
+		        
+		
+		
+		
 		break;
 	}
     default:
@@ -98,9 +140,62 @@ static void scr_clock_analog_clock_1_event_handler (lv_event_t *e)
     }
 }
 
-void events_init_scr_clock (lv_ui *ui)
+static void control_img_1_event_handler (lv_event_t *e)
 {
-	lv_obj_add_event_cb(ui->scr_clock_analog_clock_1, scr_clock_analog_clock_1_event_handler, LV_EVENT_ALL, ui);
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+	case LV_EVENT_CLICKED:
+	{
+		ui_load_scr_animation(&guider_ui, &guider_ui.home, guider_ui.home_del, &guider_ui.control_del, setup_scr_home, LV_SCR_LOAD_ANIM_OVER_TOP, 200, 0, false, true);
+		break;
+	}
+    default:
+        break;
+    }
+}
+
+void events_init_control (lv_ui *ui)
+{
+	lv_obj_add_event_cb(ui->control_slider_2, control_slider_2_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->control_img_1, control_img_1_event_handler, LV_EVENT_ALL, ui);
+}
+
+static void config_img_1_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+	case LV_EVENT_CLICKED:
+	{
+		ui_load_scr_animation(&guider_ui, &guider_ui.home, guider_ui.home_del, &guider_ui.config_del, setup_scr_home, LV_SCR_LOAD_ANIM_OVER_TOP, 200, 0, false, true);
+		break;
+	}
+    default:
+        break;
+    }
+}
+
+void events_init_config (lv_ui *ui)
+{
+	lv_obj_add_event_cb(ui->config_img_1, config_img_1_event_handler, LV_EVENT_ALL, ui);
+}
+
+static void clock_img_1_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+	case LV_EVENT_CLICKED:
+	{
+		ui_load_scr_animation(&guider_ui, &guider_ui.home, guider_ui.home_del, &guider_ui.clock_del, setup_scr_home, LV_SCR_LOAD_ANIM_OVER_LEFT, 200, 0, false, true);
+		break;
+	}
+    default:
+        break;
+    }
+}
+
+void events_init_clock (lv_ui *ui)
+{
+	lv_obj_add_event_cb(ui->clock_img_1, clock_img_1_event_handler, LV_EVENT_ALL, ui);
 }
 
 

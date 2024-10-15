@@ -478,7 +478,7 @@
  * Widgets
  *----------*/
 
-#define LV_USE_ANALOGCLOCK 1
+#define LV_USE_ANALOGCLOCK 0
 
 #define LV_USE_ANIMIMG 1
 

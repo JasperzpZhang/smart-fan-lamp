@@ -7,13 +7,13 @@
 * terms, then you may not retain, install, activate or otherwise use the software.
 */
 
-
 /*********************
  *      INCLUDES
  *********************/
 #include <stdio.h>
-#include "lvgl.h"
+#include "app/include.h"
 #include "custom.h"
+#include "lvgl.h"
 
 /*********************
  *      DEFINES
@@ -26,6 +26,7 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
+void scr_status_init(lv_ui* ui);
 
 /**********************
  *  STATIC VARIABLES
@@ -35,9 +36,17 @@
  * Create a demo application
  */
 
-void custom_init(lv_ui *ui)
-{
+void
+custom_init(lv_ui* ui) {
     /* Add your codes here */
     setup_ui(ui);
+
+    scr_status_init(ui);
 }
 
+void
+scr_status_init(lv_ui* ui) {
+
+    /* slider brightness */
+    lv_slider_set_value(ui->control_slider_2, g_led_ctrl.led_brightness * 190 / 100, LV_ANIM_OFF);
+}

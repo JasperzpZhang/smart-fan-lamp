@@ -23,12 +23,8 @@ void clock_count(int *hour, int *min, int *sec);
 #endif
 
 
-void scr_home_digital_clock_1_timer(lv_timer_t *timer);
-void scr_home_datetext_1_event_handler(lv_event_t *e);
-void scr_home_datetext_1_calendar_event_handler(lv_event_t *e);
-void scr_home_datetext_1_init_calendar(lv_obj_t *obj, char * s);
-extern const lv_img_dsc_t * scr_home_animimg_1_imgs[11];
-void scr_clock_analog_clock_1_timer(lv_timer_t *timer);
+void home_digital_clock_1_timer(lv_timer_t *timer);
+extern const lv_img_dsc_t * home_animimg_1_imgs[11];
 
 #ifdef __cplusplus
 }

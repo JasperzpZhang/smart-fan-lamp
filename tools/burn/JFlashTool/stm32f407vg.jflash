@@ -1,8 +1,8 @@
   AppVersion = 47201
 [GENERAL]
   ConnectMode = 0
-  CurrentFile = ""
-  DataFileSAddr = 0x00000000
+  CurrentFile = ".\bin\app.bin"
+  DataFileSAddr = 0x08000000
   GUIMode = 0
   HostName = ""
   TargetIF = 1

@@ -234,37 +234,54 @@ parameter:
 ********************************************************************************/
 void
 lcd_1in83_set_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend) {
-    if (LCD_1IN83.SCAN_DIR == VERTICAL) {
-        // set the X coordinates
-        lcd_1in83_send_cmd(0x2A);
-        lcd_1in83_send_data_8bit(Xstart >> 8);
-        lcd_1in83_send_data_8bit(Xstart);
-        lcd_1in83_send_data_8bit((Xend) >> 8);
-        lcd_1in83_send_data_8bit(Xend);
 
-        // set the Y coordinates
-        lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit((Ystart) >> 8);
-        lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend) >> 8);
-        lcd_1in83_send_data_8bit(Yend);
+    // set the X coordinates
+    lcd_1in83_send_cmd(0x2A);
+    lcd_1in83_send_data_8bit(Xstart >> 8);
+    lcd_1in83_send_data_8bit(Xstart);
+    lcd_1in83_send_data_8bit((Xend) >> 8);
+    lcd_1in83_send_data_8bit(Xend);
 
-    } else {
-        // set the X coordinates
-        lcd_1in83_send_cmd(0x2A);
-        lcd_1in83_send_data_8bit((Xstart) >> 8);
-        lcd_1in83_send_data_8bit(Xstart);
-        lcd_1in83_send_data_8bit((Xend) >> 8);
-        lcd_1in83_send_data_8bit(Xend);
+    // set the Y coordinates
+    lcd_1in83_send_cmd(0x2B);
+    lcd_1in83_send_data_8bit((Ystart) >> 8);
+    lcd_1in83_send_data_8bit(Ystart);
+    lcd_1in83_send_data_8bit((Yend) >> 8);
+    lcd_1in83_send_data_8bit(Yend);
 
-        // set the Y coordinates
-        lcd_1in83_send_cmd(0x2B);
-        lcd_1in83_send_data_8bit(Ystart >> 8);
-        lcd_1in83_send_data_8bit(Ystart);
-        lcd_1in83_send_data_8bit((Yend) >> 8);
-        lcd_1in83_send_data_8bit(Yend);
-    }
     lcd_1in83_send_cmd(0X2C);
+
+    // if (LCD_1IN83.SCAN_DIR == VERTICAL) {
+    //     // set the X coordinates
+    //     lcd_1in83_send_cmd(0x2A);
+    //     lcd_1in83_send_data_8bit(Xstart >> 8);
+    //     lcd_1in83_send_data_8bit(Xstart);
+    //     lcd_1in83_send_data_8bit((Xend) >> 8);
+    //     lcd_1in83_send_data_8bit(Xend);
+
+    //     // set the Y coordinates
+    //     lcd_1in83_send_cmd(0x2B);
+    //     lcd_1in83_send_data_8bit((Ystart) >> 8);
+    //     lcd_1in83_send_data_8bit(Ystart);
+    //     lcd_1in83_send_data_8bit((Yend) >> 8);
+    //     lcd_1in83_send_data_8bit(Yend);
+
+    // } else {
+    //     // set the X coordinates
+    //     lcd_1in83_send_cmd(0x2A);
+    //     lcd_1in83_send_data_8bit((Xstart) >> 8);
+    //     lcd_1in83_send_data_8bit(Xstart);
+    //     lcd_1in83_send_data_8bit((Xend) >> 8);
+    //     lcd_1in83_send_data_8bit(Xend);
+
+    //     // set the Y coordinates
+    //     lcd_1in83_send_cmd(0x2B);
+    //     lcd_1in83_send_data_8bit(Ystart >> 8);
+    //     lcd_1in83_send_data_8bit(Ystart);
+    //     lcd_1in83_send_data_8bit((Yend) >> 8);
+    //     lcd_1in83_send_data_8bit(Yend);
+    // }
+    // lcd_1in83_send_cmd(0X2C);
 }
 
 void

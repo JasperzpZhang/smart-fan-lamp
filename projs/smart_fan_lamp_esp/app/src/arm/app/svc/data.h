@@ -65,14 +65,14 @@ extern "C" {
     {.head = FLASH_DATA_HEAD,                                                                                          \
      .mem_en = 1,                                                                                                      \
      .led_status = 0,                                                                                                  \
-     .led_brightness = 50,                                                                                             \
-     .led_color_temperature = 50,                                                                                      \
+     .led_brightness = 100,                                                                                             \
+     .led_color_temperature = 100,                                                                                      \
      .fan_status = 0,                                                                                                  \
      .fan_speed = 50,                                                                                                  \
      .scence_mode = 0,                                                                                                 \
      .charge_en = 1,                                                                                                   \
      .radar_delay.hour = 0,                                                                                            \
-     .radar_delay.min = 15,                                                                                            \
+     .radar_delay.min = 20,                                                                                            \
      .radar_delay.hour = 0,                                                                                            \
      .radar_strategy_en = 0,                                                                                           \
      .crc = 0}

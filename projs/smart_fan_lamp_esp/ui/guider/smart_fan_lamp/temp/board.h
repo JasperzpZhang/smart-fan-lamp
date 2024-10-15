@@ -434,13 +434,13 @@
 
 #define LV_USE_BTN 1
 
-#define LV_USE_BTNMATRIX 1
+#define LV_USE_BTNMATRIX 0
 
 #define LV_USE_CANVAS 0
 
 #define LV_USE_CHECKBOX 0
 
-#define LV_USE_DROPDOWN 1
+#define LV_USE_DROPDOWN 0
 
 #define LV_USE_IMG 1
 
@@ -479,11 +479,11 @@
  * Widgets
  *----------*/
 
-#define LV_USE_ANALOGCLOCK 1
+#define LV_USE_ANALOGCLOCK 0
 
 #define LV_USE_ANIMIMG 1
 
-#define LV_USE_CALENDAR 1
+#define LV_USE_CALENDAR 0
 #if LV_USE_CALENDAR
 #define LV_CALENDAR_WEEK_STARTS_MONDAY 0
 #if LV_CALENDAR_WEEK_STARTS_MONDAY == 0
@@ -502,7 +502,7 @@
 
 #define LV_USE_DCLOCK 1
 
-#define LV_USE_IMGBTN 0
+#define LV_USE_IMGBTN 1
 
 #define LV_USE_KEYBOARD 0
 
@@ -534,7 +534,7 @@
 
 #define LV_USE_VIDEO 0
 
-#define LV_USE_WIN 0
+#define LV_USE_WIN 1
 
 #define LV_USE_ZH_KEYBOARD 0
 #if LV_USE_ZH_KEYBOARD

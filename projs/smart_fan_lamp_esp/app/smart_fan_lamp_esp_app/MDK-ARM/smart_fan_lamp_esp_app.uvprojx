@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--locale=english</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
               <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../../src/arm;../../src/arm/lib;../../src/arm/lib/lvgl;../../src/arm/lib/lvgl/src;../../src/arm/lib/lvgl/examples/porting;../../../ui/guider/smart_fan_lamp/custom;../../../ui/guider/smart_fan_lamp/generated</IncludePath>
@@ -1264,11 +1264,6 @@
           <GroupName>app</GroupName>
           <Files>
             <File>
-              <FileName>app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\app\app.c</FilePath>
-            </File>
-            <File>
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\sys.c</FilePath>
@@ -1354,19 +1349,24 @@
               <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\widgets_init.c</FilePath>
             </File>
             <File>
-              <FileName>setup_scr_scr_clock.c</FileName>
+              <FileName>setup_scr_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_scr_clock.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_config.c</FilePath>
             </File>
             <File>
-              <FileName>setup_scr_scr_ctrl.c</FileName>
+              <FileName>setup_scr_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_scr_ctrl.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_clock.c</FilePath>
             </File>
             <File>
-              <FileName>setup_scr_scr_home.c</FileName>
+              <FileName>setup_scr_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_scr_home.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>setup_scr_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\setup_scr_home.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1374,59 +1374,114 @@
           <GroupName>img</GroupName>
           <Files>
             <File>
-              <FileName>scr_home_animimg_1cloudy.c</FileName>
+              <FileName>_home_alpha_40x40.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1cloudy.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_home_alpha_40x40.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1sunny.c</FileName>
+              <FileName>_Humidity_alpha_30x30.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1sunny.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_Humidity_alpha_30x30.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_2.c</FileName>
+              <FileName>_temperature_alpha_30x30.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_2.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_temperature_alpha_30x30.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_3.c</FileName>
+              <FileName>home_animimg_1cloudy.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_3.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1cloudy.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_4.c</FileName>
+              <FileName>app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_4.c</FilePath>
+              <FilePath>..\..\src\arm\app\app.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_7.c</FileName>
+              <FileName>home_animimg_1sunny.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_7.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1sunny.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_12.c</FileName>
+              <FileName>home_animimg_1weather_2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_12.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_2.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_13.c</FileName>
+              <FileName>home_animimg_1weather_3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_13.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_3.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_18.c</FileName>
+              <FileName>home_animimg_1weather_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_18.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_4.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_22.c</FileName>
+              <FileName>home_animimg_1weather_7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_22.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_7.c</FilePath>
             </File>
             <File>
-              <FileName>scr_home_animimg_1weather_24.c</FileName>
+              <FileName>home_animimg_1weather_12.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\scr_home_animimg_1weather_24.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>home_animimg_1weather_13.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_13.c</FilePath>
+            </File>
+            <File>
+              <FileName>home_animimg_1weather_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_18.c</FilePath>
+            </File>
+            <File>
+              <FileName>home_animimg_1weather_22.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_22.c</FilePath>
+            </File>
+            <File>
+              <FileName>home_animimg_1weather_24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1weather_24.c</FilePath>
+            </File>
+            <File>
+              <FileName>_config_alpha_60x60.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_config_alpha_60x60.c</FilePath>
+            </File>
+            <File>
+              <FileName>_News_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_News_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_Reminders_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_Reminders_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_Settings_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_Settings_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_TV_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_TV_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_Voice_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_Voice_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_warning_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_warning_alpha_50x50.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1434,19 +1489,9 @@
           <GroupName>font</GroupName>
           <Files>
             <File>
-              <FileName>lv_font_Alatsi_Regular_14.c</FileName>
+              <FileName>lv_font_Alatsi_Regular_60.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_Alatsi_Regular_14.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_Alatsi_Regular_61.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_Alatsi_Regular_61.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserratMedium_16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_montserratMedium_16.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_Alatsi_Regular_60.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserratMedium_12.c</FileName>
@@ -1454,9 +1499,49 @@
               <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_montserratMedium_12.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_montserratMedium_18.c</FileName>
+              <FileName>lv_font_montserratMedium_16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_montserratMedium_18.c</FilePath>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_montserratMedium_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_21.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_21.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_25.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_25.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_24.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_24.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -727,6 +727,14 @@ voice_proc(msg_voice_t msg) {
 
         case (uint8_t)0x32:
             /* Start 4-hour timer */
+        
+            break;
+        
+        case (uint8_t)0x33:
+            /* 新增 定时成功 请旋转屏幕开始 */
+        
+        /* 时间到了 请复位屏幕 */
+        
             break;
 
         default: break;

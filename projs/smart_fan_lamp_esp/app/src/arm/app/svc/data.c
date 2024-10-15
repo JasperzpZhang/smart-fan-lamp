@@ -108,7 +108,6 @@ DataLoad(OUT Data_t* pxData) {
     }
     TRACE("FLASH_SAVE_PAGE2\r\n");
 
-#if 1
     /* Init FLASH data */
     Data_t xDataInit = APP_DATA_INIT;
     xDataInit.crc = prvCalcCrc((uint8_t*)&xDataInit, sizeof(Data_t) - 1);
@@ -120,9 +119,6 @@ DataLoad(OUT Data_t* pxData) {
     if (pxData) {
         *pxData = xDataInit;
     }
-#endif
-
-    TRACE("data load ok\r\n");
 
     return status_ok;
 }

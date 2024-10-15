@@ -246,6 +246,7 @@ slider_set_target_value(uint8_t value) {
         case MODE_LED_BRIGHT:
             //            TRACE("bright : %d\n", value);
             led_set_brightness_smooth(value);
+//            lv_slider_set_value(guider_ui.scr_ctrl_slider_2, g_led_ctrl.led_brightness * 190 / 100, LV_ANIM_OFF);
             g_led_ctrl.last_led_brightness = g_led_ctrl.led_brightness;
             if (value != 0) {
                 if (led_start_stop_lock == 0) {
@@ -261,6 +262,7 @@ slider_set_target_value(uint8_t value) {
             break;
         case MODE_LED_COLOR:
             //            TRACE("color : %d\n", value);
+//        lv_slider_set_value(guider_ui.scr_ctrl_slider_1, g_led_ctrl.led_color_temperature * 190 / 100, LV_ANIM_OFF);
             led_set_color_temperature_smooth(value);
             g_led_ctrl.last_led_color_temperature = g_led_ctrl.led_color_temperature;
             break;
@@ -296,6 +298,13 @@ panel_set_led_status(panel_led_target_t led_target, panel_led_status_t led_statu
         case main_sw:
             PANEL_SET_MAIN_SW_LED(led_status);
             g_panel_ctrl.sw._SW_MAIN = led_status;
+            if (led_status != 0){
+//                lv_obj_add_state(guider_ui.scr_ctrl_sw_1,LV_STATE_CHECKED);
+            }
+            else{
+//                lv_obj_clear_state(guider_ui.scr_ctrl_sw_1,LV_STATE_CHECKED);
+            }
+        
             break;
         case night_light:
             PANEL_SET_NIGHT_LIGHT_LED(led_status);

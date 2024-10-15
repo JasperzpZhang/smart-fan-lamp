@@ -18,9 +18,10 @@ extern "C" {
 
 void events_init(lv_ui *ui);
 
-void events_init_scr_home(lv_ui *ui);
-void events_init_scr_ctrl(lv_ui *ui);
-void events_init_scr_clock(lv_ui *ui);
+void events_init_home(lv_ui *ui);
+void events_init_control(lv_ui *ui);
+void events_init_config(lv_ui *ui);
+void events_init_clock(lv_ui *ui);
 
 #ifdef __cplusplus
 }

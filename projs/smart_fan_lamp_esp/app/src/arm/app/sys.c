@@ -67,6 +67,7 @@
 
 /* Forward functions */
 static void sys_task(void* parameter);
+static void daemon_task(void* parameter);
 
 void print_heap_info(void);
 
@@ -81,6 +82,7 @@ sys_init(void) {
     }
 
     xTaskCreate(sys_task, "sys_task", 128, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(daemon_task, "daemon_task", 128, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     return status_ok;
 }
@@ -90,12 +92,20 @@ sys_task(void* parameter) {
 
     while (1) {
 
-        //        BaseType_t stack_high_watermark = uxTaskGetStackHighWaterMark(g_lvgl_task_hdl);
-        //        TRACE("My Task Remaining Stack Size: %lu bytes\n", stack_high_watermark * sizeof(UBaseType_t));
-
         osDelay(500);
         wdog_feed();
         osDelay(SYS_TASK_DELAY);
+    }
+}
+
+static void
+daemon_task(void* parameter) {
+
+    while (1) {
+        if (g_scr_lvgl_ctrl.main_sw != g_led_ctrl.status._LED_STATUS) {
+            g_scr_lvgl_ctrl.main_sw = g_led_ctrl.status._LED_STATUS;
+        }
+        osDelay(10);
     }
 }
 

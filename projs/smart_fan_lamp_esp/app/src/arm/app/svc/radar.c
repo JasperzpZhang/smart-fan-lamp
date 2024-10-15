@@ -129,7 +129,9 @@ radar_strategy(void) {
             /* led */
             radar_timing_sw_lock = 1;
             led_set_status(1);
+//            lv_obj_add_state(guider_ui.scr_ctrl_sw_1, LV_STATE_CHECKED);
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
+                lv_slider_set_value(guider_ui.control_slider_2,g_led_ctrl.last_led_brightness * 190 / 100, LV_ANIM_OFF);;
                 slider_set_led_line_smooth_blk(g_led_ctrl.last_led_brightness);
             }
 
@@ -147,6 +149,7 @@ radar_strategy(void) {
 
             /* led */
             led_set_status(0);
+//            lv_obj_clear_state(guider_ui.scr_ctrl_sw_1, LV_STATE_CHECKED);
             if (g_panel_ctrl.slider_target == MODE_LED_BRIGHT) {
                 slider_set_led_line_smooth_blk(0);
             }

@@ -77,7 +77,7 @@
 #define REG_DIS_AUTOSLEEP        0xFE
 
 // 中断和动作掩码定义
-#define MOTION_MASK_DOUBLE_CLICK 0x07
+#define MOTION_MASK_DOUBLE_CLICK 0x00
 #define IRQ_EN_TOUCH             0x40
 #define IRQ_EN_CHANGE            0x20
 #define IRQ_EN_MOTION            0x10
@@ -102,7 +102,7 @@ drv_cst816t_init(cst816t_hdl_t* cst816t_hdl, uint8_t tp_mode) {
     // 读取芯片ID和固件版本
     if (cst816t_hdl->iic_read(CST816T_ADDRESS, REG_CHIP_ID, data, 4) == 0) {
         cst816t_hdl->_ctrl.chip_id = data[0];
-        cst816t_hdl->_ctrl.firmware_version = data[3];
+        cst816t_hdl->_ctrl.firmware_version = data[2];
     }
 
     // 配置中断控制和运动掩码

@@ -76,101 +76,29 @@ void clock_count(int *hour, int *min, int *sec)
 #endif
 
 
-extern int scr_home_digital_clock_1_hour_value;
-extern int scr_home_digital_clock_1_min_value;
-extern int scr_home_digital_clock_1_sec_value;
+extern int home_digital_clock_1_hour_value;
+extern int home_digital_clock_1_min_value;
+extern int home_digital_clock_1_sec_value;
 
-void scr_home_digital_clock_1_timer(lv_timer_t *timer)
+void home_digital_clock_1_timer(lv_timer_t *timer)
 {
-    clock_count_24(&scr_home_digital_clock_1_hour_value, &scr_home_digital_clock_1_min_value, &scr_home_digital_clock_1_sec_value);
-    if (lv_obj_is_valid(guider_ui.scr_home_digital_clock_1))
+    clock_count_24(&home_digital_clock_1_hour_value, &home_digital_clock_1_min_value, &home_digital_clock_1_sec_value);
+    if (lv_obj_is_valid(guider_ui.home_digital_clock_1))
     {
-        lv_dclock_set_text_fmt(guider_ui.scr_home_digital_clock_1, "%d:%02d", scr_home_digital_clock_1_hour_value, scr_home_digital_clock_1_min_value);
+        lv_dclock_set_text_fmt(guider_ui.home_digital_clock_1, "%d:%02d", home_digital_clock_1_hour_value, home_digital_clock_1_min_value);
     }
 }
-static lv_obj_t * scr_home_datetext_1_calendar;
 
-void scr_home_datetext_1_event_handler(lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-	lv_obj_t * btn = lv_event_get_target(e);
-	if(code == LV_EVENT_FOCUSED){
-		char * s = lv_label_get_text(btn);
-		if(scr_home_datetext_1_calendar == NULL){
-			scr_home_datetext_1_init_calendar(btn, s);
-		}
-	}
-}
-
-void scr_home_datetext_1_init_calendar(lv_obj_t *obj, char * s)
-{
-	if (scr_home_datetext_1_calendar == NULL){
-		lv_obj_add_flag(lv_layer_top(), LV_OBJ_FLAG_CLICKABLE);
-		scr_home_datetext_1_calendar = lv_calendar_create(lv_layer_top());
-		lv_obj_t * scr = lv_obj_get_screen(obj);
-		lv_coord_t scr_height = lv_obj_get_height(scr);
-		lv_coord_t scr_width = lv_obj_get_width(scr);
-		lv_obj_set_size(scr_home_datetext_1_calendar, scr_width * 0.8, scr_height * 0.8);
-		char * year = strtok(s, "/");
-		char * month = strtok(NULL, "/");
-		char * day = strtok(NULL, "/");
-		lv_calendar_set_showed_date(scr_home_datetext_1_calendar, atoi(year), atoi(month));
-		lv_calendar_date_t highlighted_days[1];       /*Only its pointer will be saved so should be static*/
-		highlighted_days[0].year = atoi(year);
-		highlighted_days[0].month = atoi(month);
-		highlighted_days[0].day = atoi(day);
-		lv_calendar_set_highlighted_dates(scr_home_datetext_1_calendar, highlighted_days, 1);
-		lv_obj_align(scr_home_datetext_1_calendar,LV_ALIGN_CENTER, 0, 0);
- 
-		lv_obj_add_event_cb(scr_home_datetext_1_calendar, scr_home_datetext_1_calendar_event_handler, LV_EVENT_ALL,NULL);
-		lv_calendar_header_arrow_create(scr_home_datetext_1_calendar);
-		lv_obj_update_layout(scr);
-	}
-}
-
-void scr_home_datetext_1_calendar_event_handler(lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-	lv_obj_t * obj = lv_event_get_current_target(e);
- 
-	if (code == LV_EVENT_VALUE_CHANGED){
-		lv_calendar_date_t date;
-		lv_calendar_get_pressed_date(obj,&date);
-		char buf[16];
-		lv_snprintf(buf,sizeof(buf),"%d/%02d/%02d", date.year, date.month ,date.day);
-		lv_label_set_text(guider_ui.scr_home_datetext_1, buf);
-		lv_obj_clear_flag(lv_layer_top(), LV_OBJ_FLAG_CLICKABLE);
-		lv_obj_set_style_bg_opa(lv_layer_top(), LV_OPA_TRANSP, 0);
-		lv_obj_del(scr_home_datetext_1_calendar);
-		scr_home_datetext_1_calendar = NULL;
-	}
-}
-
-
-const lv_img_dsc_t * scr_home_animimg_1_imgs[11] = { 
-	&scr_home_animimg_1cloudy,
-	&scr_home_animimg_1sunny,
-	&scr_home_animimg_1weather_13,
-	&scr_home_animimg_1weather_12,
-	&scr_home_animimg_1weather_18,
-	&scr_home_animimg_1weather_2,
-	&scr_home_animimg_1weather_22,
-	&scr_home_animimg_1weather_24,
-	&scr_home_animimg_1weather_3,
-	&scr_home_animimg_1weather_4,
-	&scr_home_animimg_1weather_7, 
+const lv_img_dsc_t * home_animimg_1_imgs[11] = { 
+	&home_animimg_1cloudy,
+	&home_animimg_1sunny,
+	&home_animimg_1weather_13,
+	&home_animimg_1weather_12,
+	&home_animimg_1weather_18,
+	&home_animimg_1weather_2,
+	&home_animimg_1weather_22,
+	&home_animimg_1weather_24,
+	&home_animimg_1weather_3,
+	&home_animimg_1weather_4,
+	&home_animimg_1weather_7, 
 };
-
-extern int scr_clock_analog_clock_1_hour_value;
-extern int scr_clock_analog_clock_1_min_value;
-extern int scr_clock_analog_clock_1_sec_value;
-
-void scr_clock_analog_clock_1_timer(lv_timer_t *timer)
-{
-    clock_count(&scr_clock_analog_clock_1_hour_value, &scr_clock_analog_clock_1_min_value, &scr_clock_analog_clock_1_sec_value);
-    if (lv_obj_is_valid(guider_ui.scr_clock_analog_clock_1))
-    {
-      lv_analogclock_set_time(guider_ui.scr_clock_analog_clock_1, scr_clock_analog_clock_1_hour_value, scr_clock_analog_clock_1_min_value, scr_clock_analog_clock_1_sec_value);
-    }
-}
-

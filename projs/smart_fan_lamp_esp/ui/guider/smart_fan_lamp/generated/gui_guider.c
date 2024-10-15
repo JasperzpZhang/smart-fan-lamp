@@ -64,14 +64,15 @@ void ui_animation(void * var, int32_t duration, int32_t delay, int32_t start_val
 void init_scr_del_flag(lv_ui *ui)
 {
   
-	ui->scr_home_del = true;
-	ui->scr_ctrl_del = true;
-	ui->scr_clock_del = true;
+	ui->home_del = true;
+	ui->control_del = true;
+	ui->config_del = true;
+	ui->clock_del = true;
 }
 
 void setup_ui(lv_ui *ui)
 {
 	init_scr_del_flag(ui);
-	setup_scr_scr_home(ui);
-	lv_scr_load(ui->scr_home);
+	setup_scr_home(ui);
+	lv_scr_load(ui->home);
 }

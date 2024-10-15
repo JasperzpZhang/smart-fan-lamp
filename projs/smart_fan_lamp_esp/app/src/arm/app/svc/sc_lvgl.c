@@ -35,8 +35,6 @@
  */
 
 #include "app/include.h"
-#include "custom.h"
-#include "lib/lvgl/lvgl.h"
 #include "lv_port_disp.h"
 #include "lv_port_indev.h"
 
@@ -76,6 +74,8 @@ static osMutexId_t MUTEX_NAME;
 #define LVGL_LOCK()
 #define LVGL_UNLOCK()
 #endif /* MEM_RTOS */
+
+scr_lvgl_ctrl_t g_scr_lvgl_ctrl;
 
 TaskHandle_t g_lvgl_task_hdl = NULL;
 

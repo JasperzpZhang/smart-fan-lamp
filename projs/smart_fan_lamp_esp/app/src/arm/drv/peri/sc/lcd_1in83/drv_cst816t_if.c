@@ -108,6 +108,14 @@ cst816t_read(void) {
         cst816t_hdl._ctrl.x = cst816t_hdl._ctrl.y;
         cst816t_hdl._ctrl.y = 240 - tmp;
 
+        // if (cst816t_hdl._ctrl.y < 50 && cst816t_hdl._ctrl.y > 15) {
+        //     cst816t_hdl._ctrl.y -= 15;
+        // }
+
+        // if (cst816t_hdl._ctrl.y > 200 && cst816t_hdl._ctrl.y < 225) {
+        //     cst816t_hdl._ctrl.y += 15;
+        // }
+
         TRACE("×ø±ê: %d , %d\n", cst816t_hdl._ctrl.x, cst816t_hdl._ctrl.y);
 
         return true;

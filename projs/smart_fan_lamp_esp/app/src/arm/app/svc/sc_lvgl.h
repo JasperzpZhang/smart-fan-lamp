@@ -41,17 +41,26 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
 /* Includes */
-    #include "lib/type/lib_type.h"
-    #include "FreeRTOS.h"
-    #include "task.h"
+#include "FreeRTOS.h"
+#include "lib/type/lib_type.h"
+#include "task.h"
+#include "custom.h"
+#include "lib/lvgl/lvgl.h"
 
+typedef struct {
+    uint8_t main_sw;
+    uint8_t slider_brightness;
+    uint8_t slider_color;
+} scr_lvgl_ctrl_t;
+
+extern scr_lvgl_ctrl_t g_scr_lvgl_ctrl;
+
+extern lv_ui guider_ui;
 
 extern TaskHandle_t g_lvgl_task_hdl;
 
 status_t lvgl_init(void);
-
 
 #ifdef __cplusplus
 }
