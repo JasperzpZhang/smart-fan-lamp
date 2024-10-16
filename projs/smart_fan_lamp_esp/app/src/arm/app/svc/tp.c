@@ -80,14 +80,13 @@ tp_task(void* parameter) {
         if (xQueueReceive(g_queue_tp, &msg_tp, portMAX_DELAY) == pdPASS) {
 
             /* check scr and load to home */
-//             lv_obj_t* current_screen = lv_scr_act();  // 获取当前屏幕
-//             if (current_screen != guider_ui.home) {
-// //                lv_scr_load(guider_ui.scr_home);  // 先切换到目标页面
-// //                lv_obj_del(current_screen);  // 然后删除当前页面
-// //                
-// //                ui_load_scr_animation(&guider_ui, &guider_ui.scr_home, guider_ui.scr_home_del, &guider_ui.scr_ctrl_del, setup_scr_scr_home, LV_SCR_LOAD_ANIM_OVER_LEFT, 200, 0, false, true);
-//             }
-
+            //             lv_obj_t* current_screen = lv_scr_act();  // 获取当前屏幕
+            //             if (current_screen != guider_ui.home) {
+            // //                lv_scr_load(guider_ui.scr_home);  // 先切换到目标页面
+            // //                lv_obj_del(current_screen);  // 然后删除当前页面
+            // //
+            // //                ui_load_scr_animation(&guider_ui, &guider_ui.scr_home, guider_ui.scr_home_del, &guider_ui.scr_ctrl_del, setup_scr_scr_home, LV_SCR_LOAD_ANIM_OVER_LEFT, 200, 0, false, true);
+            //             }
 
             if ((msg_tp.buf[0] & 0x10) != 0) {
 

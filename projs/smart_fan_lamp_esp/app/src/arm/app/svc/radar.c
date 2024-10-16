@@ -320,6 +320,8 @@ uart2_rx_event_callback(UART_HandleTypeDef* huart, uint16_t size) {
 
     /* If sending to the queue caused a task to unblock and have a higher priority than the current task, yield */
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    
+    
 }
 
 void
