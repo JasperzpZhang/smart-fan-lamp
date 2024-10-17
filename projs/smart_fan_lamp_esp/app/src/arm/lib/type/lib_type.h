@@ -47,6 +47,7 @@ extern "C" {
 typedef enum {
     status_ok = 0,
     status_err,
+    status_busy
 } status_t;
 
 typedef uint8_t Bool_t;

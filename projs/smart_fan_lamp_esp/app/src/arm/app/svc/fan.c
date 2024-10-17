@@ -18,6 +18,15 @@
 /* Includes */
 #include "app/include.h"
 
+/* Debug config */
+#if FAN_DEBUG || 1
+#undef TRACE
+#define TRACE(...) debug_printf(__VA_ARGS__)
+#else
+#undef TRACE
+#define TRACE(...)
+#endif /* FAN_DEBUG */
+
 #pragma diag_suppress 186
 
 fan_ctrl_t g_fan_ctrl;
@@ -59,17 +68,31 @@ fan_set_speed_smooth_blk(uint16_t fan_speed) {
     return status_ok;
 }
 
-/* set fan speed smooth*/
+/* set fan speed smooth */
 status_t
-fan_set_speed_smooth(uint16_t fan_speed) {
+fan_set_speed_smooth(uint16_t target_speed) {
+    status_t status = status_ok;
+    static uint16_t current_speed = 0;
+    uint16_t step = 1; // 可调整步长
 
-    if (g_fan_ctrl.fan_speed < fan_speed) {
-        g_fan_ctrl.fan_speed++;
-    } else if (g_fan_ctrl.fan_speed > fan_speed) {
-        g_fan_ctrl.fan_speed--;
+    TRACE("current_speed : %d\n", current_speed);
+    TRACE("target_speed  : %d\n", target_speed);
+
+    if (current_speed < target_speed) {
+        current_speed += step;
+        if (current_speed > target_speed) {
+            current_speed = target_speed; // 防止超过目标速度
+        }
+        status = status_busy;
+    } else if (current_speed > target_speed) {
+        current_speed -= step;
+        if (current_speed < target_speed) {
+            current_speed = target_speed; // 防止低于目标速度
+        }
+        status = status_busy;
     }
-    fan_set_speed(g_fan_ctrl.fan_speed);
-    return status_ok;
+    fan_set_speed(current_speed); // 更新风扇速度
+    return status;
 }
 
 status_t
@@ -99,7 +122,7 @@ fan_set_status(uint16_t on_off) {
     if (on_off != 0) {
         //        fan_start();
         g_fan_ctrl.fan_status = 1;
-        panel_set_led_status(fan, panel_led_on);
+        panel_set_sw_led_status(fan, panel_led_on);
         if (g_fan_ctrl.last_fan_speed == 0) {
             g_fan_ctrl.last_fan_speed = 50;
         }
@@ -108,7 +131,7 @@ fan_set_status(uint16_t on_off) {
         //        fan_stop();
         g_fan_ctrl.last_fan_speed = g_fan_ctrl.fan_speed;
         g_fan_ctrl.fan_status = 0;
-        panel_set_led_status(fan, panel_led_off);
+        panel_set_sw_led_status(fan, panel_led_off);
         fan_set_speed(0);
     }
     return status_ok;
@@ -145,23 +168,23 @@ fan_save_status(void) {
     return status_ok;
 }
 
-static void
-cli_fan_set_speed(cli_printf cliprintf, int argc, char** argv) {
-    if (2 == argc) {
-        g_fan_ctrl.fan_speed = atoi(argv[1]);
+// static void
+// cli_fan_set_speed(cli_printf cliprintf, int argc, char** argv) {
+//     if (2 == argc) {
+//         g_fan_ctrl.fan_speed = atoi(argv[1]);
 
-        if (g_fan_ctrl.fan_speed < 0 || g_fan_ctrl.fan_speed > 100) {
-            cliprintf("fan_speed : 0 - 100");
-            return;
-        }
+//         if (g_fan_ctrl.fan_speed < 0 || g_fan_ctrl.fan_speed > 100) {
+//             cliprintf("fan_speed : 0 - 100");
+//             return;
+//         }
 
-        fan_set_speed(g_fan_ctrl.fan_speed);
-        cliprintf("fan_set_speed ok\r\n");
-    } else {
-        cliprintf("parameter length error\r\n");
-    }
-}
-CLI_CMD_EXPORT(fan_set_speed, set fan speed, cli_fan_set_speed)
+//         fan_set_speed(g_fan_ctrl.fan_speed);
+//         cliprintf("fan_set_speed ok\r\n");
+//     } else {
+//         cliprintf("parameter length error\r\n");
+//     }
+// }
+// CLI_CMD_EXPORT(fan_set_speed, set fan speed, cli_fan_set_speed)
 
 static void
 cli_fan_set_status(cli_printf cliprintf, int argc, char** argv) {

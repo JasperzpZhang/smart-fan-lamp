@@ -90,30 +90,19 @@ typedef enum {
 
 typedef enum {
     main_sw = 0,
-    night_light = 1,
-    fan = 2,
-    mode_sw = 4,
-    idx_brightness = 5,
-    idx_color = 6,
-    idx_fan = 7,
+    night_light,
+    fan,
+    mode_sw,
+    idx_brightness,
+    idx_color,
+    idx_fan,
 } panel_led_target_t;
 
 typedef enum {
-    MODE_LED_BRIGHT,
+    MODE_LED_BRIGHT = 0,
     MODE_LED_COLOR,
     MODE_FAN,
-} ctrl_slider_target_t;
-
-typedef enum {
-    MAIN_PWR_OFF,
-    MAIN_PWR_ON,
-    NIGHT_LIGHT_OFF,
-    NIGHT_LIGHT_ON,
-    USB_CHARGE_OFF,
-    USB_CHARGE_ON,
-    FAN_OFF,
-    FAN_ON,
-} ctrl_status_t;
+} panel_slider_target_t;
 
 typedef struct {
     uint16_t _SW_MAIN        : 1;
@@ -123,16 +112,17 @@ typedef struct {
 } ctrl_sw_t;
 
 typedef struct {
-    ctrl_slider_target_t slider_target;
-    ctrl_status_t status;
+    panel_slider_target_t slider_target;
+    //    ctrl_status_t status;
     ctrl_sw_t sw;
     uint8_t slider_led_line_value;
 } panel_ctrl_t;
 
 status_t panel_init(void);
-status_t slider_set_led_line_smooth(uint8_t value);
+status_t slider_set_led_line_smooth(panel_slider_target_t slider_target, uint8_t value);
 status_t slider_set_led_line_smooth_blk(uint8_t value);
-status_t panel_set_led_status(panel_led_target_t led_target, panel_led_status_t led_status);
+status_t panel_set_sw_led_status(panel_led_target_t led_target, panel_led_status_t led_status);
+status_t panel_set_key_mode_sw(panel_slider_target_t slider_target);
 
 extern panel_ctrl_t g_panel_ctrl;
 

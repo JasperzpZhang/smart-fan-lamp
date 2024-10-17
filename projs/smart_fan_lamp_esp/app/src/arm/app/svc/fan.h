@@ -42,6 +42,11 @@ extern "C" {
 #include "lib/type/lib_type.h"
 #include "main.h"
 
+#define FAN_LEVEL_0 0
+#define FAN_LEVEL_1 50
+#define FAN_LEVEL_2 70
+#define FAN_LEVEL_3 100
+
 typedef struct {
     uint16_t fan_speed;
     uint16_t last_fan_speed;
@@ -49,12 +54,10 @@ typedef struct {
 } fan_ctrl_t;
 
 status_t fan_init(void);
-status_t
-fan_start(void);
-status_t
-fan_stop(void);
+status_t fan_start(void);
+status_t fan_stop(void);
 status_t fan_set_speed(uint16_t fan_speed);
-status_t fan_set_speed_smooth(uint16_t fan_speed);
+status_t fan_set_speed_smooth(uint16_t target_speed);
 status_t fan_set_status(uint16_t on_off);
 status_t fan_set_level(uint16_t fan_level);
 

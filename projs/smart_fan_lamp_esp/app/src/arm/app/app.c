@@ -52,7 +52,7 @@ void
 app_init(void) {
     wdog_start(15000);
     debug_init();
-    debug_uart_cfg(&huart1); 
+    debug_uart_cfg(&huart1);
     debug_channel_set(DEBUG_CHAN_UART);
     cli_init(&huart1, UART_DMA_ENABLE);
     delay_init();
@@ -64,10 +64,10 @@ app_init(void) {
     led_init();
     tp_init();
     panel_init();
+    sys_init();
     radar_init();
     voice_init();
     lvgl_init();
-    sys_init();
 }
 
 /* Bootloader */

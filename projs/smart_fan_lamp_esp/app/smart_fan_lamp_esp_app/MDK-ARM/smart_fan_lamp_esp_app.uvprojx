@@ -1264,6 +1264,11 @@
           <GroupName>app</GroupName>
           <Files>
             <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\app\app.c</FilePath>
+            </File>
+            <File>
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\sys.c</FilePath>
@@ -1392,11 +1397,6 @@
               <FileName>home_animimg_1cloudy.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\home_animimg_1cloudy.c</FilePath>
-            </File>
-            <File>
-              <FileName>app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\arm\app\app.c</FilePath>
             </File>
             <File>
               <FileName>home_animimg_1sunny.c</FileName>

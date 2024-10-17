@@ -36,7 +36,7 @@
 #include "app/svc/panel.h"
 
 /* Debug config */
-#if LED_DEBUG || 1
+#if LED_DEBUG || 0
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -60,8 +60,6 @@ led_ctrl_t g_led_ctrl;
 /* Local Defines */
 #define LIGHT_DEEP 100
 
-void led_task(void* para);
-
 /* functions */
 status_t
 led_init(void) {
@@ -77,24 +75,13 @@ led_init(void) {
 
     led_start_pwm();
 
-    if (g_led_ctrl.status._LED_STATUS == 1) {
-        g_panel_ctrl.sw._SW_MAIN = 1;
-        // led_set_color_temperature(g_led_ctrl.last_led_color_temperature);
-        // led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
-    }
-
-    xTaskCreate(led_task, "led task", 128, NULL, tskIDLE_PRIORITY + 2, NULL);
+    // if (g_led_ctrl.status._LED_STATUS == 1) {
+    //     g_panel_ctrl.sw._SW_MAIN = 1;
+    //     // led_set_color_temperature(g_led_ctrl.last_led_color_temperature);
+    //     // led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
+    // }
 
     return status_ok;
-}
-
-void
-led_task(void* para) {
-
-    while (1) {
-
-        osDelay(20);
-    }
 }
 
 /* change pwm duty */
@@ -162,17 +149,13 @@ led_set_status(uint16_t on_off) {
     if (on_off != 0) {
         led_set_brightness_smooth_blk(g_led_ctrl.last_led_brightness);
         g_led_ctrl.status._LED_STATUS = 1;
-        panel_set_led_status(main_sw, panel_led_on);
-        // slider_set_led_line_smooth_blk(g_led_ctrl.last_led_brightness);
-        // led_start_pwm();
+        panel_set_sw_led_status(main_sw, panel_led_on);
     } else {
         g_led_ctrl.last_led_brightness = g_led_ctrl.led_brightness;
         g_led_ctrl.last_led_color_temperature = g_led_ctrl.led_color_temperature;
         led_set_brightness_smooth_blk(0);
         g_led_ctrl.status._LED_STATUS = 0;
-        panel_set_led_status(main_sw, panel_led_off);
-        // slider_set_led_line_smooth_blk(0);
-        // led_stop_pwm();
+        panel_set_sw_led_status(main_sw, panel_led_off);
     }
     return status_ok;
 }
@@ -182,10 +165,8 @@ night_light_set_status(uint16_t on_off) {
     if (on_off != 0) {
         g_led_ctrl.status._NIGHT_LIGHT_STATUS = 1;
         HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_SET);
-        panel_set_led_status(night_light, panel_led_on);
     } else {
         HAL_GPIO_WritePin(NIGHT_LIGHT_EN_GPIO_Port, NIGHT_LIGHT_EN_Pin, GPIO_PIN_RESET);
-        panel_set_led_status(night_light, panel_led_off);
         g_led_ctrl.status._NIGHT_LIGHT_STATUS = 0;
     }
 
@@ -212,19 +193,27 @@ led_set_brightness_smooth_blk(uint16_t target_led_brightness) {
 
 status_t
 led_set_brightness_smooth(uint16_t target_led_brightness) {
+    status_t status = status_ok;
+    uint8_t step = 1;
+
+    TRACE("target_led_brightness : %d\n", target_led_brightness);
+    TRACE("current_brightness    : %d\n", g_led_ctrl.led_brightness);
+
     if (g_led_ctrl.led_brightness != target_led_brightness) {
         if (g_led_ctrl.led_brightness < target_led_brightness) {
-            g_led_ctrl.led_brightness++;
+            g_led_ctrl.led_brightness += step;
             led_set_brightness(g_led_ctrl.led_brightness);
         }
 
         if (g_led_ctrl.led_brightness > target_led_brightness) {
-            g_led_ctrl.led_brightness--;
+            g_led_ctrl.led_brightness -= step;
             led_set_brightness(g_led_ctrl.led_brightness);
         }
+
+        status = status_busy;
     }
-    g_led_ctrl.status._LED_STATUS = 1;
-    return status_ok;
+
+    return status;
 }
 
 status_t
@@ -246,38 +235,25 @@ led_set_color_temperature_smooth_blk(uint16_t target_led_color_temperature) {
 
 status_t
 led_set_color_temperature_smooth(uint16_t target_led_color_temperature) {
+    status_t status = status_ok;
+    // static uint16_t current_color_temp = 0;
+    uint8_t step = 1;
+
     if (g_led_ctrl.led_color_temperature != target_led_color_temperature) {
         if (g_led_ctrl.led_color_temperature < target_led_color_temperature) {
-            g_led_ctrl.led_color_temperature++;
+            g_led_ctrl.led_color_temperature += step;
             led_set_color_temperature(g_led_ctrl.led_color_temperature);
         }
 
         if (g_led_ctrl.led_color_temperature > target_led_color_temperature) {
-            g_led_ctrl.led_color_temperature--;
+            g_led_ctrl.led_color_temperature -= step;
             led_set_color_temperature(g_led_ctrl.led_color_temperature);
         }
+        status = status_busy;
     }
-    return status_ok;
-}
 
-/* cli commond */
-static void
-cli_led_set_brightness(cli_printf cliprintf, int argc, char** argv) {
-    if (2 == argc) {
-        int led_brightness;
-        led_brightness = atoi(argv[1]);
-        if (led_brightness < 0 || led_brightness > LIGHT_DEEP) {
-            cliprintf("brightness : 0 - 100\r\n");
-            return;
-        }
-        led_set_brightness(led_brightness);
-        led_save_status();
-        cliprintf("led_set_brightness ok\r\n");
-    } else {
-        cliprintf("parameter length error\r\n");
-    }
+    return status;
 }
-CLI_CMD_EXPORT(led_set_bright, set led brightness, cli_led_set_brightness)
 
 static void
 cli_led_set_color_temperature(cli_printf cliprintf, int argc, char** argv) {

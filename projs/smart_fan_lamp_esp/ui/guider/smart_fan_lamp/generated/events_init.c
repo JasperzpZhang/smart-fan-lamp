@@ -116,17 +116,17 @@ static void control_slider_2_event_handler (lv_event_t *e)
 		g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
 		if (msg_lvgl_panel.slider_value != 0){
 		     /* Set brightness */
-		    panel_set_led_status(idx_brightness, panel_led_on);
-		    panel_set_led_status(idx_color, panel_led_off);
-		    panel_set_led_status(idx_fan, panel_led_off);
-		    panel_set_led_status(main_sw, panel_led_on);
+		    panel_set_sw_led_status(idx_brightness, panel_led_on);
+		    panel_set_sw_led_status(idx_color, panel_led_off);
+		    panel_set_sw_led_status(idx_fan, panel_led_off);
+		    panel_set_sw_led_status(main_sw, panel_led_on);
 		}
 		else {
 		     /* Set brightness */
-		    panel_set_led_status(idx_brightness, panel_led_on);
-		    panel_set_led_status(idx_color, panel_led_off);
-		    panel_set_led_status(idx_fan, panel_led_off);
-		    panel_set_led_status(main_sw, panel_led_off);
+		    panel_set_sw_led_status(idx_brightness, panel_led_on);
+		    panel_set_sw_led_status(idx_color, panel_led_off);
+		    panel_set_sw_led_status(idx_fan, panel_led_off);
+		    panel_set_sw_led_status(main_sw, panel_led_off);
 		}
 		xQueueSend(g_queue_panel, &msg_lvgl_panel, portMAX_DELAY);
 		        
