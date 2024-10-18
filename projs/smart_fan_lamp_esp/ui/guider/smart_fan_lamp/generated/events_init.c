@@ -80,25 +80,10 @@ static void home_digital_clock_1_event_handler (lv_event_t *e)
     }
 }
 
-static void home_win_bright_0_item0_event_handler (lv_event_t *e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_add_flag(guider_ui.home_win_bright_0, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-    default:
-        break;
-    }
-}
-
 void events_init_home (lv_ui *ui)
 {
 	lv_obj_add_event_cb(ui->home, home_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->home_digital_clock_1, home_digital_clock_1_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->home_win_bright_0_item0, home_win_bright_0_item0_event_handler, LV_EVENT_ALL, ui);
 }
 
 static void control_slider_2_event_handler (lv_event_t *e)
@@ -107,28 +92,11 @@ static void control_slider_2_event_handler (lv_event_t *e)
     switch (code) {
 	case LV_EVENT_VALUE_CHANGED:
 	{
-		msg_panel_t msg_lvgl_panel;
-		// 从事件中获取触发对象（滑块）
-		lv_obj_t * slider = lv_event_get_target(e);
-		msg_lvgl_panel.slider_value = lv_slider_get_value(slider);
-		msg_lvgl_panel.slider_en = 1;
 		
-		g_panel_ctrl.slider_target = MODE_LED_BRIGHT;
-		if (msg_lvgl_panel.slider_value != 0){
-		     /* Set brightness */
-		    panel_set_sw_led_status(idx_brightness, panel_led_on);
-		    panel_set_sw_led_status(idx_color, panel_led_off);
-		    panel_set_sw_led_status(idx_fan, panel_led_off);
-		    panel_set_sw_led_status(main_sw, panel_led_on);
-		}
-		else {
-		     /* Set brightness */
-		    panel_set_sw_led_status(idx_brightness, panel_led_on);
-		    panel_set_sw_led_status(idx_color, panel_led_off);
-		    panel_set_sw_led_status(idx_fan, panel_led_off);
-		    panel_set_sw_led_status(main_sw, panel_led_off);
-		}
-		xQueueSend(g_queue_panel, &msg_lvgl_panel, portMAX_DELAY);
+		lv_obj_t * slider = lv_event_get_target(e);
+		uint16_t slider_value = lv_slider_get_value(slider);
+		
+		sys_led_set_brightness(SOURCE_SCREEN, slider_value);
 		        
 		
 		

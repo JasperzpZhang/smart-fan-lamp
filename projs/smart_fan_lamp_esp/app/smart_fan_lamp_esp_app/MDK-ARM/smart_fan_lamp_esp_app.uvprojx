@@ -1258,6 +1258,31 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\sc\lcd_1in83\drv_cst816t_if.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_apds9960.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_apds9960_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_apds9960_gesture.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960_gesture.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_apds9960_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960_interface.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_apds9960_interrupt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960_interrupt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1482,6 +1507,36 @@
               <FileName>_warning_alpha_50x50.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_warning_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_fan_select_alpha_37x38.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_fan_select_alpha_37x38.c</FilePath>
+            </File>
+            <File>
+              <FileName>_fan_select_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_fan_select_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_fan_unselect_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_fan_unselect_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_led_select_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_led_select_alpha_50x50.c</FilePath>
+            </File>
+            <File>
+              <FileName>_led_switch_alpha_40x40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_led_switch_alpha_40x40.c</FilePath>
+            </File>
+            <File>
+              <FileName>_led_unselect_alpha_50x50.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\images\_led_unselect_alpha_50x50.c</FilePath>
             </File>
           </Files>
         </Group>

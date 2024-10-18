@@ -35,8 +35,6 @@ typedef struct
 	lv_obj_t *home_label_8;
 	lv_obj_t *home_label_10;
 	lv_obj_t *home_label_11;
-	lv_obj_t *home_win_bright_0;
-	lv_obj_t *home_win_bright_0_item0;
 	lv_obj_t *control;
 	bool control_del;
 	lv_obj_t *control_slider_2;
@@ -45,14 +43,13 @@ typedef struct
 	lv_obj_t *control_imgbtn_1_label;
 	lv_obj_t *control_imgbtn_2;
 	lv_obj_t *control_imgbtn_2_label;
-	lv_obj_t *control_imgbtn_3;
-	lv_obj_t *control_imgbtn_3_label;
 	lv_obj_t *control_imgbtn_4;
 	lv_obj_t *control_imgbtn_4_label;
 	lv_obj_t *control_imgbtn_5;
 	lv_obj_t *control_imgbtn_5_label;
 	lv_obj_t *control_cont_1;
 	lv_obj_t *control_label_1;
+	lv_obj_t *control_sw_1;
 	lv_obj_t *config;
 	bool config_del;
 	lv_obj_t *config_img_1;
@@ -113,6 +110,16 @@ LV_IMG_DECLARE(home_animimg_1weather_7);
 LV_IMG_DECLARE(_temperature_alpha_30x30);
 LV_IMG_DECLARE(_Humidity_alpha_30x30);
 LV_IMG_DECLARE(_home_alpha_40x40);
+LV_IMG_DECLARE(_led_switch_alpha_40x40);
+LV_IMG_DECLARE(_fan_select_alpha_37x38);
+LV_IMG_DECLARE(_led_unselect_alpha_50x50);
+LV_IMG_DECLARE(_led_unselect_alpha_50x50);
+LV_IMG_DECLARE(_led_select_alpha_50x50);
+LV_IMG_DECLARE(_led_select_alpha_50x50);
+LV_IMG_DECLARE(_fan_unselect_alpha_50x50);
+LV_IMG_DECLARE(_fan_unselect_alpha_50x50);
+LV_IMG_DECLARE(_fan_select_alpha_50x50);
+LV_IMG_DECLARE(_fan_select_alpha_50x50);
 LV_IMG_DECLARE(_home_alpha_40x40);
 LV_IMG_DECLARE(_home_alpha_40x40);
 
@@ -120,7 +127,6 @@ LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_24)
 LV_FONT_DECLARE(lv_font_montserratMedium_16)
 LV_FONT_DECLARE(lv_font_Alatsi_Regular_60)
 LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_16)
-LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_12)
 LV_FONT_DECLARE(lv_font_montserratMedium_12)
 
 

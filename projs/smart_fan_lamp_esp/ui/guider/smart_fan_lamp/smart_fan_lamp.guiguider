@@ -256,150 +256,6 @@
 			"flag": [],
 			"list": [
 				{
-					"name": "win_bright_0",
-					"id": "5lt019nv",
-					"type": "win",
-					"left": 332,
-					"top": 61,
-					"visible": true,
-					"isLock": false,
-					"flag": [
-						"LV_OBJ_FLAG_HIDDEN"
-					],
-					"width": 183,
-					"height": 115,
-					"default_style": false,
-					"scrollbar_mode": "OFF",
-					"btns": [
-						{
-							"type": "symbol",
-							"btn_size": 36,
-							"img_path": "",
-							"img_width": 20,
-							"img_height": 20,
-							"img_symbol": "LV_SYMBOL_CLOSE"
-						}
-					],
-					"title": "提示",
-					"header_height": 39,
-					"text": "当前亮度为0\n\n请调节亮度开灯",
-					"style": [
-						{
-							"part": "LV_PART_MAIN",
-							"state": "LV_STATE_DEFAULT",
-							"object": "main",
-							"disable": false,
-							"bg_color": "#000000",
-							"bg_grad_color": null,
-							"bg_grad_dir": "LV_GRAD_DIR_NONE",
-							"bg_dither_mode": "LV_DITHER_NONE",
-							"bg_main_stop": 0,
-							"bg_grad_stop": 255,
-							"bg_opa": 255,
-							"outline_color": "#081A0F",
-							"outline_width": 0,
-							"outline_opa": 255,
-							"shadow_color": "#2195f6",
-							"shadow_opa": 255,
-							"shadow_width": 0,
-							"shadow_spread": 0,
-							"shadow_ofs_x": 0,
-							"shadow_ofs_y": 0
-						},
-						{
-							"part": "LV_WIN_PART_CONTENT_SCROLLABLE",
-							"state": "LV_STATE_DEFAULT",
-							"desc": "content",
-							"object": "extra_content",
-							"disable": false,
-							"bg_color": "#393c41",
-							"bg_grad_color": "#eeeef6",
-							"bg_grad_dir": "LV_GRAD_DIR_NONE",
-							"bg_dither_mode": "LV_DITHER_NONE",
-							"bg_main_stop": 0,
-							"bg_grad_stop": 255,
-							"bg_opa": 255,
-							"text_color": "#ffffff",
-							"font": 12,
-							"font_family": "SourceHanSerifSC_Regular",
-							"letter_space": 0,
-							"line_space": 2,
-							"text_opa": 255
-						},
-						{
-							"part": "LV_WIN_PART_HEADER",
-							"state": "LV_STATE_DEFAULT",
-							"desc": "header",
-							"object": "extra_header",
-							"disable": false,
-							"bg_color": "#e34f0e",
-							"bg_grad_color": "#e6e6e6",
-							"bg_grad_dir": "LV_GRAD_DIR_NONE",
-							"bg_dither_mode": "LV_DITHER_NONE",
-							"bg_main_stop": 0,
-							"bg_grad_stop": 255,
-							"bg_opa": 255,
-							"text_color": "#ffffff",
-							"font": 12,
-							"font_family": "SourceHanSerifSC_Regular",
-							"padding_top": 5,
-							"padding_right": 5,
-							"padding_bottom": 5,
-							"padding_left": 5,
-							"padding_column": 5,
-							"letter_space": 0,
-							"line_space": 2,
-							"text_opa": 255
-						},
-						{
-							"part": "LV_BTN_PART_MAIN",
-							"state": "LV_STATE_DEFAULT",
-							"desc": "button",
-							"object": "extra_btns",
-							"disable": false,
-							"radius": 8,
-							"border_side": [
-								"LV_BORDER_SIDE_FULL"
-							],
-							"border_width": 0,
-							"border_color": "#2195f6",
-							"border_opa": 255,
-							"bg_color": "#2195f6",
-							"bg_grad_color": "#2195f6",
-							"bg_grad_dir": "LV_GRAD_DIR_NONE",
-							"bg_dither_mode": "LV_DITHER_NONE",
-							"bg_main_stop": 0,
-							"bg_grad_stop": 255,
-							"bg_opa": 187,
-							"shadow_color": "#2195f6",
-							"shadow_opa": 255,
-							"shadow_width": 0,
-							"shadow_spread": 0,
-							"shadow_ofs_x": 0,
-							"shadow_ofs_y": 0
-						}
-					],
-					"event": {
-						"0": {
-							"clicked": {
-								"condition": [],
-								"action": [
-									{
-										"dst": "5lt019nv",
-										"bindCondi": "",
-										"actionList": {
-											"isVisible": {
-												"value": false
-											}
-										}
-									}
-								]
-							}
-						},
-						"widget": {}
-					}
-				},
-				{
 					"name": "cont_5",
 					"id": "l8meu0ew",
 					"type": "cont",
@@ -934,12 +790,12 @@
 					"id": "ocuztizn",
 					"type": "cont",
 					"left": 15,
-					"top": 107,
+					"top": 113,
 					"visible": true,
 					"isLock": false,
 					"flag": [],
 					"width": 121,
-					"height": 40,
+					"height": 34,
 					"default_style": false,
 					"scrollbar_mode": "OFF",
 					"child": [],
@@ -1589,6 +1445,233 @@
 			"flag": [],
 			"list": [
 				{
+					"name": "sw_1",
+					"id": "laa38t2v",
+					"type": "sw",
+					"left": 23,
+					"top": 74,
+					"visible": true,
+					"isLock": false,
+					"flag": [],
+					"width": 68,
+					"height": 35,
+					"default_style": false,
+					"attribute_type": "freemaster",
+					"custom_attribute": [],
+					"style": [
+						{
+							"part": "LV_PART_MAIN",
+							"state": "LV_STATE_DEFAULT",
+							"disable": false,
+							"bg_color": "#efefef",
+							"bg_grad_color": "#5b4c4c",
+							"bg_grad_dir": "LV_GRAD_DIR_HOR",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 35,
+							"shadow_color": "#2195f6",
+							"shadow_opa": 255,
+							"shadow_width": 0,
+							"shadow_spread": 0,
+							"shadow_ofs_x": 0,
+							"shadow_ofs_y": 0,
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_MAIN",
+							"state": "LV_STATE_FOCUSED",
+							"disable": true,
+							"bg_color": "#e6e2e6",
+							"bg_grad_color": "#e6e2e6",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 10,
+							"shadow_color": "#2195f6",
+							"shadow_opa": 255,
+							"shadow_width": 0,
+							"shadow_spread": 0,
+							"shadow_ofs_x": 0,
+							"shadow_ofs_y": 0,
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_MAIN",
+							"state": "LV_STATE_DISABLED",
+							"disable": true,
+							"bg_color": "#e6e2e6",
+							"bg_grad_color": "#e6e2e6",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 10,
+							"shadow_color": "#2195f6",
+							"shadow_opa": 255,
+							"shadow_width": 0,
+							"shadow_spread": 0,
+							"shadow_ofs_x": 0,
+							"shadow_ofs_y": 0,
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_INDICATOR",
+							"state": "LV_STATE_CHECKED",
+							"disable": false,
+							"bg_color": "#76ee59",
+							"bg_grad_color": "#2195f6",
+							"bg_grad_dir": "LV_GRAD_DIR_HOR",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 206,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_INDICATOR",
+							"state": "LV_STATE_FOCUSED",
+							"disable": true,
+							"bg_color": "#2195f6",
+							"bg_grad_color": "#2195f6",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_INDICATOR",
+							"state": "LV_STATE_DISABLED",
+							"disable": true,
+							"bg_color": "#2195f6",
+							"bg_grad_color": "#2195f6",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"bg_img_src": "",
+							"bg_img_opa": 255,
+							"bg_img_recolor": "#ffffff",
+							"bg_img_recolor_opa": 0
+						},
+						{
+							"part": "LV_PART_KNOB",
+							"state": "LV_STATE_DEFAULT",
+							"disable": false,
+							"bg_color": "#ffffff",
+							"bg_grad_color": "#ffffff",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 35
+						},
+						{
+							"part": "LV_PART_KNOB",
+							"state": "LV_STATE_FOCUSED",
+							"disable": true,
+							"bg_color": "#ffffff",
+							"bg_grad_color": "#ffffff",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 10
+						},
+						{
+							"part": "LV_PART_KNOB",
+							"state": "LV_STATE_DISABLED",
+							"disable": true,
+							"bg_color": "#ffffff",
+							"bg_grad_color": "#ffffff",
+							"bg_grad_dir": "LV_GRAD_DIR_NONE",
+							"bg_dither_mode": "LV_DITHER_NONE",
+							"bg_main_stop": 0,
+							"bg_grad_stop": 255,
+							"bg_opa": 255,
+							"border_side": [
+								"LV_BORDER_SIDE_FULL"
+							],
+							"border_width": 0,
+							"border_opa": 255,
+							"border_color": "#2195f6",
+							"radius": 10
+						}
+					]
+				},
+				{
 					"name": "cont_1",
 					"id": "tjnuy7km",
 					"type": "cont",
@@ -1755,10 +1838,10 @@
 					"sd_path": "",
 					"text": "",
 					"toggle": true,
-					"src_released": "",
-					"src_pressed": "",
-					"src_checked_released": "",
-					"src_checked_pressed": "",
+					"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_unselect.png",
+					"src_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_unselect.png",
+					"src_checked_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
+					"src_checked_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
 					"color_format": "true-color-alpha",
 					"style": [
 						{
@@ -1826,7 +1909,7 @@
 					"name": "imgbtn_4",
 					"id": "0sdntnju",
 					"type": "imgbtn",
-					"left": 106,
+					"left": 115,
 					"top": 67,
 					"visible": true,
 					"isLock": false,
@@ -1839,94 +1922,10 @@
 					"sd_path": "",
 					"text": "",
 					"toggle": true,
-					"src_released": "",
-					"src_pressed": "",
-					"src_checked_released": "",
-					"src_checked_pressed": "",
-					"color_format": "true-color-alpha",
-					"style": [
-						{
-							"part": "LV_PART_MAIN",
-							"state": "LV_STATE_DEFAULT",
-							"disable": false,
-							"font_family": "montserratMedium",
-							"text_color": "#000000",
-							"text_align": "LV_TEXT_ALIGN_CENTER",
-							"font": 12,
-							"radius": 0,
-							"shadow_color": "#2195f6",
-							"shadow_opa": 255,
-							"shadow_width": 0,
-							"shadow_spread": 0,
-							"shadow_ofs_x": 0,
-							"shadow_ofs_y": 0
-						},
-						{
-							"part": "LV_PART_MAIN",
-							"state": "LV_STATE_PRESSED",
-							"disable": false,
-							"image_recolor": "#000000",
-							"image_recolor_opa": 0,
-							"image_opa": 255,
-							"text_color": "#FF33FF",
-							"font_family": "montserratMedium",
-							"font": 12,
-							"shadow_color": "#2195f6",
-							"shadow_opa": 255,
-							"shadow_width": 0,
-							"shadow_spread": 0,
-							"shadow_ofs_x": 0,
-							"shadow_ofs_y": 0
-						},
-						{
-							"part": "LV_PART_MAIN",
-							"state": "LV_STATE_CHECKED",
-							"disable": false,
-							"image_recolor": "#000000",
-							"image_recolor_opa": 0,
-							"text_color": "#FF33FF",
-							"image_opa": 255,
-							"font_family": "montserratMedium",
-							"font": 12,
-							"shadow_color": "#2195f6",
-							"shadow_opa": 255,
-							"shadow_width": 0,
-							"shadow_spread": 0,
-							"shadow_ofs_x": 0,
-							"shadow_ofs_y": 0
-						},
-						{
-							"part": "LV_PART_MAIN",
-							"state": "LV_IMGBTN_STATE_RELEASED",
-							"desc": "released",
-							"disable": false,
-							"image_recolor": "#000000",
-							"image_recolor_opa": 0,
-							"image_opa": 255
-						}
-					]
-				},
-				{
-					"name": "imgbtn_3",
-					"id": "t8ty8jjb",
-					"type": "imgbtn",
-					"left": 23,
-					"top": 67,
-					"visible": true,
-					"isLock": false,
-					"flag": [],
-					"width": 50,
-					"height": 50,
-					"default_style": false,
-					"use_fs": false,
-					"fs_type": "flash",
-					"sd_path": "",
-					"text": "",
-					"toggle": true,
-					"src_released": "",
-					"src_pressed": "",
-					"src_checked_released": "",
-					"src_checked_pressed": "",
+					"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_unselect.png",
+					"src_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_unselect.png",
+					"src_checked_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_select.png",
+					"src_checked_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_select.png",
 					"color_format": "true-color-alpha",
 					"style": [
 						{
@@ -1994,20 +1993,20 @@
 					"name": "imgbtn_2",
 					"id": "4ljdj6t2",
 					"type": "imgbtn",
-					"left": 190,
+					"left": 195,
 					"top": 17,
 					"visible": true,
 					"isLock": false,
 					"flag": [],
-					"width": 50,
-					"height": 50,
+					"width": 37,
+					"height": 38,
 					"default_style": false,
 					"use_fs": false,
 					"fs_type": "flash",
 					"sd_path": "",
 					"text": "",
 					"toggle": true,
-					"src_released": "",
+					"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
 					"src_pressed": "",
 					"src_checked_released": "",
 					"src_checked_pressed": "",
@@ -2078,20 +2077,20 @@
 					"name": "imgbtn_1",
 					"id": "u7oyfm9z",
 					"type": "imgbtn",
-					"left": 106,
+					"left": 115,
 					"top": 17,
 					"visible": true,
 					"isLock": false,
 					"flag": [],
-					"width": 50,
-					"height": 50,
+					"width": 40,
+					"height": 40,
 					"default_style": false,
 					"use_fs": false,
 					"fs_type": "flash",
 					"sd_path": "",
 					"text": "",
 					"toggle": true,
-					"src_released": "",
+					"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_switch.png",
 					"src_pressed": "",
 					"src_checked_released": "",
 					"src_checked_pressed": "",
@@ -2218,12 +2217,12 @@
 					"id": "x8p9clox",
 					"type": "slider",
 					"left": 23,
-					"top": 121,
+					"top": 146,
 					"visible": true,
 					"isLock": false,
 					"flag": [],
-					"width": 214,
-					"height": 52,
+					"width": 231,
+					"height": 26,
 					"default_style": false,
 					"range_s": 0,
 					"range_e": 190,
@@ -2239,7 +2238,7 @@
 							"disable": false,
 							"bg_color": "#ffffff",
 							"bg_grad_color": "#ff6500",
-							"bg_opa": 92,
+							"bg_opa": 56,
 							"bg_grad_dir": "LV_GRAD_DIR_HOR",
 							"bg_dither_mode": "LV_DITHER_NONE",
 							"bg_main_stop": 0,
@@ -2303,7 +2302,7 @@
 							"bg_dither_mode": "LV_DITHER_NONE",
 							"bg_main_stop": 0,
 							"bg_grad_stop": 255,
-							"bg_opa": 255,
+							"bg_opa": 0,
 							"bg_img_src": "",
 							"bg_img_opa": 255,
 							"bg_img_recolor": "#ffffff",
@@ -2350,7 +2349,7 @@
 							"disable": false,
 							"bg_color": "#2195f6",
 							"bg_grad_color": "#2195f6",
-							"bg_opa": 0,
+							"bg_opa": 131,
 							"bg_grad_dir": "LV_GRAD_DIR_NONE",
 							"bg_dither_mode": "LV_DITHER_NONE",
 							"bg_main_stop": 0,
@@ -2407,7 +2406,7 @@
 										"actionList": {
 											"custom_code": {
 												"inc_c": "#include \"app/include.h\"\r\n/* Debug config */\r\n#if LVGL_DEBUG || 1\r\n#undef TRACE\r\n#define TRACE(...) debug_printf(__VA_ARGS__)\r\n#else\r\n#undef TRACE\r\n#define TRACE(...)\r\n#endif /* LVGL_DEBUG */\r\n\r\n\r\n\r\n\r\n\r\n",
-												"code_c": "msg_panel_t msg_lvgl_panel;\r\n// 从事件中获取触发对象（滑块）\r\nlv_obj_t * slider = lv_event_get_target(e);\r\nmsg_lvgl_panel.slider_value = lv_slider_get_value(slider);\r\nmsg_lvgl_panel.slider_en = 1;\r\n\r\ng_panel_ctrl.slider_target = MODE_LED_BRIGHT;\r\nif (msg_lvgl_panel.slider_value != 0){\r\n     /* Set brightness */\r\n    panel_set_led_status(idx_brightness, panel_led_on);\r\n    panel_set_led_status(idx_color, panel_led_off);\r\n    panel_set_led_status(idx_fan, panel_led_off);\r\n    panel_set_led_status(main_sw, panel_led_on);\r\n}\r\nelse {\r\n     /* Set brightness */\r\n    panel_set_led_status(idx_brightness, panel_led_on);\r\n    panel_set_led_status(idx_color, panel_led_off);\r\n    panel_set_led_status(idx_fan, panel_led_off);\r\n    panel_set_led_status(main_sw, panel_led_off);\r\n}\r\nxQueueSend(g_queue_panel, &msg_lvgl_panel, portMAX_DELAY);\r\n        \r\n\r\n\r\n",
+												"code_c": "\r\nlv_obj_t * slider = lv_event_get_target(e);\r\nuint16_t slider_value = lv_slider_get_value(slider);\r\n\r\nsys_led_set_brightness(SOURCE_SCREEN, slider_value);\r\n        \r\n\r\n\r\n",
 												"inc_py": "",
 												"code_py": ""
 											}
@@ -4071,6 +4070,9 @@
 					}
 				}
 			],
+			"event": {
+				"widget": {}
+			},
 			"style": [
 				{
 					"part": "LV_PART_MAIN",
@@ -4088,10 +4090,7 @@
 					"bg_img_recolor": "#ffffff",
 					"bg_img_recolor_opa": 0
 				}
-			],
-			"event": {
-				"widget": {}
-			}
+			]
 		},
 		{
 			"name": "clock",
@@ -4166,6 +4165,9 @@
 					}
 				}
 			],
+			"event": {
+				"widget": {}
+			},
 			"style": [
 				{
 					"part": "LV_PART_MAIN",
@@ -4183,10 +4185,7 @@
 					"bg_img_recolor": "#ffffff",
 					"bg_img_recolor_opa": 0
 				}
-			],
-			"event": {
-				"widget": {}
-			}
+			]
 		}
 	],
 	"Application": {
@@ -4206,7 +4205,7 @@
 			"keyboard_font_type": "SourceHanSerifSC_Regular",
 			"keyboard_font_size": 18
 		},
-		"default_scr": "home",
+		"default_scr": "control",
 		"theme": "LV_THEME_MATERIAL_FLAG_LIGHT",
 		"screen": [
 			{
@@ -4878,11 +4877,11 @@
 						"flag": [],
 						"pos": [
 							15,
-							107
+							113
 						],
 						"size": [
 							121,
-							40
+							34
 						],
 						"default_style": false,
 						"child": [],
@@ -5472,160 +5471,6 @@
 								"shadow_ofs_y": 5
 							}
 						]
-					},
-					{
-						"name": "home_win_bright_0",
-						"id": "5lt019nv",
-						"type": "win",
-						"visible": true,
-						"scrollbar_mode": "OFF",
-						"flag": [
-							"LV_OBJ_FLAG_HIDDEN"
-						],
-						"pos": [
-							332,
-							61
-						],
-						"size": [
-							183,
-							115
-						],
-						"default_style": false,
-						"event": {
-							"0": {
-								"clicked": {
-									"condition": [],
-									"action": [
-										{
-											"dst": "home_win_bright_0",
-											"bindCondi": "",
-											"actionList": {
-												"isVisible": {
-													"value": false
-												}
-											},
-											"dst_type": "win"
-										}
-									]
-								}
-							},
-							"widget": {}
-						},
-						"title": "提示",
-						"header_height": 39,
-						"text": "当前亮度为0\n\n请调节亮度开灯",
-						"btns": [
-							{
-								"type": "symbol",
-								"btn_size": 36,
-								"img_path": "",
-								"img_width": 20,
-								"img_height": 20,
-								"img_symbol": "LV_SYMBOL_CLOSE",
-								"img_size": [
-									20,
-									20
-								],
-								"img_sd_path": "S://",
-								"img_flash_path": "F:/"
-							}
-						],
-						"style": [
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_DEFAULT",
-								"object": "main",
-								"disable": false,
-								"bg_color": "#000000",
-								"bg_grad_color": null,
-								"bg_grad_dir": "LV_GRAD_DIR_NONE",
-								"bg_dither_mode": "LV_DITHER_NONE",
-								"bg_main_stop": 0,
-								"bg_grad_stop": 255,
-								"bg_opa": 255,
-								"outline_color": "#081A0F",
-								"outline_width": 0,
-								"outline_opa": 255,
-								"shadow_color": "#2195f6",
-								"shadow_opa": 255,
-								"shadow_width": 0,
-								"shadow_spread": 0,
-								"shadow_ofs_x": 0,
-								"shadow_ofs_y": 0
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_DEFAULT",
-								"desc": "content",
-								"object": "extra_content",
-								"disable": false,
-								"bg_color": "#393c41",
-								"bg_grad_color": "#eeeef6",
-								"bg_grad_dir": "LV_GRAD_DIR_NONE",
-								"bg_dither_mode": "LV_DITHER_NONE",
-								"bg_main_stop": 0,
-								"bg_grad_stop": 255,
-								"bg_opa": 255,
-								"text_color": "#ffffff",
-								"font": 12,
-								"font_family": "SourceHanSerifSC_Regular",
-								"letter_space": 0,
-								"line_space": 2,
-								"text_opa": 255
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_DEFAULT",
-								"desc": "header",
-								"object": "extra_header",
-								"disable": false,
-								"bg_color": "#e34f0e",
-								"bg_grad_color": "#e6e6e6",
-								"bg_grad_dir": "LV_GRAD_DIR_NONE",
-								"bg_dither_mode": "LV_DITHER_NONE",
-								"bg_main_stop": 0,
-								"bg_grad_stop": 255,
-								"bg_opa": 255,
-								"text_color": "#ffffff",
-								"font": 12,
-								"font_family": "SourceHanSerifSC_Regular",
-								"padding_top": 5,
-								"padding_right": 5,
-								"padding_bottom": 5,
-								"padding_left": 5,
-								"padding_column": 5,
-								"letter_space": 0,
-								"line_space": 2,
-								"text_opa": 255
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_DEFAULT",
-								"desc": "button",
-								"object": "extra_btns",
-								"disable": false,
-								"radius": 8,
-								"border_side": [
-									"LV_BORDER_SIDE_FULL"
-								],
-								"border_width": 0,
-								"border_color": "#2195f6",
-								"border_opa": 255,
-								"bg_color": "#2195f6",
-								"bg_grad_color": "#2195f6",
-								"bg_grad_dir": "LV_GRAD_DIR_NONE",
-								"bg_dither_mode": "LV_DITHER_NONE",
-								"bg_main_stop": 0,
-								"bg_grad_stop": 255,
-								"bg_opa": 187,
-								"shadow_color": "#2195f6",
-								"shadow_opa": 255,
-								"shadow_width": 0,
-								"shadow_spread": 0,
-								"shadow_ofs_x": 0,
-								"shadow_ofs_y": 0
-							}
-						]
 					}
 				]
 			},
@@ -5678,11 +5523,11 @@
 						"flag": [],
 						"pos": [
 							23,
-							121
+							146
 						],
 						"size": [
-							214,
-							52
+							231,
+							26
 						],
 						"default_style": false,
 						"attribute_type": "freemaster",
@@ -5698,7 +5543,7 @@
 											"actionList": {
 												"custom_code": {
 													"inc_c": "#include \"app/include.h\"\r\n/* Debug config */\r\n#if LVGL_DEBUG || 1\r\n#undef TRACE\r\n#define TRACE(...) debug_printf(__VA_ARGS__)\r\n#else\r\n#undef TRACE\r\n#define TRACE(...)\r\n#endif /* LVGL_DEBUG */\r\n\r\n\r\n\r\n\r\n\r\n",
-													"code_c": "msg_panel_t msg_lvgl_panel;\r\n// 从事件中获取触发对象（滑块）\r\nlv_obj_t * slider = lv_event_get_target(e);\r\nmsg_lvgl_panel.slider_value = lv_slider_get_value(slider);\r\nmsg_lvgl_panel.slider_en = 1;\r\n\r\ng_panel_ctrl.slider_target = MODE_LED_BRIGHT;\r\nif (msg_lvgl_panel.slider_value != 0){\r\n     /* Set brightness */\r\n    panel_set_led_status(idx_brightness, panel_led_on);\r\n    panel_set_led_status(idx_color, panel_led_off);\r\n    panel_set_led_status(idx_fan, panel_led_off);\r\n    panel_set_led_status(main_sw, panel_led_on);\r\n}\r\nelse {\r\n     /* Set brightness */\r\n    panel_set_led_status(idx_brightness, panel_led_on);\r\n    panel_set_led_status(idx_color, panel_led_off);\r\n    panel_set_led_status(idx_fan, panel_led_off);\r\n    panel_set_led_status(main_sw, panel_led_off);\r\n}\r\nxQueueSend(g_queue_panel, &msg_lvgl_panel, portMAX_DELAY);\r\n        \r\n\r\n\r\n",
+													"code_c": "\r\nlv_obj_t * slider = lv_event_get_target(e);\r\nuint16_t slider_value = lv_slider_get_value(slider);\r\n\r\nsys_led_set_brightness(SOURCE_SCREEN, slider_value);\r\n        \r\n\r\n\r\n",
 													"inc_py": "",
 													"code_py": ""
 												}
@@ -5720,7 +5565,7 @@
 								"disable": false,
 								"bg_color": "#ffffff",
 								"bg_grad_color": "#ff6500",
-								"bg_opa": 92,
+								"bg_opa": 56,
 								"bg_grad_dir": "LV_GRAD_DIR_HOR",
 								"bg_dither_mode": "LV_DITHER_NONE",
 								"bg_main_stop": 0,
@@ -5784,7 +5629,7 @@
 								"bg_dither_mode": "LV_DITHER_NONE",
 								"bg_main_stop": 0,
 								"bg_grad_stop": 255,
-								"bg_opa": 255,
+								"bg_opa": 0,
 								"bg_img_src": "",
 								"bg_img_opa": 255,
 								"bg_img_recolor": "#ffffff",
@@ -5831,7 +5676,7 @@
 								"disable": false,
 								"bg_color": "#2195f6",
 								"bg_grad_color": "#2195f6",
-								"bg_opa": 0,
+								"bg_opa": 131,
 								"bg_grad_dir": "LV_GRAD_DIR_NONE",
 								"bg_dither_mode": "LV_DITHER_NONE",
 								"bg_main_stop": 0,
@@ -5878,8 +5723,8 @@
 							}
 						],
 						"knob_size": [
-							62,
-							62
+							36,
+							36
 						]
 					},
 					{
@@ -5948,29 +5793,29 @@
 						"visible": true,
 						"flag": [],
 						"pos": [
-							106,
+							115,
 							17
 						],
 						"size": [
-							50,
-							50
+							40,
+							40
 						],
 						"default_style": false,
 						"toggle": true,
 						"text_align": "center",
 						"text": "",
 						"color_format": "true-color-alpha",
-						"src_released": "",
+						"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_switch.png",
 						"src_pressed": "",
 						"src_checked_released": "",
 						"src_checked_pressed": "",
 						"use_fs": false,
 						"fs_type": "flash",
-						"src_sd_released": "S:/",
+						"src_sd_released": "S:/led_switch.png",
 						"src_sd_pressed": "S:/",
 						"src_sd_checked_released": "S:/",
 						"src_sd_checked_pressed": "S:/",
-						"src_flash_released": "F:/",
+						"src_flash_released": "F:/led_switch.png",
 						"src_flash_pressed": "F:/",
 						"src_flash_checked_released": "F:/",
 						"src_flash_checked_pressed": "F:/",
@@ -6043,124 +5888,29 @@
 						"visible": true,
 						"flag": [],
 						"pos": [
-							190,
+							195,
 							17
 						],
 						"size": [
-							50,
-							50
+							37,
+							38
 						],
 						"default_style": false,
 						"toggle": true,
 						"text_align": "center",
 						"text": "",
 						"color_format": "true-color-alpha",
-						"src_released": "",
+						"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
 						"src_pressed": "",
 						"src_checked_released": "",
 						"src_checked_pressed": "",
 						"use_fs": false,
 						"fs_type": "flash",
-						"src_sd_released": "S:/",
+						"src_sd_released": "S:/fan_select.png",
 						"src_sd_pressed": "S:/",
 						"src_sd_checked_released": "S:/",
 						"src_sd_checked_pressed": "S:/",
-						"src_flash_released": "F:/",
-						"src_flash_pressed": "F:/",
-						"src_flash_checked_released": "F:/",
-						"src_flash_checked_pressed": "F:/",
-						"style": [
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_DEFAULT",
-								"disable": false,
-								"font_family": "montserratMedium",
-								"text_color": "#000000",
-								"text_align": "LV_TEXT_ALIGN_CENTER",
-								"font": 12,
-								"radius": 0,
-								"shadow_color": "#2195f6",
-								"shadow_opa": 255,
-								"shadow_width": 0,
-								"shadow_spread": 0,
-								"shadow_ofs_x": 0,
-								"shadow_ofs_y": 0
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_PRESSED",
-								"disable": false,
-								"image_recolor": "#000000",
-								"image_recolor_opa": 0,
-								"image_opa": 255,
-								"text_color": "#FF33FF",
-								"font_family": "montserratMedium",
-								"font": 12,
-								"shadow_color": "#2195f6",
-								"shadow_opa": 255,
-								"shadow_width": 0,
-								"shadow_spread": 0,
-								"shadow_ofs_x": 0,
-								"shadow_ofs_y": 0
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_STATE_CHECKED",
-								"disable": false,
-								"image_recolor": "#000000",
-								"image_recolor_opa": 0,
-								"text_color": "#FF33FF",
-								"image_opa": 255,
-								"font_family": "montserratMedium",
-								"font": 12,
-								"shadow_color": "#2195f6",
-								"shadow_opa": 255,
-								"shadow_width": 0,
-								"shadow_spread": 0,
-								"shadow_ofs_x": 0,
-								"shadow_ofs_y": 0
-							},
-							{
-								"part": "LV_PART_MAIN",
-								"state": "LV_IMGBTN_STATE_RELEASED",
-								"desc": "released",
-								"disable": false,
-								"image_recolor": "#000000",
-								"image_recolor_opa": 0,
-								"image_opa": 255
-							}
-						]
-					},
-					{
-						"name": "control_imgbtn_3",
-						"id": "t8ty8jjb",
-						"type": "imgbtn",
-						"visible": true,
-						"flag": [],
-						"pos": [
-							23,
-							67
-						],
-						"size": [
-							50,
-							50
-						],
-						"default_style": false,
-						"toggle": true,
-						"text_align": "center",
-						"text": "",
-						"color_format": "true-color-alpha",
-						"src_released": "",
-						"src_pressed": "",
-						"src_checked_released": "",
-						"src_checked_pressed": "",
-						"use_fs": false,
-						"fs_type": "flash",
-						"src_sd_released": "S:/",
-						"src_sd_pressed": "S:/",
-						"src_sd_checked_released": "S:/",
-						"src_sd_checked_pressed": "S:/",
-						"src_flash_released": "F:/",
+						"src_flash_released": "F:/fan_select.png",
 						"src_flash_pressed": "F:/",
 						"src_flash_checked_released": "F:/",
 						"src_flash_checked_pressed": "F:/",
@@ -6233,7 +5983,7 @@
 						"visible": true,
 						"flag": [],
 						"pos": [
-							106,
+							115,
 							67
 						],
 						"size": [
@@ -6245,20 +5995,20 @@
 						"text_align": "center",
 						"text": "",
 						"color_format": "true-color-alpha",
-						"src_released": "",
-						"src_pressed": "",
-						"src_checked_released": "",
-						"src_checked_pressed": "",
+						"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_unselect.png",
+						"src_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_unselect.png",
+						"src_checked_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_select.png",
+						"src_checked_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\led_select.png",
 						"use_fs": false,
 						"fs_type": "flash",
-						"src_sd_released": "S:/",
-						"src_sd_pressed": "S:/",
-						"src_sd_checked_released": "S:/",
-						"src_sd_checked_pressed": "S:/",
-						"src_flash_released": "F:/",
-						"src_flash_pressed": "F:/",
-						"src_flash_checked_released": "F:/",
-						"src_flash_checked_pressed": "F:/",
+						"src_sd_released": "S:/led_unselect.png",
+						"src_sd_pressed": "S:/led_unselect.png",
+						"src_sd_checked_released": "S:/led_select.png",
+						"src_sd_checked_pressed": "S:/led_select.png",
+						"src_flash_released": "F:/led_unselect.png",
+						"src_flash_pressed": "F:/led_unselect.png",
+						"src_flash_checked_released": "F:/led_select.png",
+						"src_flash_checked_pressed": "F:/led_select.png",
 						"style": [
 							{
 								"part": "LV_PART_MAIN",
@@ -6340,20 +6090,20 @@
 						"text_align": "center",
 						"text": "",
 						"color_format": "true-color-alpha",
-						"src_released": "",
-						"src_pressed": "",
-						"src_checked_released": "",
-						"src_checked_pressed": "",
+						"src_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_unselect.png",
+						"src_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_unselect.png",
+						"src_checked_released": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
+						"src_checked_pressed": "D:\\Files\\Work\\AXLON\\Project\\smart_fan_lamp\\dev\\projs\\smart_fan_lamp_esp\\ui\\guider\\smart_fan_lamp\\import\\image\\fan_select.png",
 						"use_fs": false,
 						"fs_type": "flash",
-						"src_sd_released": "S:/",
-						"src_sd_pressed": "S:/",
-						"src_sd_checked_released": "S:/",
-						"src_sd_checked_pressed": "S:/",
-						"src_flash_released": "F:/",
-						"src_flash_pressed": "F:/",
-						"src_flash_checked_released": "F:/",
-						"src_flash_checked_pressed": "F:/",
+						"src_sd_released": "S:/fan_unselect.png",
+						"src_sd_pressed": "S:/fan_unselect.png",
+						"src_sd_checked_released": "S:/fan_select.png",
+						"src_sd_checked_pressed": "S:/fan_select.png",
+						"src_flash_released": "F:/fan_unselect.png",
+						"src_flash_pressed": "F:/fan_unselect.png",
+						"src_flash_checked_released": "F:/fan_select.png",
+						"src_flash_checked_pressed": "F:/fan_select.png",
 						"style": [
 							{
 								"part": "LV_PART_MAIN",
@@ -6571,6 +6321,236 @@
 								"shadow_ofs_y": 0
 							}
 						]
+					},
+					{
+						"name": "control_sw_1",
+						"id": "laa38t2v",
+						"type": "sw",
+						"visible": true,
+						"flag": [],
+						"pos": [
+							23,
+							74
+						],
+						"size": [
+							68,
+							35
+						],
+						"default_style": false,
+						"attribute_type": "freemaster",
+						"custom_attribute": [],
+						"style": [
+							{
+								"part": "LV_PART_MAIN",
+								"state": "LV_STATE_DEFAULT",
+								"disable": false,
+								"bg_color": "#efefef",
+								"bg_grad_color": "#5b4c4c",
+								"bg_grad_dir": "LV_GRAD_DIR_HOR",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 35,
+								"shadow_color": "#2195f6",
+								"shadow_opa": 255,
+								"shadow_width": 0,
+								"shadow_spread": 0,
+								"shadow_ofs_x": 0,
+								"shadow_ofs_y": 0,
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_MAIN",
+								"state": "LV_STATE_FOCUSED",
+								"disable": true,
+								"bg_color": "#e6e2e6",
+								"bg_grad_color": "#e6e2e6",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 10,
+								"shadow_color": "#2195f6",
+								"shadow_opa": 255,
+								"shadow_width": 0,
+								"shadow_spread": 0,
+								"shadow_ofs_x": 0,
+								"shadow_ofs_y": 0,
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_MAIN",
+								"state": "LV_STATE_DISABLED",
+								"disable": true,
+								"bg_color": "#e6e2e6",
+								"bg_grad_color": "#e6e2e6",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 10,
+								"shadow_color": "#2195f6",
+								"shadow_opa": 255,
+								"shadow_width": 0,
+								"shadow_spread": 0,
+								"shadow_ofs_x": 0,
+								"shadow_ofs_y": 0,
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_INDICATOR",
+								"state": "LV_STATE_CHECKED",
+								"disable": false,
+								"bg_color": "#76ee59",
+								"bg_grad_color": "#2195f6",
+								"bg_grad_dir": "LV_GRAD_DIR_HOR",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 206,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_INDICATOR",
+								"state": "LV_STATE_FOCUSED",
+								"disable": true,
+								"bg_color": "#2195f6",
+								"bg_grad_color": "#2195f6",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_INDICATOR",
+								"state": "LV_STATE_DISABLED",
+								"disable": true,
+								"bg_color": "#2195f6",
+								"bg_grad_color": "#2195f6",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"bg_img_src": "",
+								"bg_img_opa": 255,
+								"bg_img_recolor": "#ffffff",
+								"bg_img_recolor_opa": 0
+							},
+							{
+								"part": "LV_PART_KNOB",
+								"state": "LV_STATE_DEFAULT",
+								"disable": false,
+								"bg_color": "#ffffff",
+								"bg_grad_color": "#ffffff",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 35
+							},
+							{
+								"part": "LV_PART_KNOB",
+								"state": "LV_STATE_FOCUSED",
+								"disable": true,
+								"bg_color": "#ffffff",
+								"bg_grad_color": "#ffffff",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 10
+							},
+							{
+								"part": "LV_PART_KNOB",
+								"state": "LV_STATE_DISABLED",
+								"disable": true,
+								"bg_color": "#ffffff",
+								"bg_grad_color": "#ffffff",
+								"bg_grad_dir": "LV_GRAD_DIR_NONE",
+								"bg_dither_mode": "LV_DITHER_NONE",
+								"bg_main_stop": 0,
+								"bg_grad_stop": 255,
+								"bg_opa": 255,
+								"border_side": [
+									"LV_BORDER_SIDE_FULL"
+								],
+								"border_width": 0,
+								"border_opa": 255,
+								"border_color": "#2195f6",
+								"radius": 10
+							}
+						]
 					}
 				]
 			},
@@ -6590,6 +6570,9 @@
 				"height": 240,
 				"visible": true,
 				"flag": [],
+				"event": {
+					"widget": {}
+				},
 				"style": [
 					{
 						"part": "LV_PART_MAIN",
@@ -6608,9 +6591,6 @@
 						"bg_img_recolor_opa": 0
 					}
 				],
-				"event": {
-					"widget": {}
-				},
 				"layerName": "config",
 				"size": [
 					280,
@@ -8292,6 +8272,9 @@
 				"height": 240,
 				"visible": true,
 				"flag": [],
+				"event": {
+					"widget": {}
+				},
 				"style": [
 					{
 						"part": "LV_PART_MAIN",
@@ -8310,9 +8293,6 @@
 						"bg_img_recolor_opa": 0
 					}
 				],
-				"event": {
-					"widget": {}
-				},
 				"layerName": "clock",
 				"size": [
 					280,

@@ -64,7 +64,7 @@ tp_init(void) {
     drv_tp_init();
     osDelay(100);
     g_queue_panel = xQueueCreate(20, sizeof(msg_panel_t));
-    xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 3, NULL);
+    xTaskCreate(tp_task, "tp_task", 128, NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
 static void

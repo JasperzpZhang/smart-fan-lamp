@@ -171,8 +171,8 @@ void setup_scr_home(lv_ui *ui)
 
 	//Write codes home_cont_3
 	ui->home_cont_3 = lv_obj_create(ui->home);
-	lv_obj_set_pos(ui->home_cont_3, 15, 107);
-	lv_obj_set_size(ui->home_cont_3, 121, 40);
+	lv_obj_set_pos(ui->home_cont_3, 15, 113);
+	lv_obj_set_size(ui->home_cont_3, 121, 34);
 	lv_obj_set_scrollbar_mode(ui->home_cont_3, LV_SCROLLBAR_MODE_OFF);
 
 	//Write style for home_cont_3, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
@@ -336,70 +336,6 @@ void setup_scr_home(lv_ui *ui)
 	lv_obj_set_style_pad_bottom(ui->home_label_11, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_left(ui->home_label_11, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_shadow_width(ui->home_label_11, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write codes home_win_bright_0
-	ui->home_win_bright_0 = lv_win_create(ui->home, 39);
-	lv_obj_t * home_win_bright_0_title = lv_win_add_title(ui->home_win_bright_0, "提示");
-	ui->home_win_bright_0_item0 = lv_win_add_btn(ui->home_win_bright_0, LV_SYMBOL_CLOSE, 36);
-	lv_obj_t *home_win_bright_0_label = lv_label_create(lv_win_get_content(ui->home_win_bright_0));
-	lv_label_set_text(home_win_bright_0_label, "当前亮度为0\n\n请调节亮度开灯");
-	lv_obj_set_scrollbar_mode(lv_win_get_content(ui->home_win_bright_0), LV_SCROLLBAR_MODE_OFF);
-	lv_obj_set_pos(ui->home_win_bright_0, 332, 61);
-	lv_obj_set_size(ui->home_win_bright_0, 183, 115);
-	lv_obj_set_scrollbar_mode(ui->home_win_bright_0, LV_SCROLLBAR_MODE_OFF);
-	lv_obj_add_flag(ui->home_win_bright_0, LV_OBJ_FLAG_HIDDEN);
-
-	//Write style for home_win_bright_0, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->home_win_bright_0, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->home_win_bright_0, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->home_win_bright_0, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_outline_width(ui->home_win_bright_0, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->home_win_bright_0, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style state: LV_STATE_DEFAULT for &style_home_win_bright_0_extra_content_main_default
-	static lv_style_t style_home_win_bright_0_extra_content_main_default;
-	ui_init_style(&style_home_win_bright_0_extra_content_main_default);
-	
-	lv_style_set_bg_opa(&style_home_win_bright_0_extra_content_main_default, 255);
-	lv_style_set_bg_color(&style_home_win_bright_0_extra_content_main_default, lv_color_hex(0x393c41));
-	lv_style_set_bg_grad_dir(&style_home_win_bright_0_extra_content_main_default, LV_GRAD_DIR_NONE);
-	lv_style_set_text_color(&style_home_win_bright_0_extra_content_main_default, lv_color_hex(0xffffff));
-	lv_style_set_text_font(&style_home_win_bright_0_extra_content_main_default, &lv_font_SourceHanSerifSC_Regular_12);
-	lv_style_set_text_opa(&style_home_win_bright_0_extra_content_main_default, 255);
-	lv_style_set_text_letter_space(&style_home_win_bright_0_extra_content_main_default, 0);
-	lv_style_set_text_line_space(&style_home_win_bright_0_extra_content_main_default, 2);
-	lv_obj_add_style(lv_win_get_content(ui->home_win_bright_0), &style_home_win_bright_0_extra_content_main_default, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style state: LV_STATE_DEFAULT for &style_home_win_bright_0_extra_header_main_default
-	static lv_style_t style_home_win_bright_0_extra_header_main_default;
-	ui_init_style(&style_home_win_bright_0_extra_header_main_default);
-	
-	lv_style_set_bg_opa(&style_home_win_bright_0_extra_header_main_default, 255);
-	lv_style_set_bg_color(&style_home_win_bright_0_extra_header_main_default, lv_color_hex(0xe34f0e));
-	lv_style_set_bg_grad_dir(&style_home_win_bright_0_extra_header_main_default, LV_GRAD_DIR_NONE);
-	lv_style_set_text_color(&style_home_win_bright_0_extra_header_main_default, lv_color_hex(0xffffff));
-	lv_style_set_text_font(&style_home_win_bright_0_extra_header_main_default, &lv_font_SourceHanSerifSC_Regular_12);
-	lv_style_set_text_opa(&style_home_win_bright_0_extra_header_main_default, 255);
-	lv_style_set_text_letter_space(&style_home_win_bright_0_extra_header_main_default, 0);
-	lv_style_set_text_line_space(&style_home_win_bright_0_extra_header_main_default, 2);
-	lv_style_set_pad_top(&style_home_win_bright_0_extra_header_main_default, 5);
-	lv_style_set_pad_right(&style_home_win_bright_0_extra_header_main_default, 5);
-	lv_style_set_pad_bottom(&style_home_win_bright_0_extra_header_main_default, 5);
-	lv_style_set_pad_left(&style_home_win_bright_0_extra_header_main_default, 5);
-	lv_style_set_pad_column(&style_home_win_bright_0_extra_header_main_default, 5);
-	lv_obj_add_style(lv_win_get_header(ui->home_win_bright_0), &style_home_win_bright_0_extra_header_main_default, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style state: LV_STATE_DEFAULT for &style_home_win_bright_0_extra_btns_main_default
-	static lv_style_t style_home_win_bright_0_extra_btns_main_default;
-	ui_init_style(&style_home_win_bright_0_extra_btns_main_default);
-	
-	lv_style_set_radius(&style_home_win_bright_0_extra_btns_main_default, 8);
-	lv_style_set_border_width(&style_home_win_bright_0_extra_btns_main_default, 0);
-	lv_style_set_bg_opa(&style_home_win_bright_0_extra_btns_main_default, 187);
-	lv_style_set_bg_color(&style_home_win_bright_0_extra_btns_main_default, lv_color_hex(0x2195f6));
-	lv_style_set_bg_grad_dir(&style_home_win_bright_0_extra_btns_main_default, LV_GRAD_DIR_NONE);
-	lv_style_set_shadow_width(&style_home_win_bright_0_extra_btns_main_default, 0);
-	lv_obj_add_style(ui->home_win_bright_0_item0, &style_home_win_bright_0_extra_btns_main_default, LV_PART_MAIN|LV_STATE_DEFAULT);
 
 	//The custom code of home.
 	
