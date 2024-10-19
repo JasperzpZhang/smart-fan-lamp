@@ -52,7 +52,8 @@
 /**
  * @brief iic address definition
  */
-#define APDS9960_ADDRESS        0x72        /**< iic address */
+//#define APDS9960_ADDRESS        0x72        /**< iic address */
+#define APDS9960_ADDRESS        0x39        /**< iic address */
 
 /**
  * @brief chip register definition
@@ -227,9 +228,10 @@ uint8_t apds9960_init(apds9960_handle_t *handle)
         
         return 4;                                                            /* return error */
     }
-    if (id != 0xAB)                                                          /* check id */
+    if (id != 0xA8)                                                          /* check id */
     {
-        handle->debug_print("apds9960: id is invalid.\n");                   /* id is invalid */
+        
+        handle->debug_print("apds9960: id is invalid.[%x]\n", id);                   /* id is invalid */
         (void)handle->iic_deinit();                                          /* iic deinit */
         
         return 5;                                                            /* return error */

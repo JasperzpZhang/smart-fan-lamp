@@ -67,7 +67,9 @@ app_init(void) {
     sys_init();
     radar_init();
     voice_init();
+    gyro_init();
     lvgl_init();
+    app_apds9960_init();
 }
 
 /* Bootloader */

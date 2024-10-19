@@ -41,7 +41,7 @@
 #include "task.h"
 
 /* Debug config */
-#if SYS_DEBUG || 1
+#if SYS_DEBUG || 0
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -538,6 +538,7 @@ prv_daemon_proc(const sys_msg_t* msg) {
             if (msg->source == SOURCE_PANEL) {
                 prv_daemon_led_on_from_panel();
             } else if (msg->source == SOURCE_SCREEN) {
+                prv_daemon_led_on_from_screen(); 
             }
             break;
 
@@ -545,6 +546,7 @@ prv_daemon_proc(const sys_msg_t* msg) {
             if (msg->source == SOURCE_PANEL) {
                 prv_daemon_led_off_from_panel();
             } else if (msg->source == SOURCE_SCREEN) {
+                prv_daemon_led_off_from_screen();
             }
             break;
 
@@ -1004,15 +1006,24 @@ prv_daemon_slider_switch_target_from_panel(panel_slider_target_t slider_target) 
             panel_set_sw_led_status(idx_brightness, panel_led_on);
             panel_set_sw_led_status(idx_color, panel_led_off);
             panel_set_sw_led_status(idx_fan, panel_led_off);
-            if (slider_set_led_line_smooth(MODE_LED_BRIGHT, g_sys_ctrl.led.brightness) == status_ok) {
-                g_daemon_msg.type = SYS_EVENT_IDLE;
+
+            if (g_sys_ctrl.led.state == LED_OFF) {
+                if (slider_set_led_line_smooth(MODE_LED_BRIGHT, 0) == status_ok) {
+                    g_daemon_msg.type = SYS_EVENT_IDLE;
+                }
+            } else if (g_sys_ctrl.led.state == LED_ON) {
+                if (slider_set_led_line_smooth(MODE_LED_BRIGHT, g_sys_ctrl.led.brightness) == status_ok) {
+                    g_daemon_msg.type = SYS_EVENT_IDLE;
+                }
             }
+
             break;
 
         case MODE_LED_COLOR:
             panel_set_sw_led_status(idx_brightness, panel_led_off);
             panel_set_sw_led_status(idx_color, panel_led_on);
             panel_set_sw_led_status(idx_fan, panel_led_off);
+
             if (slider_set_led_line_smooth(MODE_LED_COLOR, g_sys_ctrl.led.color_temperature) == status_ok) {
                 g_daemon_msg.type = SYS_EVENT_IDLE;
             }
@@ -1022,9 +1033,17 @@ prv_daemon_slider_switch_target_from_panel(panel_slider_target_t slider_target) 
             panel_set_sw_led_status(idx_brightness, panel_led_off);
             panel_set_sw_led_status(idx_color, panel_led_off);
             panel_set_sw_led_status(idx_fan, panel_led_on);
-            if (slider_set_led_line_smooth(MODE_FAN, g_sys_ctrl.fan.speed) == status_ok) {
-                g_daemon_msg.type = SYS_EVENT_IDLE;
+
+            if (g_sys_ctrl.fan.state == FAN_OFF) {
+                if (slider_set_led_line_smooth(MODE_FAN, 0) == status_ok) {
+                    g_daemon_msg.type = SYS_EVENT_IDLE;
+                }
+            } else if (g_sys_ctrl.fan.state == FAN_ON) {
+                if (slider_set_led_line_smooth(MODE_FAN, g_sys_ctrl.fan.speed) == status_ok) {
+                    g_daemon_msg.type = SYS_EVENT_IDLE;
+                }
             }
+
             break;
         default:
             /* do nothing */

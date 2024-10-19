@@ -1283,6 +1283,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\drv\peri\apds9960\drv_apds9960_interrupt.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_sc7a20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\drv\peri\gyro\drv_sc7a20.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1352,6 +1357,11 @@
               <FileName>radar.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arm\app\svc\radar.c</FilePath>
+            </File>
+            <File>
+              <FileName>gyro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arm\app\svc\gyro.c</FilePath>
             </File>
           </Files>
         </Group>

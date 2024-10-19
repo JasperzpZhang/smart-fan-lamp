@@ -39,6 +39,8 @@
 #include "lib/delay/lib_delay.h"
 #include "lib/iic/lib_iic.h"
 #include "usart.h"
+#include "FreeRTOS.h"
+#include "cmsis_os.h"
 
 /**
  * @brief  interface iic bus init
@@ -107,7 +109,7 @@ apds9960_interface_iic_write(uint8_t addr, uint8_t reg, uint8_t* buf, uint16_t l
  */
 void
 apds9960_interface_delay_ms(uint32_t ms) {
-    delay_ms(ms);
+    osDelay(ms);
 }
 
 /**

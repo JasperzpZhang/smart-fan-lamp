@@ -326,7 +326,7 @@ function :  Clear screen
 parameter:
 ******************************************************************************/
 void
-lcd_1in83_clear(uint16_t Color) {
+lcd_1in83_clear(uint16_t Color) { 
 
     uint16_t i, j;
 
@@ -383,8 +383,8 @@ lcd_1in83_display_windows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint1
         uint16_t rows_to_process = (row + SPI_BUFFER_HEIGHT > height) ? (height - row) : SPI_BUFFER_HEIGHT;
 
         index = 0;
-        for (uint16_t i = 0; i < rows_to_process; i++) {
-            for (uint16_t j = 0; j < width; j++) {
+        for (i = 0; i < rows_to_process; i++) {
+            for (j = 0; j < width; j++) {
                 spi_buffer[index++] = (*(Image) >> 8) & 0xFF; // ¸ß×Ö½Ú
                 spi_buffer[index++] = *(Image) & 0xFF;        // µÍ×Ö½Ú
                 Image++;

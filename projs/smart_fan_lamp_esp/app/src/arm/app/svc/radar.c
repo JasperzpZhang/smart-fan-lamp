@@ -203,7 +203,7 @@ cli_cmd_redar_send_cmd(cli_printf cliprintf, int argc, char** argv) {
 
     // Now cmd_buffer contains the full command string
     cliprintf("Radar command:%s\n", cmd_buffer);
-    radar_send(cmd_buffer);
+    radar_send((uint8_t *)cmd_buffer);
 }
 CLI_CMD_EXPORT(radar_send, radar send cmd, cli_cmd_redar_send_cmd)
 

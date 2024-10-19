@@ -216,12 +216,11 @@ panel_set_key_mode_sw(panel_slider_target_t slider_target) {
             /* do nothing */
             break;
     }
+    return status_ok;
 }
 
 status_t
 slider_set_target_value(uint8_t value) {
-    static uint8_t fan_start_stop_lock = 0;
-    static uint8_t led_start_stop_lock = 0;
 
     switch (g_panel_ctrl.slider_target) {
         case MODE_LED_BRIGHT:

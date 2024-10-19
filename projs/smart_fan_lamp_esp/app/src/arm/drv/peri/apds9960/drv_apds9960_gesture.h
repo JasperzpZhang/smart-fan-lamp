@@ -80,9 +80,9 @@ extern "C"{
 #define APDS9960_GESTURE_DEFAULT_GESTURE_FIFO_THRESHOLD                APDS9960_GESTURE_FIFO_THRESHOLD_8_DATASET                  /**< fifo level 8 */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_EXIT_PERSISTENCE              APDS9960_GESTURE_EXIT_PERSISTENCE_1ST                      /**< persistence 1st */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_EXIT_MASK                     0x00                                                       /**< 0x00 */
-#define APDS9960_GESTURE_DEFAULT_GESTURE_GAIN                          APDS9960_GESTURE_GAIN_2X                                   /**< gesture 2x */
+#define APDS9960_GESTURE_DEFAULT_GESTURE_GAIN                          APDS9960_ALS_COLOR_GAIN_64X //APDS9960_GESTURE_GAIN_2X                                   /**< gesture 2x */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_LED_CURRENT                   APDS9960_GESTURE_LED_CURRENT_100_MA                        /**< gesture 100 mA */
-#define APDS9960_GESTURE_DEFAULT_GESTURE_WAIT_TIME                     APDS9960_GESTURE_WAIT_TIME_2P8_MS                          /**< 2.8 ms */
+#define APDS9960_GESTURE_DEFAULT_GESTURE_WAIT_TIME                     APDS9960_GESTURE_WAIT_TIME_14_MS         //APDS9960_GESTURE_WAIT_TIME_14_MS     APDS9960_GESTURE_WAIT_TIME_2P8_MS            /**< 2.8 ms */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_UP_OFFSET                     0                                                          /**< 0 offset */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_DOWN_OFFSET                   0                                                          /**< 0 offset */
 #define APDS9960_GESTURE_DEFAULT_GESTURE_LEFT_OFFSET                   0                                                          /**< 0 offset */

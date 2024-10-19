@@ -37,7 +37,7 @@
 #include "app/include.h"
 
 /* Debug config */
-#if TP_DEBUG || 1
+#if TP_DEBUG || 0
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else

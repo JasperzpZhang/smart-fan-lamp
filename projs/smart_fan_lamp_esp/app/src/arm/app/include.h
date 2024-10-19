@@ -85,26 +85,27 @@ extern "C" {
 #include "lib/wdog/lib_wdog.h"
 
 /* Driver moudle */
+#include "drv/peri/gyro/drv_sc7a20.h"
 #include "drv/peri/mem/drv_mem.h"
 #include "drv/peri/rtc/drv_rtc.h"
 #include "drv/peri/sc/drv_sc.h"
 #include "drv/peri/sc/lcd_1in83/drv_cst816t_if.h"
 #include "drv/peri/tp/drv_tp.h"
 
-
 /* Application */
 #include "app/app.h"
 #include "app/svc/cli.h"
 #include "app/svc/data.h"
 #include "app/svc/fan.h"
+#include "app/svc/gyro.h"
 #include "app/svc/led.h"
 #include "app/svc/mem.h"
 #include "app/svc/panel.h"
+#include "app/svc/radar.h"
 #include "app/svc/sc_lvgl.h"
 #include "app/svc/time.h"
 #include "app/svc/tp.h"
 #include "app/svc/voice.h"
-#include "app/svc/radar.h"
 #include "app/sys.h"
 
 #ifdef __cplusplus
