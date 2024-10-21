@@ -57,6 +57,11 @@
 
 #define SC7A20_IIC_ADDR 0x18
 
+typedef struct {
+    QueueHandle_t gesture_queue;
+
+} gesture_hdl_t;
+
 sc7a20_hdl_t g_sc7a20_hdl;
 static void gyro_task(void* parameter);
 
@@ -79,15 +84,15 @@ gyro_task(void* parameter) {
 
     while (1) {
 
-        // if (status_err == sc7a20_get_z_axis_angle(&g_sc7a20_hdl, acc, &angle_z)) //SC7A20读取加速度值
-        // {
-        //     TRACE("加速度数据读取失败\r\n");
-        // } else {
-        //     TRACE("x        : %d\n", acc[0]);
-        //     TRACE("y        : %d\n", acc[1]);
-        //     TRACE("z        : %d\n", acc[2]);
-        //     TRACE("angle_z  : %4f\n\n", angle_z);
-        // }
+        //         if (status_err == sc7a20_get_z_axis_angle(&g_sc7a20_hdl, acc, &angle_z)) //SC7A20读取加速度值
+        //         {
+        //             TRACE("加速度数据读取失败\r\n");
+        //         } else {
+        //             TRACE("x        : %d\n", acc[0]);
+        //             TRACE("y        : %d\n", acc[1]);
+        //             TRACE("z        : %d\n", acc[2]);
+        //             TRACE("angle_z  : %4f\n\n", angle_z);
+        //         }
 
         orientation = sc7a20_get_orientation(&g_sc7a20_hdl);
 
@@ -142,13 +147,13 @@ a_gesture_callback(uint8_t type) {
         case APDS9960_INTERRUPT_STATUS_GESTURE_LEFT: {
             apds9960_interface_debug_print("apds9960: irq gesture left.\n");
             gs_flag = 1;
-
+            isr_led_on(SOURCE_PANEL);
             break;
         }
         case APDS9960_INTERRUPT_STATUS_GESTURE_RIGHT: {
             apds9960_interface_debug_print("apds9960: irq gesture right.\n");
             gs_flag = 1;
-
+            isr_led_off(SOURCE_PANEL);
             break;
         }
         case APDS9960_INTERRUPT_STATUS_GESTURE_UP: {
@@ -224,130 +229,23 @@ a_gesture_callback(uint8_t type) {
     }
 }
 
-/**
- * @brief     interrupt receive callback
- * @param[in] type is the interrupt type
- * @note      none
- */
-static void
-a_interrupt_callback(uint8_t type) {
-    switch (type) {
-        case APDS9960_INTERRUPT_STATUS_GESTURE_LEFT: {
-            apds9960_interface_debug_print("apds9960: irq gesture left.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GESTURE_RIGHT: {
-            apds9960_interface_debug_print("apds9960: irq gesture right.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GESTURE_UP: {
-            apds9960_interface_debug_print("apds9960: irq gesture up.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GESTURE_DOWN: {
-            apds9960_interface_debug_print("apds9960: irq gesture down.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GESTURE_NEAR: {
-            apds9960_interface_debug_print("apds9960: irq gesture near.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GESTURE_FAR: {
-            apds9960_interface_debug_print("apds9960: irq gesture far.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GFOV: {
-            apds9960_interface_debug_print("apds9960: irq gesture fifo overflow.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GVALID: {
-            apds9960_interface_debug_print("apds9960: irq gesture fifo data.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_CPSAT: {
-            apds9960_interface_debug_print("apds9960: irq clear photo diode saturation.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_PGSAT: {
-            apds9960_interface_debug_print("apds9960: irq analog saturation.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_PINT: {
-            uint8_t res;
-            uint8_t proximity;
-
-            /* read proximity */
-            res = apds9960_interrupt_read_proximity((uint8_t*)&proximity);
-            if (res != 0) {
-                apds9960_interface_debug_print("apds9960: read proximity failed.\n");
-            }
-            apds9960_interface_debug_print("apds9960: proximity is 0x%02X.\n", proximity);
-            gs_flag = 1;
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_AINT: {
-            uint8_t res;
-            uint16_t red, green, blue, clear;
-
-            /* read rgbc */
-            res = apds9960_interrupt_read_rgbc((uint16_t*)&red, (uint16_t*)&green, (uint16_t*)&blue, (uint16_t*)&clear);
-            if (res != 0) {
-                apds9960_interface_debug_print("apds9960: read rgbc failed.\n");
-            }
-            /* output */
-            apds9960_interface_debug_print("apds9960: red is 0x%04X.\n", red);
-            apds9960_interface_debug_print("apds9960: green is 0x%04X.\n", green);
-            apds9960_interface_debug_print("apds9960: blue is 0x%04X.\n", blue);
-            apds9960_interface_debug_print("apds9960: clear is 0x%04X.\n", clear);
-            gs_flag = 1;
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_GINT: {
-            apds9960_interface_debug_print("apds9960: irq gesture interrupt.\n");
-
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_PVALID: {
-            break;
-        }
-        case APDS9960_INTERRUPT_STATUS_AVALID: {
-            break;
-        }
-        default: {
-            apds9960_interface_debug_print("apds9960: irq unknown.\n");
-
-            break;
-        }
-    }
-}
-
 void
 app_apds9960_init(void) {
 
     uint8_t times = 3;
-    uint8_t res;
     uint32_t i;
 
     /* set gpio irq */
     g_gpio_irq = apds9960_gesture_irq_handler;
 
+    //    g_gesture_hdl.gesture_queue = xQueueCreate(20, sizeof(uint8_t));
+
     /* gesture init */
-    res = apds9960_gesture_init(a_gesture_callback);
+    apds9960_gesture_init(a_gesture_callback);
 
     /* loop */
     gs_flag = 0;
+
     for (i = 0; i < times; i++) {
         while (1) {
             if (gs_flag != 0) {
@@ -366,3 +264,112 @@ app_apds9960_init(void) {
         }
     }
 }
+
+// /**
+//  * @brief     interrupt receive callback
+//  * @param[in] type is the interrupt type
+//  * @note      none
+//  */
+// static void
+// a_interrupt_callback(uint8_t type) {
+//     switch (type) {
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_LEFT: {
+//             apds9960_interface_debug_print("apds9960: irq gesture left.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_RIGHT: {
+//             apds9960_interface_debug_print("apds9960: irq gesture right.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_UP: {
+//             apds9960_interface_debug_print("apds9960: irq gesture up.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_DOWN: {
+//             apds9960_interface_debug_print("apds9960: irq gesture down.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_NEAR: {
+//             apds9960_interface_debug_print("apds9960: irq gesture near.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GESTURE_FAR: {
+//             apds9960_interface_debug_print("apds9960: irq gesture far.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GFOV: {
+//             apds9960_interface_debug_print("apds9960: irq gesture fifo overflow.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GVALID: {
+//             apds9960_interface_debug_print("apds9960: irq gesture fifo data.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_CPSAT: {
+//             apds9960_interface_debug_print("apds9960: irq clear photo diode saturation.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_PGSAT: {
+//             apds9960_interface_debug_print("apds9960: irq analog saturation.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_PINT: {
+//             uint8_t res;
+//             uint8_t proximity;
+
+//             /* read proximity */
+//             res = apds9960_interrupt_read_proximity((uint8_t*)&proximity);
+//             if (res != 0) {
+//                 apds9960_interface_debug_print("apds9960: read proximity failed.\n");
+//             }
+//             apds9960_interface_debug_print("apds9960: proximity is 0x%02X.\n", proximity);
+//             gs_flag = 1;
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_AINT: {
+//             uint8_t res;
+//             uint16_t red, green, blue, clear;
+
+//             /* read rgbc */
+//             res = apds9960_interrupt_read_rgbc((uint16_t*)&red, (uint16_t*)&green, (uint16_t*)&blue, (uint16_t*)&clear);
+//             if (res != 0) {
+//                 apds9960_interface_debug_print("apds9960: read rgbc failed.\n");
+//             }
+//             /* output */
+//             apds9960_interface_debug_print("apds9960: red is 0x%04X.\n", red);
+//             apds9960_interface_debug_print("apds9960: green is 0x%04X.\n", green);
+//             apds9960_interface_debug_print("apds9960: blue is 0x%04X.\n", blue);
+//             apds9960_interface_debug_print("apds9960: clear is 0x%04X.\n", clear);
+//             gs_flag = 1;
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_GINT: {
+//             apds9960_interface_debug_print("apds9960: irq gesture interrupt.\n");
+
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_PVALID: {
+//             break;
+//         }
+//         case APDS9960_INTERRUPT_STATUS_AVALID: {
+//             break;
+//         }
+//         default: {
+//             apds9960_interface_debug_print("apds9960: irq unknown.\n");
+
+//             break;
+//         }
+//     }
+// }

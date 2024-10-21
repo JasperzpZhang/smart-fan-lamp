@@ -71,7 +71,7 @@ typedef enum {
     SYS_MODE_SWITCH
 } sys_mode_t;
 
-typedef enum { SOURCE_PANEL, SOURCE_SCREEN, SOURCE_VOICE, SOURCE_OTHER } sys_enent_source_t;
+typedef enum { SOURCE_PANEL, SOURCE_SCREEN, SOURCE_VOICE, SOURCE_OTHER } sys_event_source_t;
 
 typedef enum { LED_OFF, LED_ON } led_state_t;
 
@@ -115,18 +115,23 @@ status_t sys_init(void);
 void charge_set_sattus(uint8_t charge_status);
 void charge_save_sattus(void);
 
-status_t sys_led_on(sys_enent_source_t source);
-status_t sys_led_off(sys_enent_source_t source);
-status_t sys_led_set_brightness(sys_enent_source_t source, uint16_t brightness);
-status_t sys_led_set_color_temp(sys_enent_source_t source, uint16_t color_temperature);
-status_t sys_night_light_on(sys_enent_source_t source);
-status_t sys_night_light_off(sys_enent_source_t source);
-status_t sys_fan_on(sys_enent_source_t source);
-status_t sys_fan_off(sys_enent_source_t source);
-status_t sys_fan_set_speed(sys_enent_source_t source, uint16_t speed);
-status_t sys_timer_start(sys_enent_source_t source);
-status_t sys_timer_stop(sys_enent_source_t source);
-status_t sys_slider_switch_target(sys_enent_source_t source, panel_slider_target_t slider_target);
+status_t
+isr_led_on(sys_event_source_t source);
+status_t
+isr_led_off(sys_event_source_t source);
+
+status_t sys_led_on(sys_event_source_t source);
+status_t sys_led_off(sys_event_source_t source);
+status_t sys_led_set_brightness(sys_event_source_t source, uint16_t brightness);
+status_t sys_led_set_color_temp(sys_event_source_t source, uint16_t color_temperature);
+status_t sys_night_light_on(sys_event_source_t source);
+status_t sys_night_light_off(sys_event_source_t source);
+status_t sys_fan_on(sys_event_source_t source);
+status_t sys_fan_off(sys_event_source_t source);
+status_t sys_fan_set_speed(sys_event_source_t source, uint16_t speed);
+status_t sys_timer_start(sys_event_source_t source);
+status_t sys_timer_stop(sys_event_source_t source);
+status_t sys_slider_switch_target(sys_event_source_t source, panel_slider_target_t slider_target);
 
 #ifdef __cplusplus
 }

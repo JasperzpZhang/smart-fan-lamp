@@ -148,7 +148,54 @@ sys_init(void) {
 }
 
 status_t
-sys_led_on(sys_enent_source_t source) {
+isr_led_on(sys_event_source_t source) {
+    TRACE("ISR led on\n");
+    sys_msg_t msg;
+    msg.source = source;
+    msg.type = SYS_EVENT_LED_ON;
+    msg.mode = SYS_MODE_LED_BRIGHT;
+
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    BaseType_t sys_queue_status = xQueueSendFromISR(g_sys_queue, &msg, &xHigherPriorityTaskWoken);
+    BaseType_t daemon_queue_status = xQueueSendFromISR(g_daemon_queue, &msg, &xHigherPriorityTaskWoken);
+
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+    if (sys_queue_status == pdPASS && daemon_queue_status == pdPASS) {
+        return status_ok;
+    }
+
+    return status_err;
+}
+
+status_t
+isr_led_off(sys_event_source_t source) {
+    TRACE("ISR led off\n");
+    sys_msg_t msg;
+    msg.source = source;
+    msg.type = SYS_EVENT_LED_OFF;
+    msg.mode = SYS_MODE_LED_BRIGHT;
+
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    BaseType_t sys_queue_status = xQueueSendFromISR(g_sys_queue, &msg, &xHigherPriorityTaskWoken);
+    BaseType_t daemon_queue_status = xQueueSendFromISR(g_daemon_queue, &msg, &xHigherPriorityTaskWoken);
+
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+    if (sys_queue_status == pdPASS && daemon_queue_status == pdPASS) {
+        return status_ok;
+    }
+
+    return status_err;
+}
+
+
+
+
+
+
+status_t
+sys_led_on(sys_event_source_t source) {
     TRACE("sys led on\n");
     sys_msg_t msg;
     msg.source = source;
@@ -166,7 +213,7 @@ sys_led_on(sys_enent_source_t source) {
 }
 
 status_t
-sys_led_off(sys_enent_source_t source) {
+sys_led_off(sys_event_source_t source) {
     TRACE("sys led off\n");
     sys_msg_t msg;
     msg.source = source;
@@ -184,7 +231,7 @@ sys_led_off(sys_enent_source_t source) {
 }
 
 status_t
-sys_night_light_on(sys_enent_source_t source) {
+sys_night_light_on(sys_event_source_t source) {
     TRACE("sys night light on\n");
     sys_msg_t msg;
     msg.source = source;
@@ -202,7 +249,7 @@ sys_night_light_on(sys_enent_source_t source) {
 }
 
 status_t
-sys_night_light_off(sys_enent_source_t source) {
+sys_night_light_off(sys_event_source_t source) {
     TRACE("sys night light off\n");
     sys_msg_t msg;
     msg.source = source;
@@ -220,7 +267,7 @@ sys_night_light_off(sys_enent_source_t source) {
 }
 
 status_t
-sys_led_set_brightness(sys_enent_source_t source, uint16_t brightness) {
+sys_led_set_brightness(sys_event_source_t source, uint16_t brightness) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_LED_SET_BRIGHTNESS;
@@ -238,7 +285,7 @@ sys_led_set_brightness(sys_enent_source_t source, uint16_t brightness) {
 }
 
 status_t
-sys_led_set_color_temp(sys_enent_source_t source, uint16_t color_temperature) {
+sys_led_set_color_temp(sys_event_source_t source, uint16_t color_temperature) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_LED_SET_COLOR_TEMP;
@@ -256,7 +303,7 @@ sys_led_set_color_temp(sys_enent_source_t source, uint16_t color_temperature) {
 }
 
 status_t
-sys_fan_on(sys_enent_source_t source) {
+sys_fan_on(sys_event_source_t source) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_FAN_ON;
@@ -275,7 +322,7 @@ sys_fan_on(sys_enent_source_t source) {
 }
 
 status_t
-sys_fan_off(sys_enent_source_t source) {
+sys_fan_off(sys_event_source_t source) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_FAN_OFF;
@@ -294,7 +341,7 @@ sys_fan_off(sys_enent_source_t source) {
 }
 
 status_t
-sys_fan_set_speed(sys_enent_source_t source, uint16_t speed) {
+sys_fan_set_speed(sys_event_source_t source, uint16_t speed) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_FAN_SET_SPEED;
@@ -312,7 +359,7 @@ sys_fan_set_speed(sys_enent_source_t source, uint16_t speed) {
 }
 
 status_t
-sys_timer_start(sys_enent_source_t source) {
+sys_timer_start(sys_event_source_t source) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_TIMER_START;
@@ -329,7 +376,7 @@ sys_timer_start(sys_enent_source_t source) {
 }
 
 status_t
-sys_timer_stop(sys_enent_source_t source) {
+sys_timer_stop(sys_event_source_t source) {
     sys_msg_t msg;
     msg.source = source;
     msg.type = SYS_EVENT_TIMER_STOP;
@@ -346,7 +393,7 @@ sys_timer_stop(sys_enent_source_t source) {
 }
 
 status_t
-sys_slider_switch_target(sys_enent_source_t source, panel_slider_target_t slider_target) {
+sys_slider_switch_target(sys_event_source_t source, panel_slider_target_t slider_target) {
     sys_msg_t msg;
     msg.source = source;
     msg.slider_target = slider_target;
