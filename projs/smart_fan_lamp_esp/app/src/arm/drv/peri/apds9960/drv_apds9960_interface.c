@@ -82,7 +82,9 @@ apds9960_interface_iic_deinit(void) {
 uint8_t
 apds9960_interface_iic_read(uint8_t addr, uint8_t reg, uint8_t* buf, uint16_t len) {
     //    return iic_read(addr, reg, buf, len);
-    return iic_read_addr8(addr, reg, buf, len);
+    uint8_t res = iic_read_addr8(addr, reg, buf, len);
+    delay_us(300);
+    return res;
 }
 
 /**

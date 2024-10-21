@@ -761,7 +761,7 @@ iic_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ac
     /* ·¢ËÍÍ£Ö¹ĞÅºÅ */
     prv_iic_stop();
     IIC_UNLOCK();
-    return status_ok; 
+    return status_ok;
 }
 
 #endif
