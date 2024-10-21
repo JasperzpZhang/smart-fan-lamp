@@ -41,7 +41,7 @@
 #include "lib/iic/lib_iic.h"
 
 /* Debug config */
-#if IIC_DEBUG || 0
+#if IIC_DEBUG || 1
 #undef TRACE
 #define TRACE(...) debug_printf(__VA_ARGS__)
 #else
@@ -559,12 +559,16 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
         return status_err;
     }
 
+    prv_iic_delay();
+
     if (prv_iic_send_byte((addr << 1) | 0x01) != status_ok) {
         TRACE("iic read addr8 re-send addr error\n");
         prv_iic_stop();
         IIC_UNLOCK();
         return status_err;
     }
+
+    prv_iic_delay();
 
     for (uint8_t i = 0; i < len; i++) {
         if (i == len - 1) {
@@ -583,10 +587,12 @@ iic_read_addr8(uint8_t addr, uint8_t reg, uint8_t* buf, uint8_t len) {
         }
         prv_iic_delay();
     }
+    delay_us(50);
     prv_iic_stop();
+    delay_us(50);
 
     /* 这个时间短了会出现 start error */
-    // delay_us(100);
+    // delay_us(150);
     IIC_UNLOCK();
     return status_ok;
 }
@@ -755,7 +761,7 @@ iic_read_data(uint8_t device_address, uint8_t* data, uint16_t length, uint8_t ac
     /* 发送停止信号 */
     prv_iic_stop();
     IIC_UNLOCK();
-    return status_ok;
+    return status_ok; 
 }
 
 #endif

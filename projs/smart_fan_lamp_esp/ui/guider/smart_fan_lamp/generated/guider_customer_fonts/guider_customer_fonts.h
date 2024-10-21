@@ -20,7 +20,7 @@ extern "C" {
 #include "font/lv_font.h"
 #endif
 
-LV_FONT_DECLARE(lv_customer_font_SourceHanSerifSC_Regular_24)
+LV_FONT_DECLARE(lv_customer_font_SourceHanSerifSC_Regular_13)
 
 
 #ifdef __cplusplus

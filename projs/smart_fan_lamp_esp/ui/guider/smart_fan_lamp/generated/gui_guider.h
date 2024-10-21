@@ -66,6 +66,8 @@ typedef struct
 	lv_obj_t *config_cont_5;
 	lv_obj_t *config_label_4;
 	lv_obj_t *config_sw_4;
+	lv_obj_t *config_label_5;
+	lv_obj_t *config_label_6;
 	lv_obj_t *clock;
 	bool clock_del;
 	lv_obj_t *clock_img_1;
@@ -128,6 +130,7 @@ LV_FONT_DECLARE(lv_font_montserratMedium_16)
 LV_FONT_DECLARE(lv_font_Alatsi_Regular_60)
 LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_16)
 LV_FONT_DECLARE(lv_font_montserratMedium_12)
+LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_13)
 
 
 #ifdef __cplusplus

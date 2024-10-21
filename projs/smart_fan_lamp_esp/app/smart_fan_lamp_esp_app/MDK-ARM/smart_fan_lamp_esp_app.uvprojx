@@ -10,6 +10,7 @@
       <TargetName>smart_fan_lamp_esp_app</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARM_Complier_5.06</pArmCC>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARM_Complier_5.06</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -83,7 +84,7 @@
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>1</RunUserProg2>
             <UserProg1Name>D:\Program Files\MDK\Keil5\ARM\ARM_Complier_5.06\bin\fromelf.exe --bin -o ..\..\src\script\app.bin smart_fan_lamp_esp_app\smart_fan_lamp_esp_app.axf</UserProg1Name>
-            <UserProg2Name>..\..\src\script\auto_copy.bat</UserProg2Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
@@ -1607,6 +1608,16 @@
               <FileName>lv_customer_font_SourceHanSerifSC_Regular_24.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_24.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_SourceHanSerifSC_Regular_13.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_fonts\lv_font_SourceHanSerifSC_Regular_13.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_customer_font_SourceHanSerifSC_Regular_13.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ui\guider\smart_fan_lamp\generated\guider_customer_fonts\lv_customer_font_SourceHanSerifSC_Regular_13.c</FilePath>
             </File>
           </Files>
         </Group>

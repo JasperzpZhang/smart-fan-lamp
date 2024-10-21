@@ -335,75 +335,34 @@ a_interrupt_callback(uint8_t type) {
 
 void
 app_apds9960_init(void) {
-    
-    
-//    apds9960_basic_init();
-//    
-//    
-//    apds9960_gesture_init(a_gesture_callback);
-//    
-//    
-//    uint16_t alow = 1;
-//    uint16_t ahigh = 1000;
-//    uint8_t plow = 1;
-//    uint8_t phigh = 128;
-//    
-//    
-//        
-//        /* set gpio irq */
-//        g_gpio_irq = apds9960_interrupt_irq_handler;
-//        
-//     
-//        /* run interrupt function */
-//        if (apds9960_interrupt_init(a_interrupt_callback, alow, ahigh, plow, phigh) != 0)
-//        {
 
-//        }
+    uint8_t times = 3;
+    uint8_t res;
+    uint32_t i;
 
+    /* set gpio irq */
+    g_gpio_irq = apds9960_gesture_irq_handler;
 
-        uint8_t times = 3;
-        uint8_t res;
-        uint32_t i;
-        
-        /* set gpio irq */
-        g_gpio_irq = apds9960_gesture_irq_handler;
-        
+    /* gesture init */
+    res = apds9960_gesture_init(a_gesture_callback);
 
+    /* loop */
+    gs_flag = 0;
+    for (i = 0; i < times; i++) {
+        while (1) {
+            if (gs_flag != 0) {
+                gs_flag = 0;
 
-        /* gesture init */
-        res = apds9960_gesture_init(a_gesture_callback);
+                /* 1000 ms */
+                apds9960_interface_delay_ms(100);
 
-        /* loop */
-        gs_flag = 0;
-        for (i = 0; i < times; i++)
-        {
-            while (1)
-            {
-                if (gs_flag != 0)
-                {
-                    gs_flag = 0;
-                    
-                    /* 1000 ms */
-                    apds9960_interface_delay_ms(100);
-                    
-                    break;
-                }
-                else
-                {
-                    /* 1000 ms */
-                    apds9960_interface_delay_ms(100); 
-                    
-                    continue;
-                }
+                break;
+            } else {
+                /* 1000 ms */
+                apds9960_interface_delay_ms(100);
+
+                continue;
             }
         }
-        
-    
+    }
 }
-
-
-
-
-
-
-

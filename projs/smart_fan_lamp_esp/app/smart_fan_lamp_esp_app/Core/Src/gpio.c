@@ -98,7 +98,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = GES_INT_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING; //GPIO_MODE_IT_FALLING GPIO_MODE_IT_RISING
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GES_INT_GPIO_Port, &GPIO_InitStruct);
 
